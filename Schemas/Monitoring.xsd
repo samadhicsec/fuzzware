@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="Monitoring"
+                  targetNamespace="urn:Fuzzware.Schemas.Configuration"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:cfg="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="PostMortemDebugger">
+    <xs:annotation>
+      <xs:documentation>
+        FuzzwareDBG will be used as a post-mortem debugger (just-in-time debugger).  The command line of the crashed process
+        is documented in the crash log created (in CrashOutputDir).  If the same testcase filename is being used for each
+        testcase this means it will not be possible to know which state caused the crash.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CrashOutputDir" type="xs:string" nillable="false">
+          <xs:annotation>
+            <xs:documentation>
+              The base directory where crash dumps and crash logs will be stored.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="EventLog">
+    <xs:annotation>
+      <xs:documentation>
+        EventLog monitoring causes all entries written to the event log to be parsed for certain keywords.  Lists of keywords
+        are provided and a match occurs if all the keywords in a particular list occur in an event log entry.  Only one keyword
+        list need score a match, and a match is registered.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="KeyWordList" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="KeyWord" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="TargetProcess">
+    <xs:annotation>
+      <xs:documentation>
+        Specify the process by specifying either the process ID or name.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="ProcessId" type="xs:unsignedInt" />
+        <xs:element name="ProcessName" type="xs:string" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ActionsToTake">
+    <xs:annotation>
+      <xs:documentation>
+        When the process terminates either pause the fuzzing or run a command e.g. restart the process.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="PauseFuzzing" type="xs:boolean" />
+        <xs:element name="RunCommand" type="xs:string" maxOccurs="unbounded" minOccurs="0" />
+        <xs:element name="ResumeFuzzing" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="ProcessTerminationMonitor">
+    <xs:annotation>
+      <xs:documentation>
+        Monitor for the termination of the specified process.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="TargetProcess" />
+        <xs:element ref="ActionsToTake" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ProcessorPercentageUsage" nillable="true">
+    <xs:annotation>
+      <xs:documentation>
+        This should be specified as if the target computer has 1 processor, it will be adjusted automatically for computers
+        with multiple processors (including logical and hyper-threading).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:unsignedInt">
+        <xs:minInclusive value="1" />
+        <xs:maxInclusive value="100" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="MemoryUsage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MaxVirtualMemoryMB" type="xs:unsignedInt" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Monitor the process's virtual memory for exceeding the specified amount.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="MultipleOfBaseMemory" type="xs:unsignedByte" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Monitor the process's virtual memory for exceeding the specified multiple of the base amount of memory used by the
+              process.  E.g. If '2' is specified, monitors for double the memory usage of the base case (calculated automatically).
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ProcessMaxValues">
+    <xs:annotation>
+      <xs:documentation>
+        If any of the specified properties exceed specified value for the polling interval, then the action is executed.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MaxValues">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="VirtualBytesMb" type="xs:unsignedInt" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Specified in Mb's</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="HandleCount" type="xs:unsignedInt" minOccurs="0" />
+              <xs:element name="PercentProcessorTime" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>A value between 0 and 100</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:unsignedInt">
+                    <xs:minInclusive value="1" />
+                    <xs:maxInclusive value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ThreadCount" type="xs:unsignedInt" minOccurs="0" />
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="ActionsToTake" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="ProcessMultiple">
+    <xs:annotation>
+      <xs:documentation>
+        If any of the specified properties exceed the specified multiple of the base test case for the polling interval, 
+        then the action is executed.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Property">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="VirtualBytes" type="xs:unsignedShort" minOccurs="0" />
+            <xs:element name="HandleCount" type="xs:unsignedShort" minOccurs="0" />
+            <xs:element name="ThreadCount" type="xs:unsignedShort" minOccurs="0" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element ref="ActionsToTake" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="ProcessPerformanceMonitor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="TargetProcess" />
+        <xs:element name="PollingIntervalSecs" type="xs:unsignedByte" />
+        <xs:element ref="ProcessMaxValues" minOccurs="0" />
+        <xs:element name="ProcessBaseMultiple" type="ProcessMultiple" minOccurs="0" />
+        <xs:element name="ProcessPrevPollMultiple" type="ProcessMultiple" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Monitoring">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="RemoteCredentials" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              If Monitoring a remote host, specify hostname, username and password.  If omitted then monitoring will be of localhost
+              with the credentials of the current process.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RemoteHostname" type="xs:string" />
+              <xs:element name="RemoteUsername" type="xs:string" />
+              <xs:element name="RemotePassword" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="PostMortemDebugger" minOccurs="0" />
+        <xs:element ref="EventLog" minOccurs="0" />
+        <xs:element ref="ProcessTerminationMonitor" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="ProcessPerformanceMonitor" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

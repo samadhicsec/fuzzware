@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Output.View.ActiveXOutputView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="700" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>-->
+
+        <ScrollViewer Grid.Column="1" Grid.Row="1">
+            <Border Style="{StaticResource BorderStyle}">
+                <HeaderedContentControl Style="{StaticResource HeaderedContentControlStyle}" Header="Invoke ActiveX Control">
+                    <StackPanel>
+                        <HeaderedContentControl Style="{StaticResource AdvancedOptionsStyle}"
+                                                cmn:Common.IsExpanded="false">
+                            <StackPanel>
+                                <HeaderedContentControl Margin="5,5,5,0" Style="{StaticResource SubHeaderedContentControlStyle}" 
+                                                        Header="Script template file for invoking the ActiveX control">
+                                    <StackPanel>
+                                        <cv:FileControlView DataContext="{Binding Path=ScriptTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Margin="5,0,0,5" Style="{StaticResource HelpText}" TextWrapping="Wrap">
+                                            If a custom script template is required, make a copy of the default template (in the Resources directory) and edit as appropriate.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </HeaderedContentControl>
+                                <cv:ExeOutputControlView Margin="5,5,0,0" DataContext="{Binding Path=ExeOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </HeaderedContentControl>                        
+                    </StackPanel>
+                </HeaderedContentControl>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

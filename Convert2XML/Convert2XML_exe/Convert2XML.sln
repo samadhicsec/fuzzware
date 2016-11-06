@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Convert2XML", "Convert2XML\Convert2XML.csproj", "{6169C0E6-C105-44AE-B02F-5D4DA662A22C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{00ECFFBF-23CB-49DB-BA9D-1C0D8A0F076D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Convert2XML_exe", "Convert2XML_exe\Convert2XML_exe.csproj", "{ACDD9968-ABCF-4306-A446-55DBEC9308F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6169C0E6-C105-44AE-B02F-5D4DA662A22C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6169C0E6-C105-44AE-B02F-5D4DA662A22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6169C0E6-C105-44AE-B02F-5D4DA662A22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6169C0E6-C105-44AE-B02F-5D4DA662A22C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00ECFFBF-23CB-49DB-BA9D-1C0D8A0F076D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00ECFFBF-23CB-49DB-BA9D-1C0D8A0F076D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00ECFFBF-23CB-49DB-BA9D-1C0D8A0F076D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00ECFFBF-23CB-49DB-BA9D-1C0D8A0F076D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACDD9968-ABCF-4306-A446-55DBEC9308F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACDD9968-ABCF-4306-A446-55DBEC9308F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACDD9968-ABCF-4306-A446-55DBEC9308F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACDD9968-ABCF-4306-A446-55DBEC9308F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,271 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Input.View.MethodsConfigControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Input.View"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <cmn:ChangeStringToXMLQualifiedName x:Key="ChangeStringToXMLQualifiedName" />
+            <cmn:DoNothingWithEmtpyStrings x:Key="DoNothingWithEmtpyStrings" />
+
+            <ComboBox x:Key="cbInitMethods" ItemsSource="{Binding}"
+                      SelectedItem="{Binding RelativeSource={RelativeSource Self}, Path=(cmn:GenericAdorner.ProxyProperty), 
+                                        Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoNothingWithEmtpyStrings}}"/>
+            
+            <Style x:Key="GenericAdornerComboBox" TargetType="ComboBox">
+
+                <Setter Property="ItemsSource" Value="{Binding}" />
+                <Setter Property="SelectedItem" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cmn:GenericAdorner.ProxyProperty), 
+                                        Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DoNothingWithEmtpyStrings}}" />
+            </Style>
+
+            <Style x:Key="GenericAdornableInitialMethods">
+                <Setter Property="Control.HorizontalAlignment" Value="Left"  />
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type cmn:GenericAdornable}">
+                            <TextBlock x:Name="PART_UIElementPart" 
+                                VerticalAlignment="Center"
+                                Text="{Binding Path=Value,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                MinWidth="{Binding Path=MinWidth,RelativeSource={RelativeSource TemplatedParent}}"
+                                MaxWidth="{Binding Path=MaxWidth,RelativeSource={RelativeSource TemplatedParent}}"
+                                Width="{Binding Path=Width,RelativeSource={RelativeSource TemplatedParent}}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style x:Key="GenericAdornableHyperlinkComboBox">
+                <Setter Property="Control.VerticalAlignment" Value="Center"  />
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type cmn:GenericAdornable}">
+                            <AdornerDecorator>
+                                <TextBlock x:Name="PART_UIElementPart" Foreground="Blue" xml:space="preserve"
+                                        Text="{Binding Path=Value,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </AdornerDecorator>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="TextBlock.IsMouseOver" Value="true">
+                                    <Setter TargetName="PART_UIElementPart" Property="TextBlock.Foreground" Value="Red" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <StackPanel>
+
+        <HeaderedContentControl Style="{StaticResource SubHeaderedContentControlStyle}" Header="Initial Methods">
+            <StackPanel>
+                <TextBlock Style="{StaticResource CommonText}" Margin="5" TextWrapping="Wrap">
+                    Add initial methods to ensure that these methods are always invoked before other methods.  
+                    This is useful if there are initialisation methods on the interface that need to be invoked before
+                    other methods can be invoked correctly.
+                </TextBlock>
+                <Grid Margin="10" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <ListBox Name="lbInitialMethods" MinWidth="390" Grid.Column="0" Grid.Row="0" Style="{StaticResource DataText}"
+                        ItemsSource="{Binding Path=InitialMethods, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        KeyDown="lbMethods_KeyDown"
+                        SelectionMode="Extended" KeyboardNavigation.DirectionalNavigation="Contained"
+                        BorderBrush="{StaticResource CommonFontColour}"
+                        local:MethodsConfigControlView.DeleteInitialMethod="{Binding Path=DeleteInitialMethodCommand}"
+                        local:MethodsConfigControlView.PromoteInitialMethod="{Binding Path=PromoteInitialMethodCommand}"
+                        local:MethodsConfigControlView.DemoteInitialMethod="{Binding Path=DemoteInitialMethodCommand}"
+                        GotFocus="lbInitialMethods_GotFocus"
+                        LostFocus="lbInitialMethods_LostFocus">
+                        <ListBox.Resources>
+                            <!--Data Context will be set in code to lbInitialMethods-->
+                            <MenuItem x:Key="EditMenuResource" Header="Edit">
+                                <MenuItem Header="Delete" InputGestureText="Del" Command="{Binding Path=DataContext.DeleteInitialMethodCommand}" CommandParameter="{Binding Path=SelectedItem}" />
+                                <MenuItem Header="Move Up" InputGestureText="Ctrl++" Command="{Binding Path=DataContext.PromoteInitialMethodCommand}" CommandParameter="{Binding Path=SelectedItem}" />
+                                <MenuItem Header="Move Down" InputGestureText="Ctrl+-" Command="{Binding Path=DataContext.DemoteInitialMethodCommand}" CommandParameter="{Binding Path=SelectedItem}" />
+                            </MenuItem>
+                        </ListBox.Resources>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <cmn:GenericAdornable Height="25" Value="{Binding Path=Value, Mode=TwoWay}" 
+                                        AdornerContentControlStyle="{StaticResource GenericAdornerComboBox}" 
+                                        AdornerFrwkElementType="{x:Type ComboBox}"
+                                        AdornerDataContext="{Binding ElementName=lbInitialMethods, Path=DataContext.Methods}"
+                                        FinishedEditting="{Binding ElementName=lbInitialMethods, Path=DataContext.AddInitialMethodCommand}"
+                                        MinWidth="370" Style="{StaticResource GenericAdornableInitialMethods}" Name="gaInitialMethods"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </StackPanel>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Style="{StaticResource SubHeaderedContentControlStyle}" Header="Default Method Parameter Values">
+            <StackPanel>
+                <TextBlock Style="{StaticResource CommonText}" Margin="5" TextWrapping="Wrap">
+                    Since Fuzzware does not use an example call to this interface to generate test cases from, default values
+                    for the method parameters are required.  If a specific parameter is not given a default value then the
+                    default value for the data type of the parameter is used.  Only parameters with simple types can be set.
+                </TextBlock>
+                <ScrollViewer Margin="10" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <StackPanel>
+                        <ItemsControl Name="lbDefaultValues" Style="{StaticResource CommonText}"
+                            ItemsSource="{Binding Path=DefaultValues, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            KeyDown="lbMethods_KeyDown"
+                            BorderBrush="{StaticResource CommonFontColour}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Left" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Button Grid.Column="0" Template="{StaticResource SubtractButtonTemplate}" Margin="0,0,5,0" HorizontalAlignment="Left" 
+                                                Command="{Binding ElementName=lbDefaultValues, Path=DataContext.RemoveDefaultValueCommand}" CommandParameter="{Binding}"/>
+                                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,0,10,0" Style="{StaticResource CommonText}" 
+                                                    HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Button Command="{Binding ElementName=lbDefaultValues, Path=DataContext.PromoteDefaultValueCommand}" CommandParameter="{Binding}" 
+                                                    Height="13" Width="18">
+                                                <Label Style="{StaticResource CommonText}" FontWeight="Bold" Margin="-4,-5,-5,-5" Padding="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                                    <Label.RenderTransform>
+                                                        <RotateTransform Angle="90" />
+                                                    </Label.RenderTransform>
+                                                    &lt;
+                                                </Label>
+                                            </Button>
+                                            <Button Command="{Binding ElementName=lbDefaultValues, Path=DataContext.DemoteDefaultValueCommand}" CommandParameter="{Binding}" 
+                                                    Height="13" Width="18">
+                                                <Label Style="{StaticResource CommonText}" FontWeight="Bold" Margin="-4,-5,-5,-5" Padding="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                                    <Label.RenderTransform>
+                                                        <RotateTransform Angle="90" />
+                                                    </Label.RenderTransform>
+                                                    &gt;
+                                                </Label>
+                                            </Button>
+                                        </StackPanel>
+                                        <cmn:GenericAdornable Grid.Column="2" Name="gaParameterCondition" 
+                                                Value="{Binding Path=ParameterCondition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                                                AdornerFrwkElementType="{x:Type ComboBox}"
+                                                AdornerContentControlStyle="{StaticResource GenericAdornerComboBox}"
+                                                AdornerDataContext="{Binding Path=Conditions, Mode=OneWay}"
+                                                Style="{StaticResource GenericAdornableHyperlinkComboBox}" VerticalAlignment="Center"/>
+                                        <StackPanel Grid.Column="3" Orientation="Horizontal" Name="spConditionSpecfic" Visibility="Collapsed" VerticalAlignment="Center">
+                                            <TextBlock VerticalAlignment="Center" xml:space="preserve">For </TextBlock>
+                                            <cmn:GenericAdornable Name="gaMethod"
+                                                    Value="{Binding Path=Method, Mode=TwoWay}" ValueConverter="{StaticResource DoNothingWithEmtpyStrings}"
+                                                    AdornerFrwkElementType="{x:Type ComboBox}"
+                                                    AdornerContentControlStyle="{StaticResource GenericAdornerComboBox}"
+                                                    AdornerDataContext="{Binding Path=AllMethodsWithInputParameters}"
+                                                    Style="{StaticResource GenericAdornableHyperlinkComboBox}"/>
+                                            <TextBlock VerticalAlignment="Center" xml:space="preserve"> assign </TextBlock>
+                                            <cmn:GenericAdornable Value="{Binding Path=Parameter, Mode=TwoWay}" Name="gaInputParameter" ValueConverter="{StaticResource DoNothingWithEmtpyStrings}"
+                                                    AdornerFrwkElementType="{x:Type ComboBox}"
+                                                    AdornerContentControlStyle="{StaticResource GenericAdornerComboBox}"
+                                                    AdornerDataContext="{Binding ElementName=gaMethod, Path=Value.InParameters}"
+                                                    FinishedEditting="{Binding ElementName=lbDefaultValues, Path=DataContext.AssignDefaultValueCommand}"
+                                                    FinishedEdittingParameter="{Binding}"
+                                                    Style="{StaticResource GenericAdornableHyperlinkComboBox}"/>
+                                            <TextBlock VerticalAlignment="Center" xml:space="preserve"> the value </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="3" Orientation="Horizontal" Name="tbConditionValue" Visibility="Visible" VerticalAlignment="Center">
+                                            <TextBox MinWidth="150" VerticalAlignment="Center" Text="{Binding Path=ConditionValue, Mode=TwoWay}" />
+                                            <TextBlock VerticalAlignment="Center" xml:space="preserve"> assign </TextBlock>
+                                        </StackPanel>
+                                        <TextBox Grid.Column="4" Text="{Binding Path=DefaultValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                 Name="tbDefaultValue" MinWidth="150" MaxWidth="1000" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                                 Style="{StaticResource DataText}"/>
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <Trigger SourceName="gaParameterCondition" Property="Value" Value="Named method/parameter: ">
+                                            <Setter TargetName="spConditionSpecfic" Property="Visibility" Value="Visible" />
+                                            <Setter TargetName="tbConditionValue" Property="Visibility" Value="Collapsed" />
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <StackPanel Margin="5" Style="{StaticResource CommonText}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Button Template="{StaticResource AddButtonTemplate}" Command="{Binding Path=AddDefaultValueCommand}" />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+                <TextBlock Style="{StaticResource CommonText}" Margin="5" TextWrapping="Wrap">
+                    Note, the above default values are applied in the order specified.  If a large amount of default values need to be supplied
+                    then run Fuzzware in Test Mode to create the XML template and then edit it manually.  Fuzzware reuses this template if it exists.
+                </TextBlock>
+                <StackPanel Style="{StaticResource CommonText}" Margin="5">
+                    <TextBlock xml:space="preserve" VerticalAlignment="Center">Otherwise ...</TextBlock>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style x:Key="DefaultValueControl" BasedOn="{StaticResource DataText}" >
+                                <Setter Property="Control.Width" Value="150" />
+                                <Setter Property="Control.Height" Value="25" />
+                                <Setter Property="FrameworkElement.Margin" Value="5,5,5,0" />
+                                <Setter Property="FrameworkElement.HorizontalAlignment" Value="Left" />
+                                <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
+                            </Style>
+                        </Grid.Resources>
+
+                        <TextBlock xml:space="preserve" Grid.Column="0" Grid.Row="0" Margin="5" VerticalAlignment="Center"
+                               >... give parameters of type String a default value of </TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Path=DefaultStringValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultValueControl}" />
+
+                        <TextBlock xml:space="preserve" Grid.Column="0" Grid.Row="1" Margin="5" VerticalAlignment="Center"
+                                   >... give parameters of type Integer a default value of </TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Path=DefaultIntegerValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultValueControl}"/>
+
+                        <TextBlock xml:space="preserve" Grid.Column="0" Grid.Row="2" Margin="5" VerticalAlignment="Center"
+                                   >... give parameters of type Decimal a default value of </TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Path=DefaultDecimalValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultValueControl}"/>
+
+                        <TextBlock xml:space="preserve" Grid.Column="0" Grid.Row="3" Margin="5" VerticalAlignment="Center"
+                                   >... give parameters of type Binary a default value of </TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Path=DefaultBinaryValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultValueControl}"/>
+
+                    </Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock xml:space="preserve" Margin="5" VerticalAlignment="Center"
+                                   >... give parameters of type Variant or AnyType the default value of type </TextBlock>
+                        <ComboBox Grid.Column="1" Grid.Row="4" Width="150" Margin="5"
+                                  ItemsSource="{Binding Path=AnyTypeValues}"
+                                  SelectedItem="{Binding Path=DefaultAnyTypeValue, Mode=TwoWay, Converter={StaticResource ChangeStringToXMLQualifiedName}}">
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+
+    </StackPanel>
+</UserControl>

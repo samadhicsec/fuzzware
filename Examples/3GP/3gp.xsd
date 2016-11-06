@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.3GP"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.3GP"
+    xmlns:tgp="urn:Fuzzware.Examples.3GP"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <!--AMRSampleEntry box-->
+  <xs:element name="amr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfamr" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:choice>
+          <xs:element name="armConst1" type="xs:string" fixed="samr" />
+          <xs:element name="armConst2" type="xs:string" fixed="sawb" />
+        </xs:choice>
+        <xs:element name="amrData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="amrReserved1" type="xs:hexBinary" fixed="000000000000" sac:outputAs="Decoded" />
+              <xs:element name="amrDataRefIndex" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="amrReserved2" type="xs:hexBinary" fixed="0000000000000000" sac:outputAs="Decoded" />
+              <xs:element name="amrReserved3" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="amrReserved4" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="amrReserved5" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="amrTimescale" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="amrReserved6" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element ref="tgp:damr" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--AMRSpecific box-->
+  <xs:element name="damr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfdamr" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="damrConst" type="xs:string" fixed="damr" />
+        <xs:element name="damrData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="damrVendor" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="damrDecoderVersion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="damrModeSet" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="damrModeChangePeriod" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="damrFramesPerSample" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--AMRWPSampleEntry box-->
+  <xs:element name="sawp">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfsawp" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="sawpConst" type="xs:string" fixed="sawp" />
+        <xs:element name="sawpData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="sawpReserved1" type="xs:hexBinary" fixed="000000000000" sac:outputAs="Decoded" />
+              <xs:element name="sawpDataRefIndex" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="sawpReserved2" type="xs:hexBinary" fixed="0000000000000000" sac:outputAs="Decoded" />
+              <xs:element name="sawpReserved3" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="sawpReserved4" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="sawpReserved5" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="sawpSamplingRate" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="sawpReserved6" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element ref="tgp:damr" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--H263SampleEntry box-->
+  <xs:element name="s263">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfs263" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="s263Const" type="xs:string" fixed="s263" />
+        <xs:element name="s263Data">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="s263Reserved1" type="xs:hexBinary" fixed="000000000000" sac:outputAs="Decoded" />
+              <xs:element name="s263DataRefIndex" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="s263Reserved2" type="xs:hexBinary" fixed="00000000000000000000000000000000" sac:outputAs="Decoded" />
+              <xs:element name="s263Width" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="s263Height" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="s263Reserved3" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="s263Reserved4" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="s263Reserved4" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="s263Reserved5" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="s263Reserved6" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="s263Reserved7" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="s263Reserved8" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element ref="tgp:d263" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--D263Specific box-->
+  <xs:element name="d263">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfd263" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="d263Const" type="xs:string" fixed="d263" />
+        <xs:element name="d263Data">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="d263Vendor" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="d263DecoderVersion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="d263Level" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="d263Profile" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element ref="tgp:bitr" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Bitrate box-->
+  <xs:element name="bitr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfbitr" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="bitrConst" type="xs:string" fixed="bitr" />
+        <xs:element name="bitrData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="bitrAvgBitrate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="bitrMaxBitrate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

@@ -1,0 +1,65 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="..\..\Common\Common.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <cmn:BooleanToVisability x:Key="BooleanToVisability" />
+
+    <Style x:Key="HelpTextStyle">
+        <Setter Property="TextBlock.FontSize" Value="12" />
+        <Setter Property="Control.FontSize" Value="12" />
+    </Style>
+
+    <Style x:Key="TabItemStackPanelStyle" TargetType="StackPanel">
+        <Setter Property="Width" Value="195" />
+    </Style>
+
+    <Style x:Key="HelpStackPanelStyle" TargetType="StackPanel">
+        <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}, Path=IsSelected, Converter={StaticResource BooleanToVisability}}" />
+    </Style>
+
+    <ControlTemplate x:Key="CustomNodeName" TargetType="ContentControl">
+        <StackPanel Name="spCustomText" Visibility="{Binding Path=CustomFuzzer, Converter={StaticResource BooleanToVisability}}">
+            <TextBlock Margin="10,0,0,3" Style="{StaticResource CommonText}">
+                For this specific XML node, specify custom values for each fuzzing technique:
+            </TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Margin="10,0,3,3" VerticalAlignment="Center" Style="{StaticResource CommonText}">
+                    Namespace
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,0,3" Height="25" Style="{StaticResource ControlCommonText}"
+                    Text="{Binding Path=CustomNodeNamespace.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBlock Grid.Column="0" Grid.Row="1" Margin="10,0,0,3" VerticalAlignment="Center" Style="{StaticResource CommonText}">
+                    Name
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="1" Margin="0,0,0,3" Height="25" Style="{StaticResource ControlCommonText}"
+                                         Text="{Binding Path=CustomNodeName.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            </Grid>
+        </StackPanel>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="RandomFuzzerIterations" TargetType="ContentControl">
+        <StackPanel Height="250" Width="Auto" HorizontalAlignment="Center">
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <TextBlock Margin="5" Style="{StaticResource CommonText}" Foreground="Black" VerticalAlignment="Top">
+                Amount of random numbers to try
+            </TextBlock>
+                <TextBox Margin="5" Height="25" Style="{StaticResource CommonText}" Foreground="Black" VerticalAlignment="Top"
+                Text="{Binding Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="60"></TextBox>
+            </StackPanel>
+        </StackPanel>
+    </ControlTemplate>
+
+</ResourceDictionary>

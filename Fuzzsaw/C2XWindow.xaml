@@ -1,0 +1,28 @@
+﻿<Window x:Class="Fuzzware.Fuzzsaw.C2XWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Convert To XML Viewer" Height="884" Width="847" Name="wC2XWindow" Closing="wC2XWindow_Closing" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <StackPanel Name="spC2XCommands" Orientation="Horizontal" Height="60" DockPanel.Dock="Bottom">
+            <Button Name="bC2XInitialise" Content="Initialise" Click="bC2XInitialise_Click" Margin="20,0,0,0" Height="25" Width="60" />
+            <Button Name="bC2XStart" Content="Start" IsEnabled="False" Click="bC2XStart_Click" Margin="20,0,0,0" Height="25" Width="60" />
+            <Button Name="bC2XPause" Content="Pause" IsEnabled="False" Click="bC2XPause_Click" Margin="20,0,0,0" Height="25" Width="60" />
+            <Button Name="bC2XResume" Content="Resume" IsEnabled="False" Click="bC2XResume_Click" Margin="20,0,0,0" Height="25" Width="60" />
+            <Button Name="bC2XEnd" Content="End" IsEnabled="False" Click="bC2XEnd_Click" Margin="20,0,0,0" Height="25" Width="60" />
+            <Label Content="Delay" Margin="20,18,0,10" />
+            <Slider Name="slDelay" Orientation="Horizontal" Width="300" Margin="10,18,0,0" Minimum="0" Maximum="1000" TickFrequency="50" TickPlacement="Both" IsSnapToTickEnabled="True" 
+                    Value="{Binding ElementName=wC2XWindow, Path=Delay}"/>
+        </StackPanel>
+        <StackPanel>
+            <TabControl Name="tpOutput">
+                <TabItem Name="tbiC2XOutput" Header="Convert To Xml Output">
+                    <TextBox Name="tbC2XOutput" Margin="15" Height="727" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" />
+                </TabItem>
+                <TabItem Name="tbiLogOutput" Header="Log">
+                    <TextBox Name="tbLogOutput" Margin="15" Height="{Binding ElementName=tbC2XOutput, Path=Height}" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True" 
+                             Text="{Binding ElementName=wC2XWindow, Path=LogOutput, Mode=OneWay}"/>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </DockPanel>
+</Window>

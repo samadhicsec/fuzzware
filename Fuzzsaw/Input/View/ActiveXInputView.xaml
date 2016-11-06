@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Input.View.ActiveXInputView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Input.View"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <cmn:ObjectToVisability x:Key="ObjectToVisability" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="700" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>-->
+
+        <ScrollViewer Grid.Column="1" Grid.Row="1">
+            <Border Style="{StaticResource BorderStyle}">
+                <HeaderedContentControl Style="{StaticResource HeaderedContentControlStyle}" Header="Fuzz an ActiveX Control">
+                    <StackPanel>
+                        <StackPanel Margin="5">
+                            <TextBlock Style="{StaticResource CommonText}">
+                                Specify the ClassId or ProgId of the ActiveX Control
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource HelpText}" TextWrapping="Wrap">
+                                Note, an actual instance of the control is created in order to retrieve its methods and their parameters.
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBox MinWidth="150" MaxWidth="500" Style="{StaticResource DataText}" Margin="5" IsEnabled="{Binding Path=ActiveXEdittable}"
+                                 Text="{Binding Path=ActiveXID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        <TextBlock Style="{StaticResource HelpText}" TextWrapping="Wrap" Foreground="Red" 
+                                 Text="{Binding Path=ActiveXError}" Visibility="{Binding Path=ActiveXError, Converter={StaticResource ObjectToVisability}}"/>
+                        <local:MethodsConfigControlView DataContext="{Binding Path=MethodsConfig, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </HeaderedContentControl>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

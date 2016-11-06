@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="Alert" 
+                  targetNamespace="urn:Fuzzware.Examples.TLS"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.TLS"
+                  xmlns:tls="urn:Fuzzware.Examples.TLS"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:complexType name="AlertLevel">
+    <xs:choice>
+      <xs:element name="warning" type="xs:unsignedByte" fixed="1" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="fatal" type="xs:unsignedByte" fixed="2" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="unknown" type="xs:unsignedByte" fixed="255" sac:outputAs="BinaryBigEndian" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="AlertDescription">
+    <xs:choice>
+      <xs:element name="close_notify" type="xs:unsignedByte" fixed="0" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="unexpected_message" type="xs:unsignedByte" fixed="10" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="bad_record_mac" type="xs:unsignedByte" fixed="20" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="decryption_failed" type="xs:unsignedByte" fixed="21" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="record_overflow" type="xs:unsignedByte" fixed="22" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="decompression_failure" type="xs:unsignedByte" fixed="30" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="handshake_failure" type="xs:unsignedByte" fixed="40" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="no_certificate_RESERVED" type="xs:unsignedByte" fixed="41" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="bad_certificate" type="xs:unsignedByte" fixed="42" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="unsupported_certificate" type="xs:unsignedByte" fixed="43" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="certificate_revoked" type="xs:unsignedByte" fixed="44" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="certificate_expired" type="xs:unsignedByte" fixed="45" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="certificate_unknown" type="xs:unsignedByte" fixed="46" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="illegal_parameter" type="xs:unsignedByte" fixed="47" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="unknown_ca" type="xs:unsignedByte" fixed="48" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="access_denied" type="xs:unsignedByte" fixed="49" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="decode_error" type="xs:unsignedByte" fixed="50" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="decrypt_error" type="xs:unsignedByte" fixed="51" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="export_restriction_RESERVED" type="xs:unsignedByte" fixed="60" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="protocol_version" type="xs:unsignedByte" fixed="70" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="insufficient_security" type="xs:unsignedByte" fixed="71" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="internal_error" type="xs:unsignedByte" fixed="80" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="user_canceled" type="xs:unsignedByte" fixed="90" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="no_renegotiation" type="xs:unsignedByte" fixed="100" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="unknown" type="xs:unsignedByte" fixed="255" sac:outputAs="BinaryBigEndian" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:element name="Alert" sac:TypeID="21">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="level" type="AlertLevel" />
+        <xs:element name="description" type="AlertDescription" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

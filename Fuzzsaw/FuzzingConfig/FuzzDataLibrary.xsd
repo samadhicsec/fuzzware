@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FuzzDataLibrary"
+    targetNamespace="urn:Fuzzware.Fuzzsaw.FuzzingConfig.FuzzDataLibrary"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Fuzzsaw.FuzzingConfig.FuzzDataLibrary"
+    xmlns:fdl="urn:Fuzzware.Fuzzsaw.FuzzingConfig.FuzzDataLibrary"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <xs:attributeGroup name="FuzzDataBaseAttributes">
+    <xs:attribute name="Selected" type="xs:boolean" use="required" />
+  </xs:attributeGroup>
+  
+  <xs:element name="FuzzData">
+    <xs:annotation>
+      <xs:documentation>
+        Used to hold a single fuzz data library value
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attributeGroup ref="fdl:FuzzDataBaseAttributes" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="FuzzDataRange">
+    <xs:annotation>
+      <xs:documentation>
+        Used to hold a a range of fuzz data library values
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Start" type="xs:string" />
+        <xs:element name="End" type="xs:string" />
+      </xs:sequence>
+      <xs:attributeGroup ref="fdl:FuzzDataBaseAttributes" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="FuzzDataFile">
+    <xs:annotation>
+      <xs:documentation>
+        Used to hold a file name containing fuzz data library values.  The file should be line delimited data.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attributeGroup ref="fdl:FuzzDataBaseAttributes" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:complexType name="FuzzDataSubSectionType">
+    <xs:annotation>
+      <xs:documentation>
+        Groups together different ways of specifying data library values of the same type.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice maxOccurs="unbounded">
+      <xs:element ref="fdl:FuzzDataSubSection" />
+      <xs:element ref="fdl:FuzzData" />
+      <xs:element ref="fdl:FuzzDataRange" />
+      <xs:element ref="fdl:FuzzDataFile" />
+    </xs:choice>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Selected" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="All" />
+          <xs:enumeration value="Some" />
+          <xs:enumeration value="None" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:element name="FuzzDataSubSection" type="fdl:FuzzDataSubSectionType" />
+  
+  <xs:element name="FuzzDataSection">
+    <xs:annotation>
+      <xs:documentation>
+        The root fuzz data library section that specifies the datatype of the fuzz data library subsections or values.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="fdl:FuzzDataSubSectionType">
+          <xs:attribute name="DataType" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="String" />
+                <xs:enumeration value="Integer" />
+                <xs:enumeration value="Decimal" />
+                <xs:enumeration value="Binary" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="FuzzDataLibrary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="fdl:FuzzDataSection" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="ClientSpecificMessages" 
+                  targetNamespace="urn:Fuzzware.Examples.TLS"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.TLS"
+                  xmlns:tls="urn:Fuzzware.Examples.TLS"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+  <xs:include schemaLocation="CommonMessages.xsd" />
+  
+  <xs:element name="PublicKeyEncryptedVector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfPublicKeyEncryption" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="PublicKeyEncryption" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ClientDiffieHellmanPublic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dh_public">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element name="implicit" type="xs:string" fixed="" nillable="true" />
+              <xs:element name="explicit">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ByteLengthOfdh_Yc" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="dh_Yc" type="xs:hexBinary" sac:outputAs="Decoded" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ClientKeyExchange">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="exchange_keys">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element ref="PublicKeyEncryptedVector" />
+              <xs:element ref="ClientDiffieHellmanPublic" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="CertificateVerify">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="cert_verify_signature" type="SignatureVector" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

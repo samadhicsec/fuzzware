@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.NavPane"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fzs="clr-namespace:Fuzzware.Fuzzsaw"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    Height="Auto" Width="Auto" IsEnabled="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Common\Common.xaml" />
+                <ResourceDictionary Source="Common\NavPaneStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>        
+    </UserControl.Resources>
+    
+    <StackPanel Height="Auto" Width="Auto" Background="Transparent">
+        <HeaderedContentControl Style="{StaticResource NavPaneContentControl}" Header="Input">
+            <StackPanel>
+                <Button Name="butInputSource" Style="{StaticResource NavPaneItem}"
+                        Command="{Binding Path=(fzs:ProjectNavigationCommands.ShowInputSelection)}"
+                        cmn:Common.IsSelected="{Binding Path=InputSelectionSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Style="{StaticResource CommonSubHeaderText}">Choose an input source</TextBlock>
+                </Button>
+                <Button Name="butInput" Style="{StaticResource NavPaneItem}"
+                        Command="{Binding Path=(fzs:ProjectNavigationCommands.ShowInputConfig)}"
+                        cmn:Common.IsSelected="{Binding Path=InputSourceSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Style="{StaticResource CommonSubHeaderText}">Configure the input source</TextBlock>
+                </Button>
+            </StackPanel>
+        </HeaderedContentControl>
+        <HeaderedContentControl Style="{StaticResource NavPaneContentControl}" Header="Configuration">
+            <StackPanel>
+                <Button Name="butConfigSimpleTypes" Style="{StaticResource NavPaneItem}"
+                        Command="{Binding Path=(fzs:ProjectNavigationCommands.ShowDataTypesConfig)}"
+                        cmn:Common.IsSelected="{Binding Path=DataTypesConfigSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Style="{StaticResource CommonSubHeaderText}">Options for fuzzing data types</TextBlock>
+                </Button>
+                <Button Name="butConfigComplexTypes" Style="{StaticResource NavPaneItem}"
+                        Command="{Binding Path=(fzs:ProjectNavigationCommands.ShowDataStructuresConfig)}"
+                        cmn:Common.IsSelected="{Binding Path=DataStructuresConfigSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Style="{StaticResource CommonSubHeaderText}">Options for fuzzing data structures</TextBlock>
+                </Button>
+            </StackPanel>
+        </HeaderedContentControl>
+        <HeaderedContentControl Style="{StaticResource NavPaneContentControl}" Header="Output">
+            <StackPanel>
+                <Button Name="butOutputDestintation" Style="{StaticResource NavPaneItem}"
+                        Command="{Binding Path=(fzs:ProjectNavigationCommands.ShowOutputSelection)}"
+                        cmn:Common.IsSelected="{Binding Path=OutputSelectionSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Style="{StaticResource CommonSubHeaderText}">Choose an output destination</TextBlock>
+                </Button>
+                <Button Name="butOutput" Style="{StaticResource NavPaneItem}"
+                        Command="{Binding Path=(fzs:ProjectNavigationCommands.ShowOutputConfig)}"
+                        cmn:Common.IsSelected="{Binding Path=OutputDestinationSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Style="{StaticResource CommonSubHeaderText}">Configure the output destination</TextBlock>
+                </Button>
+            </StackPanel>
+        </HeaderedContentControl>
+        <HeaderedContentControl Style="{StaticResource NavPaneContentControl}" Header="Execution">
+            <StackPanel>
+                <Button Name="butMonitoring" Style="{StaticResource NavPaneItem}"
+                        Command="{Binding Path=(fzs:ProjectNavigationCommands.ShowMonitoring)}"
+                        cmn:Common.IsSelected="{Binding Path=MonitoringSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Style="{StaticResource CommonSubHeaderText}">Configure Monitoring</TextBlock>
+                </Button>
+                <Button Name="butExecution" Style="{StaticResource NavPaneItem}"
+                        Command="{Binding Path=(fzs:ProjectNavigationCommands.ShowExecution)}"
+                        cmn:Common.IsSelected="{Binding Path=ExecutionSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Style="{StaticResource CommonSubHeaderText}">Configure and Run fuzzer</TextBlock>
+                </Button>
+            </StackPanel>
+        </HeaderedContentControl>
+    </StackPanel>
+</UserControl>

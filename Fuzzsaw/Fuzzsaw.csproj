@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{484DB3E8-375E-467F-9D19-6756B4353D61}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fuzzware.Fuzzsaw</RootNamespace>
+    <AssemblyName>Fuzzsaw</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <PublishUrl>http://localhost/Fuzzsaw/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Common.snk</AssemblyOriginatorKeyFile>
+    <ApplicationIcon>Fuzzsaw.ico</ApplicationIcon>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>false</GenerateManifests>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="C2XWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\AdvancedFileStoreControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\DirectoryControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\ExeOutputControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\FileControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\FilesControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\FileStoreControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\NetworkOutputControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\OnOffControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\BaseFuzzerResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\ByteFuzzerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\DataStructuresConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\DataTypesConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\DecimalFuzzerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\FuzzDataSelectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\IntegerFuzzerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\RangeDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FuzzingConfig\View\StringFuzzerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\TestC2XWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PropertiesWindows\View\GeneralPropertiesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PropertiesWindows\View\ProjectPropertiesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\View\UserDefinedCodeControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Execution\View\ExecuteControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Execution\View\MonitoringControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\ActiveXInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\C2XInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\CustomInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\InputSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\MethodsConfigControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\PDMLInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\WSDLInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\View\XMLInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NavPane.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewProjectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Output\View\ActiveXOutputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Output\View\CustomOutputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Output\View\ExeOutputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Output\View\NetworkOutputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Output\View\OutputFileStoreView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Output\View\OutputSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\FuzzingDataTypesConfigStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\HandlerSelectionStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\NavPaneStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Output\View\WSDLOutputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WelcomeMessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Schemer\AutoGenerated\ComplexTypeFuzzerConfig.cs">
+      <Link>AutoGenerated\ComplexTypeFuzzerConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Schemer\AutoGenerated\SimpleTypeFuzzerConfig.cs">
+      <Link>AutoGenerated\SimpleTypeFuzzerConfig.cs</Link>
+    </Compile>
+    <Compile Include="C2XWindow.xaml.cs">
+      <DependentUpon>C2XWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ControlSelectedEventArgs.cs" />
+    <Compile Include="Common\Converters.cs" />
+    <Compile Include="Common\GenericAdornable.cs" />
+    <Compile Include="Common\GenericAdorner.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="Common\ViewModel\BaseFileViewModel.cs" />
+    <Compile Include="Common\ViewModel\DirectoryControlViewModel.cs" />
+    <Compile Include="Common\ViewModel\ExeOutputControlViewModel.cs" />
+    <Compile Include="Common\ViewModel\FileControlViewModel.cs" />
+    <Compile Include="Common\ViewModel\FilesControlViewModel.cs" />
+    <Compile Include="Common\ViewModel\FileStoreControlViewModel.cs" />
+    <Compile Include="Common\ViewModel\NetworkOutputControlViewModel.cs" />
+    <Compile Include="Common\ViewModel\OnOffControlViewModel.cs" />
+    <Compile Include="Common\ViewModel\UserDefinedCodeControlViewModel.cs" />
+    <Compile Include="Common\ViewModel\WindowActionKeystrokeViewModel.cs" />
+    <Compile Include="Common\ViewModel\WindowActionsViewModel.cs" />
+    <Compile Include="Common\View\AdvancedFileStoreControlView.xaml.cs">
+      <DependentUpon>AdvancedFileStoreControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\View\DirectoryControlView.xaml.cs">
+      <DependentUpon>DirectoryControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\View\ExeOutputControlView.xaml.cs">
+      <DependentUpon>ExeOutputControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\View\FileControlView.xaml.cs">
+      <DependentUpon>FileControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\View\FilesControlView.xaml.cs">
+      <DependentUpon>FilesControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\View\FileStoreControlView.xaml.cs">
+      <DependentUpon>FileStoreControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\View\NetworkOutputControlView.xaml.cs">
+      <DependentUpon>NetworkOutputControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\View\OnOffControlView.xaml.cs">
+      <DependentUpon>OnOffControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FuzzingConfig\ViewModel\BaseFuzzerViewModel.cs" />
+    <Compile Include="FuzzingConfig\ViewModel\ByteFuzzerViewModel.cs" />
+    <Compile Include="FuzzingConfig\ViewModel\DataStructuresConfigViewModel.cs" />
+    <Compile Include="FuzzingConfig\ViewModel\DataTypesConfigViewModel.cs" />
+    <Compile Include="FuzzingConfig\ViewModel\DecimalFuzzerViewModel.cs" />
+    <Compile Include="FuzzingConfig\ViewModel\FuzzDataSelectorViewModel.cs" />
+    <Compile Include="FuzzingConfig\ViewModel\IntegerFuzzerViewModel.cs" />
+    <Compile Include="FuzzingConfig\ViewModel\RangeDataViewModel.cs" />
+    <Compile Include="FuzzingConfig\ViewModel\StringFuzzerViewModel.cs" />
+    <Compile Include="FuzzingConfig\View\ByteFuzzerView.xaml.cs">
+      <DependentUpon>ByteFuzzerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FuzzingConfig\View\DataStructuresConfigView.xaml.cs">
+      <DependentUpon>DataStructuresConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FuzzingConfig\View\DataTypesConfigView.xaml.cs">
+      <DependentUpon>DataTypesConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FuzzingConfig\View\DecimalFuzzerView.xaml.cs">
+      <DependentUpon>DecimalFuzzerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FuzzingConfig\View\FuzzDataSelectorView.xaml.cs">
+      <DependentUpon>FuzzDataSelectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FuzzingConfig\View\IntegerFuzzerView.xaml.cs">
+      <DependentUpon>IntegerFuzzerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FuzzingConfig\View\RangeDataView.xaml.cs">
+      <DependentUpon>RangeDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FuzzingConfig\View\StringFuzzerView.xaml.cs">
+      <DependentUpon>StringFuzzerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\ViewModel\InputSelectionViewModel.cs" />
+    <Compile Include="Input\ViewModel\TestC2XWindowViewModel.cs" />
+    <Compile Include="Input\View\TestC2XWindow.xaml.cs">
+      <DependentUpon>TestC2XWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NavPaneViewModel.cs" />
+    <Compile Include="NewProjectViewModel.cs" />
+    <Compile Include="Output\ViewModel\OutputSelectionViewModel.cs" />
+    <Compile Include="PropertiesWindows\ViewModel\GeneralPropertiesViewModel.cs" />
+    <Compile Include="PropertiesWindows\ViewModel\ProjectPropertiesViewModel.cs" />
+    <Compile Include="PropertiesWindows\View\GeneralPropertiesWindow.xaml.cs">
+      <DependentUpon>GeneralPropertiesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PropertiesWindows\View\ProjectPropertiesWindow.xaml.cs">
+      <DependentUpon>ProjectPropertiesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\View\UserDefinedCodeControlView.xaml.cs">
+      <DependentUpon>UserDefinedCodeControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Execution\ViewModel\ExecuteControlViewModel.cs" />
+    <Compile Include="Execution\ViewModel\KeywordListViewModel.cs" />
+    <Compile Include="Execution\ViewModel\MonitoringControlViewModel.cs" />
+    <Compile Include="Execution\ViewModel\OnTerminateActionsViewModel.cs" />
+    <Compile Include="Execution\View\ExecuteControlView.xaml.cs">
+      <DependentUpon>ExecuteControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Execution\View\MonitoringControlView.xaml.cs">
+      <DependentUpon>MonitoringControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\FileAndPathHelper.cs" />
+    <Compile Include="Common\ObservableString.cs" />
+    <Compile Include="Fuzzsaw.cs" />
+    <Compile Include="Input\View\ActiveXInputView.xaml.cs">
+      <DependentUpon>ActiveXInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\ViewModel\ActiveXInputViewModel.cs" />
+    <Compile Include="Input\ViewModel\CustomInputViewModel.cs" />
+    <Compile Include="Input\ViewModel\DefaultValueViewModel.cs" />
+    <Compile Include="Input\ViewModel\MethodInfoViewModel.cs" />
+    <Compile Include="Input\ViewModel\MethodsConfigControlViewModel.cs" />
+    <Compile Include="Input\ViewModel\ParamDescViewModel.cs" />
+    <Compile Include="Input\ViewModel\PDMLInputViewModel.cs" />
+    <Compile Include="Input\ViewModel\WSDLInputViewModel.cs" />
+    <Compile Include="Input\View\C2XInputView.xaml.cs">
+      <DependentUpon>C2XInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\View\CustomInputView.xaml.cs">
+      <DependentUpon>CustomInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\IInputHandler.cs" />
+    <Compile Include="Input\View\InputSelection.xaml.cs">
+      <DependentUpon>InputSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\View\MethodsConfigControlView.xaml.cs">
+      <DependentUpon>MethodsConfigControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\View\PDMLInputView.xaml.cs">
+      <DependentUpon>PDMLInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\ViewModel\C2XInputViewModel.cs" />
+    <Compile Include="Input\ViewModel\InputBaseViewModel.cs" />
+    <Compile Include="Input\ViewModel\XMLInputViewModel.cs" />
+    <Compile Include="Input\View\WSDLInputView.xaml.cs">
+      <DependentUpon>WSDLInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\View\XMLInputView.xaml.cs">
+      <DependentUpon>XMLInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow2.xaml.cs">
+      <DependentUpon>MainWindow2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="NavPane.xaml.cs">
+      <DependentUpon>NavPane.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewProjectWindow.xaml.cs">
+      <DependentUpon>NewProjectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Output\ViewModel\ActiveXOutputViewModel.cs" />
+    <Compile Include="Output\ViewModel\CustomOutputViewModel.cs" />
+    <Compile Include="Output\View\ActiveXOutputView.xaml.cs">
+      <DependentUpon>ActiveXOutputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Output\View\CustomOutputView.xaml.cs">
+      <DependentUpon>CustomOutputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Output\ViewModel\ExeOutputViewModel.cs" />
+    <Compile Include="Output\ViewModel\NetworkOutputViewModel.cs" />
+    <Compile Include="Output\ViewModel\WSDLOutputViewModel.cs" />
+    <Compile Include="Output\View\ExeOutputView.xaml.cs">
+      <DependentUpon>ExeOutputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Output\IOutputHandler.cs" />
+    <Compile Include="Output\View\NetworkOutputView.xaml.cs">
+      <DependentUpon>NetworkOutputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Output\ViewModel\OutputBaseViewModel.cs" />
+    <Compile Include="Output\View\OutputFileStoreView.xaml.cs">
+      <DependentUpon>OutputFileStoreView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Output\View\OutputSelection.xaml.cs">
+      <DependentUpon>OutputSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Output\ViewModel\OutputFileStoreViewModel.cs" />
+    <Compile Include="Output\View\WSDLOutputView.xaml.cs">
+      <DependentUpon>WSDLOutputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs" />
+    <Compile Include="Commands.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Common\Common.cs" />
+    <Compile Include="ValueConverters.cs" />
+    <Compile Include="WelcomeMessageView.xaml.cs">
+      <DependentUpon>WelcomeMessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WelcomeViewModel.cs" />
+    <Resource Include="..\Schemas\Configuration.xsd">
+      <Link>Resources\Configuration.xsd</Link>
+    </Resource>
+    <None Include="Common.snk" />
+    <None Include="Properties\app.manifest" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{00ECFFBF-23CB-49DB-BA9D-1C0D8A0F076D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Convert2XML\Convert2XML.csproj">
+      <Project>{655665A1-0B71-4F91-8264-DF52D69624DC}</Project>
+      <Name>Convert2XML</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Fuzzsaw.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>

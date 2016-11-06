@@ -1,0 +1,6 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <StartWorkingDirectory>G:\Tools\Fuzzware\</StartWorkingDirectory>
+    <StartArguments>/ib:Examples\WinRAR\archive.rar /cx:Examples\WinRAR\Eval_Config.xml</StartArguments>
+  </PropertyGroup>
+</Project>

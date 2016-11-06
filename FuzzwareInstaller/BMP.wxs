@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="BMP" FileSource="g:\Tools\Fuzzware\Examples\BMP\publish">
+            <Component Id="BMP.xml" Guid="{208FC637-ACDC-4410-B1CB-451134941353}" Feature="MainApplication">
+                <File Id="BMP.xml" Name="BMP.xml" Source="g:\Tools\Fuzzware\Examples\BMP\publish\BMP.xml" />
+                <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                  <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+                </RegistryKey>
+            </Component>
+            <Component Id="BMP.xsd" Guid="{B7746B38-2BBA-46BA-A4D5-C0ED4674186F}" Feature="MainApplication">
+                <File Id="BMP.xsd" Name="BMP.xsd" Source="g:\Tools\Fuzzware\Examples\BMP\publish\BMP.xsd" />
+                <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                  <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+                </RegistryKey>
+            </Component>
+            <Component Id="BMP.ComplexTypeFuzzerConfig.xml" Guid="{6FC9637B-FFC0-45C7-A98F-1F07372EA6EA}">
+                <File Id="BMP.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\BMP\publish\ComplexTypeFuzzerConfig.xml" />
+                <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                  <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+                </RegistryKey>
+            </Component>
+            <Component Id="BMP.Configuration.xml" Guid="{9F9BEB61-2440-43AF-8ED2-C927C3690F28}" Feature="MainApplication">
+                <File Id="BMP.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\BMP\publish\Configuration.xml" />
+                <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                  <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+                </RegistryKey>
+            </Component>
+            <Component Id="BMP.SimpleTypeFuzzerConfig.xml" Guid="{3D3BAEB6-6E62-4980-BA6B-C792BA1BE068}" Feature="MainApplication">
+                <File Id="BMP.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\BMP\publish\SimpleTypeFuzzerConfig.xml" />
+                <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                  <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+                </RegistryKey>
+            </Component>
+            <Component Id="SmallBitmap.bmp" Guid="{59A7C0BD-B047-431C-A9F0-45FD7CDE87FC}" Feature="MainApplication">
+                <File Id="SmallBitmap.bmp" Name="SmallBitmap.bmp" Source="g:\Tools\Fuzzware\Examples\BMP\publish\SmallBitmap.bmp" />
+                <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                  <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+                </RegistryKey>
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+
+  <Fragment>  
+    <DirectoryRef Id="Examples">
+      <Directory Id="BMP" Name="BMP">
+        <Component Id="BMPDir" Guid="{73E7A221-6628-40db-AB12-5CECD6ACCD42}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveBMPDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="BMPComponentGroup">
+      <ComponentRef Id="BMP.xml"/>
+      <ComponentRef Id="BMP.xsd"/>
+      <ComponentRef Id="BMP.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="BMP.Configuration.xml"/>
+      <ComponentRef Id="BMP.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="SmallBitmap.bmp"/>
+    </ComponentGroup>
+  </Fragment>
+  
+</Wix>

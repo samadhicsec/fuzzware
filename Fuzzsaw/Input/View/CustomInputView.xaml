@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Input.View.CustomInputView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Input"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" MaxHeight="700" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>-->
+
+        <ScrollViewer Grid.Column="1" Grid.Row="1">
+            <Border Style="{StaticResource BorderStyle}">
+                <HeaderedContentControl Style="{StaticResource HeaderedContentControlStyle}" Header="Fuzz a custom input">
+                    <cv:UserDefinedCodeControlView x:Name="ucCustomInputCode" InterfaceName="Fuzzware.Extensible.IUserInputHandler"
+                                                   DataContext="{Binding Path=CustomCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </HeaderedContentControl>
+            </Border>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

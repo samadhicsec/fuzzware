@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.View.FileStoreControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Style="{StaticResource CommonText}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0" Margin="5,5,5,0" 
+                   Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Description}" />
+            
+        <local:DirectoryControlView DataContext="{Binding}" Grid.Column="0" Grid.Row="1" />
+        <TextBlock Grid.Column="1" Grid.Row="0" Margin="5,5,5,0">
+            File Ext
+        </TextBlock>
+        <TextBox Style="{StaticResource DataText}" MinWidth="50" Grid.Column="1" Grid.Row="1" Margin="5" 
+                 Text="{Binding Path=FileExtension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+    </Grid>
+</UserControl>

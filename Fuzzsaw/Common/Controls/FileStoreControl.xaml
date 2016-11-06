@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.Controls.FileStoreControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Common.Controls"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Style="{StaticResource CommonText}" DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Column="0" Grid.Row="0" Margin="5,5,5,0" Text="{Binding Path=Description}" />
+            
+        <local:DirectoryInput x:Name="diOutputDir" Grid.Column="0" Grid.Row="1" DirectoryName="{Binding Path=FileStore.Directory, Mode=TwoWay}"
+                        Title="Choose the output directory" UseRelativePaths="True" />
+        <TextBlock Grid.Column="1" Grid.Row="0" Margin="5,5,5,0">
+            File Ext
+        </TextBlock>
+        <TextBox x:Name="tbOutputFilesExtension" Style="{StaticResource CommonText}" MinWidth="50" Grid.Column="1" Grid.Row="1" Margin="5" 
+                 Text="{Binding Path=FileStore.FileExtension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+    </Grid>
+
+</UserControl>

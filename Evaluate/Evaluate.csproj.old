@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{87558DB3-98F5-4E59-8E19-80FBE8DB04AE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fuzzware.Evaluate</RootNamespace>
+    <AssemblyName>Evaluate</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Common.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IFuzzwareDBGProxy, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aa1d88e2146a75ba, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\FuzzwareDBG\IFuzzwareDBGProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DebugProcessProxy.cs" />
+    <Compile Include="ExtensibleOutputHandler.cs" />
+    <Compile Include="OutputHandler.cs" />
+    <Compile Include="OutputHandlersFactory.cs" />
+    <Compile Include="OutputToCode.cs" />
+    <Compile Include="OutputToCOMHandler.cs" />
+    <Compile Include="OutputToExeHandler.cs" />
+    <Compile Include="OutputToFileHandler.cs" />
+    <Compile Include="OutputToNetworkHandler.cs" />
+    <Compile Include="OutputToWebServiceHandler.cs" />
+    <Compile Include="ProcessProxy.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Statistics\OutputStats.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Schemas\Evaluate.xsd">
+      <Link>Resources\Evaluate.xsd</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{00ECFFBF-23CB-49DB-BA9D-1C0D8A0F076D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Convert2XML\Convert2XML.csproj">
+      <Project>{655665A1-0B71-4F91-8264-DF52D69624DC}</Project>
+      <Name>Convert2XML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConvertFromXML\ConvertFromXML.csproj">
+      <Project>{034F3A9C-0C5D-4224-9273-2D59268AB8E6}</Project>
+      <Name>ConvertFromXML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensible\Extensible.csproj">
+      <Project>{65D98596-8185-4A41-A86B-DB7ECB34DDDD}</Project>
+      <Name>Extensible</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Resources\ActiveXInvoke.htm">
+      <Link>Resources\ActiveXInvoke.htm</Link>
+    </Content>
+    <Content Include="..\Resources\ActiveXInvoke.js">
+      <Link>Resources\ActiveXInvoke.js</Link>
+    </Content>
+    <Content Include="..\Resources\SOAPRequestTemplate.xml">
+      <Link>Resources\SOAPRequestTemplate.xml</Link>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

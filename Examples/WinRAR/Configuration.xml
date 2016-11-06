@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.5" testConfig="true" originalFile="archive.rar" xmlns="urn:Fuzzware.Schemas.Configuration">
+  <Input>
+    <DataInputHandler>
+      <XMLFileInput>
+        <XMLPathAndFilename>WinRAR2.02.xml</XMLPathAndFilename>
+        <XSDPathAndFilename>WinRAR2.02.xsd</XSDPathAndFilename>
+      </XMLFileInput>
+    </DataInputHandler>
+  </Input>
+  <XmlConfigFiles>
+    <SimpleTypeFuzzerXML>SimpleTypeFuzzerConfig.xml</SimpleTypeFuzzerXML>
+    <ComplexTypeFuzzerXML>ComplexTypeFuzzerConfig.xml</ComplexTypeFuzzerXML>
+  </XmlConfigFiles>
+  <Output>
+    <ConvertFromXML>
+      <OmitXMLDeclaration>true</OmitXMLDeclaration>
+      <OmitComments>true</OmitComments>
+      <FormatXML>false</FormatXML>
+      <OutputEncoding>us-ascii</OutputEncoding>
+      <VerifyOutputAgainstInputSchema>false</VerifyOutputAgainstInputSchema>
+    </ConvertFromXML>
+    <EvaluationMethod>
+      <OutputToExe>
+        <ExePathAndName UseDebugger="true">c:\program files\winrar\winrar.exe</ExePathAndName>
+        <InputFromFile>
+          <Directory>out</Directory>
+          <FileExtension>rar</FileExtension>
+        </InputFromFile>
+        <CommandLineParameters>"[workingdir]\[filename]"</CommandLineParameters>
+        <ExeOpenActions>
+          <OpenDelayMilliSecs>3000</OpenDelayMilliSecs>
+          <OpenWindowAction>
+            <WindowTitle>Please purchase WinRAR license</WindowTitle>
+            <KeyboardStrokes>
+              <KeyStroke>{TAB}</KeyStroke>
+              <KeyStroke>{TAB}</KeyStroke>
+              <KeyStroke>{ENTER}</KeyStroke>
+            </KeyboardStrokes>
+          </OpenWindowAction>
+          <OpenWindowAction>
+            <WindowTitle>WinRAR: Diagnostic messages</WindowTitle>
+            <KeyboardStrokes>
+              <KeyStroke>{ENTER}</KeyStroke>
+            </KeyboardStrokes>
+          </OpenWindowAction>
+          <OpenWindowAction>
+            <WindowTitle>Error</WindowTitle>
+            <KeyboardStrokes>
+              <KeyStroke>{ENTER}</KeyStroke>
+            </KeyboardStrokes>
+          </OpenWindowAction>
+        </ExeOpenActions>
+        <ExeCloseActions />
+        <UniqueOutputs>
+          <Directory>out</Directory>
+          <FileExtension>txt</FileExtension>
+        </UniqueOutputs>
+      </OutputToExe>
+    </EvaluationMethod>
+    <Monitoring />
+  </Output>
+</Configuration>

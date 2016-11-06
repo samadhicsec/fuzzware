@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="SimpleTypeFuzzerConfig" 
+                  targetNamespace="urn:Fuzzware.Schemas.SimpleTypeFuzzerConfig"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.SimpleTypeFuzzerConfig"
+                  xmlns:stfc="urn:Fuzzware.Schemas.SimpleTypeFuzzerConfig"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="LengthFuzzerType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="LengthGroupRef" type="xs:IDREF" use="required" />
+        <xs:attribute name="ValueRangeRef" type="xs:IDREF" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ValueFuzzerType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="ValueGroupRef" type="xs:IDREF" use="required" />
+        <xs:attribute name="ValueRangeRef" type="xs:IDREF" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="RandomFuzzerType">
+    <xs:attribute name="Iterations" type="xs:unsignedInt" use="required" />
+  </xs:complexType>
+  
+  <xs:complexType name ="ValueRange" >
+    <xs:annotation>
+      <xs:documentation>
+        Define a ValueRange node to limit the area of the value data that will be fuzzed.  If a ValueFuzzerType is not explicitly
+        linked to a ValueRange node, then the default values are used.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="StartIndex" type="xs:unsignedInt" default="0" />
+      <xs:element name="Length" type="xs:unsignedInt" default="0">
+        <xs:annotation>
+          <xs:documentation>
+            The value 0 for this element indicates that the length will be the entire length of the node.  Any value fuzzing type that
+            would affect a value beyond this length, will be skipped, including value ranges that start less than the length but finish
+            beyond it.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="StepSize" default="1">
+        <xs:annotation>
+          <xs:documentation>
+            Set this to indicate which values in the specified range will be fuzzed.  For example, if set to 1, then every value
+            is fuzzed, or if set to 4 then every 4th value (i.e. DWORD boundaries if type is bytes) is fuzzed.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:minInclusive value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ID" type="xs:ID" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="StringLengthFuzzersType">
+    <xs:all>
+      <xs:element name="StringLength" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This type of length fuzzing will replace the string value with the LengthRepetitionString string repeated
+            according to the LengthGroup.  If a LengthSectionRef is specified it will be ignored.
+            Bug Scenario: An application improperly processes a long string.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InsertStringLength" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This type of length fuzzing will insert the LengthRepetitionString string repeated according to the LengthGroup,
+            into the string value, at every character position (according to the ValueRangeRef).  The values in the LengthGroup
+            specify the length of the string inserted.
+            Bug Scenario: An application processes the input string, but part of it is unexpectedly long.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InsertTotalStringLength" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This type of length fuzzing will insert the LengthRepetitionString string repeated according to the LengthGroup,
+            into the string value, at every character position.  The values in the LengthGroup specify the TOTAL length of the
+            output string, the fuzzer will determine the correct size of string to inject.
+            Bug Scenario: Similar to StringLength, except to avoid an application rejecting a string based on its content, the
+            content is kept, with the long strings injected at each character position (according to the ValueRangeRef).
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:element name="StringLengthFuzzer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="LengthRepetitionString" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="DefaultFuzzers" type="StringLengthFuzzersType" minOccurs="0" />
+        <xs:element name="CustomFuzzer" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="StringLengthFuzzersType">
+                <xs:attribute name="NodeNamespace" type="xs:string" use="required" />
+                <xs:attribute name="NodeName" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LengthRange" type="stfc:ValueRange" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              For string length fuzzing if the value we are inserting exceeds the range specified, the insertion still occurs.  This is
+              different to the binary case.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="LengthGroup" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="StringLength" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="StringValueFuzzersType">
+    <xs:all>
+      <xs:element name="ReplaceString" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This type of value fuzzing will replace the string value with the values specified in the reference StringGroup.
+            If a ValueRangeRef is specified it will be ignored.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="InsertString" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This type of value fuzzing will insert into the string value, in every character position (according to the
+            ValueRangeRef), the values specified in the reference StringGroup.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="EncodeString" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This type of value fuzzing will replace the string value with the values specified in the reference StringGroup, one
+            time for each of the following encodings; ASCII, UTF-7, UTF-8 (with and without a byte order mark), UTF-16 (big and
+            little endian) and UTF-32 (big and little endian).
+            If a ValueRangeRef is specified it will be ignored.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+  
+  <xs:element name="StringValueFuzzer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DefaultFuzzers" type="StringValueFuzzersType" minOccurs="0" />
+        <xs:element name="CustomFuzzer" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="StringValueFuzzersType">
+                <xs:attribute name="NodeNamespace" type="xs:string" use="required" />
+                <xs:attribute name="NodeName" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="StringRange" type="stfc:ValueRange" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="StringGroup" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="StringValue" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="DecimalValueFuzzersType">
+    <xs:all>
+      <xs:element name="ReplaceDecimal" type="stfc:ValueFuzzerType" minOccurs="0" >
+        <xs:annotation>
+          <xs:documentation>
+            Replace decimal values with the values specified in the value group.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RandomDecimal" type="stfc:RandomFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Select random decimals as values for decimal node types.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:element name="DecimalValueFuzzer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DefaultFuzzers" type="DecimalValueFuzzersType" minOccurs="0" />
+        <xs:element name="CustomFuzzer" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="DecimalValueFuzzersType">
+                <xs:attribute name="NodeNamespace" type="xs:string" use="required" />
+                <xs:attribute name="NodeName" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DecimalGroup" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DecimalValue" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="IntegerValueFuzzersType">
+    <xs:all>
+      <xs:element name="ReplaceInteger" type="stfc:ValueFuzzerType" minOccurs="0" >
+      <xs:annotation>
+          <xs:documentation>
+            The numbers specified here can be passed in either as arbitrary size base 10 numbers, or as hex numbers (identified by a preceeding
+            '0x' or '0X') that fit into an Int64 (as the pre-processor converts them to their base 10 representation, and to do this they need
+            to fit into the largest integer type).  The hex numbers should be used when the output will be in binary, and the type used in the
+            XML should be unsigned.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RandomInteger" type="stfc:RandomFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Select random integers as values for integer node types.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddInteger" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Add the integers specified in the value group to the integer value of the node being fuzzed.  If the result does not fit
+            into the integer type it will be skipped, except it the type is a 64-bit integer, then the result overflows.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubtractInteger" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Subtract the integers specified in the value group to the integer value of the node being fuzzed.  If the result does not fit
+            into the integer type it will be skipped, except it the type is a 64-bit integer, then the result overflows.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="MultiplyInteger" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Multiply the integers specified in the value group to the integer value of the node being fuzzed.  If the result does not fit
+            into the integer type it will be skipped, except it the type is a 64-bit integer, then the result overflows.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DivideInteger" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Divide the integers specified in the value group to the integer value of the node being fuzzed.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:element name="IntegerValueFuzzer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DefaultFuzzers" type="IntegerValueFuzzersType" minOccurs="0" />
+        <xs:element name="CustomFuzzer" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="IntegerValueFuzzersType">
+                <xs:attribute name="NodeNamespace" type="xs:string" use="required" />
+                <xs:attribute name="NodeName" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="IntegerGroup" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IntegerValue" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="BooleanValueFuzzer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BooleanValue" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="ByteValueFuzzersType">
+    <xs:all>
+      <xs:element name="ReplaceBytes" type="stfc:ValueFuzzerType" minOccurs="0" />
+      <xs:element name="InsertBytes" type="stfc:ValueFuzzerType" minOccurs="0" />
+      <xs:element name="AndBytes" type="stfc:ValueFuzzerType" minOccurs="0" />
+      <xs:element name="OrBytes" type="stfc:ValueFuzzerType" minOccurs="0" />
+      <xs:element name="XOrBytes" type="stfc:ValueFuzzerType" minOccurs="0" />
+      <xs:element name="RandomBinary" type="stfc:RandomFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Select random binary values for binary node types.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RandomBitFlip" type="stfc:RandomFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Flip a random bit for binary node types.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+  
+  <xs:element name="BinaryValueFuzzer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DefaultFuzzers" type="ByteValueFuzzersType" minOccurs="0" />
+        <xs:element name="CustomFuzzer" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="ByteValueFuzzersType">
+                <xs:attribute name="NodeNamespace" type="xs:string" use="required" />
+                <xs:attribute name="NodeName" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name ="ByteRange" type="stfc:ValueRange" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="ByteGroup" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ByteValue" type="xs:hexBinary" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="DateTimeValueFuzzerType">
+    <xs:all>
+      <xs:element name="ReplaceDateTime" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This fuzzer will replace the current value of the node with the DateTime's listed.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="AddDuration" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This fuzzer will add to the current value of the node the Duration's listed.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="SubtractDuration" type="stfc:ValueFuzzerType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This fuzzer will subtract from the current value of the node the Duration's listed.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:element name="DateTimeValueFuzzer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DefaultFuzzers" type="DateTimeValueFuzzerType" minOccurs="0" />
+        <xs:element name="CustomFuzzer" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="DateTimeValueFuzzerType">
+                <xs:attribute name="NodeNamespace" type="xs:string" use="required" />
+                <xs:attribute name="NodeName" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DateTimeGroup" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DateTimeValue" minOccurs="0" maxOccurs="unbounded">
+                <xs:simpleType>
+                  <xs:union memberTypes="xs:dateTime xs:date xs:time xs:gYear xs:gYearMonth xs:gMonth xs:gMonthDay xs:gDay" />
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID" use="required" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DurationGroup" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DurationValue" type="xs:duration" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:ID" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="SimpleTypeFuzzerConfig">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="StringLengthFuzzer" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="StringValueFuzzer" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="DecimalValueFuzzer" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="IntegerValueFuzzer" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="BooleanValueFuzzer" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="BinaryValueFuzzer" minOccurs="0" maxOccurs="1" />
+        <xs:element ref="DateTimeValueFuzzer" minOccurs="0" maxOccurs="1" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="KeyExchange" 
+                  targetNamespace="urn:Fuzzware.Examples.TLS"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.TLS"
+                  xmlns:tls="urn:Fuzzware.Examples.TLS"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+  <xs:include schemaLocation="CommonMessages.xsd" />
+  
+  <xs:complexType name="ServerRSAParams">
+    <xs:sequence>
+      <xs:element name="rsa_modulus">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ByteLengthOfRSAModulus" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            <xs:element name="RSAModulus" type="xs:hexBinary" sac:outputAs="Decoded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="rsa_exponent">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ByteLengthOfRSAExponent" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            <xs:element name="RSAExponent" type="xs:hexBinary" sac:outputAs="Decoded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ServerDHParams">
+    <xs:sequence>
+      <xs:element name="dh_p">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ByteLengthOfDHP" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            <xs:element name="DHP" type="xs:hexBinary" sac:outputAs="Decoded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="dh_q">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ByteLengthOfDHQ" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            <xs:element name="DHQ" type="xs:hexBinary" sac:outputAs="Decoded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="dh_Ys">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ByteLengthOfDHYs" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            <xs:element name="DHYs" type="xs:hexBinary" sac:outputAs="Decoded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="ServerKeyExchange">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="dh_params" type="ServerDHParams" />
+          <xs:element name="rsa_params" type="ServerRSAParams" />
+        </xs:choice>
+        <xs:element name="signed_params" type="SignatureVector" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="ClientCertificateTypeVector">
+    <xs:sequence>
+      <xs:element name="ByteLengthOfClientCertificateTypes" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="ClientCertificateTypes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ClientCertificateType" type="xs:unsignedByte" maxOccurs="255" sac:outputAs="BinaryBigEndian" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DistinguishedNameVector">
+    <xs:sequence>
+      <xs:element name="ByteLengthOfDistinguishedNames" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="DistinguishedNames">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DistinguishedName" maxOccurs="65535" sac:outputAs="Decoded">
+              <xs:simpleType>
+                <xs:restriction base="xs:hexBinary">
+                  <xs:minLength value="1" />
+                  <xs:maxLength value="65535" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="CertificateRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="certificate_types" type="ClientCertificateTypeVector" />
+        <xs:element name="certificate_authorities" type="DistinguishedNameVector" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ServerHelloDone" type="xs:string" fixed="" nillable="true" />
+  
+</xs:schema>

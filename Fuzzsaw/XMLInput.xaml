@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.XMLInput"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="300" Width="300">
+    <StackPanel Name="spInputXMLFile" DataContext="{DynamicResource XMLFileInput}">
+        <GroupBox Name="gbInputXMLFile" Header="Input XML and XSD" >
+            <StackPanel>
+                <GroupBox Header="XML File">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBox Name="tbXMLFile" Margin="5" Width="300"/>
+                        <Button Name="bSelectXMLFile" Content="..." Margin="5" />
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</UserControl>

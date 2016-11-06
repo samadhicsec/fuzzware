@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.FuzzingConfig.View.FuzzDataSelectorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    xmlns:fzw="clr-namespace:Fuzzware.Fuzzsaw"
+    xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+    Height="Auto" Width="Auto" Name="ucFuzzDataSelector">
+
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style x:Key="GenericAdornableFuzzData">
+                <Setter Property="Control.HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Control.HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type cmn:GenericAdornable}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                            
+                                <TextBlock x:Name="PART_UIElementPart" 
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Path=Value,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, ValidatesOnDataErrors=True}" 
+                                        ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), Converter={StaticResource GetError}}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style x:Key="GenericAdornerTextBox" TargetType="TextBox">
+
+                <Setter Property="Control.HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Control.HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cmn:GenericAdorner.ProxyProperty), 
+                                        Mode=TwoWay}" />
+            </Style>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--KeyDown="lbFuzzData_KeyDown" Width="390" -->
+        <ListBox Name="lbDataCollection" Grid.Column="0" Grid.Row="0"
+                 ItemsSource="{Binding Path=DataCollection}"
+                 fzw:ListDataCommands.DeleteDataMethod="{Binding Path=DeleteDataCommand}"
+                 fzw:ListDataCommands.PromoteDataMethod="{Binding Path=PromoteDataCommand}"
+                 fzw:ListDataCommands.DemoteDataMethod="{Binding Path=DemoteDataCommand}"
+                 KeyDown="lbDataCollection_KeyDown"
+                 GotFocus="lbDataCollection_GotFocus"
+                 LostFocus="lbDataCollection_LostFocus"
+                 SelectionMode="Extended" KeyboardNavigation.DirectionalNavigation="Contained"
+                 BorderBrush="{StaticResource CommonFontColour}">
+            <ListBox.Resources>
+                <!--Data Context will be set in code to lbDataCollection-->
+                <MenuItem x:Key="EditMenuResource" Header="Edit">
+                    <MenuItem Header="Delete" InputGestureText="Del" Command="{Binding Path=DataContext.DeleteDataCommand}" CommandParameter="{Binding Path=SelectedItem}" />
+                    <MenuItem Header="Move Up" InputGestureText="Ctrl++" Command="{Binding Path=DataContext.PromoteDataCommand}" CommandParameter="{Binding Path=SelectedItem}" />
+                    <MenuItem Header="Move Down" InputGestureText="Ctrl+-" Command="{Binding Path=DataContext.DemoteDataCommand}" CommandParameter="{Binding Path=SelectedItem}" />
+                </MenuItem>
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <!--EmptyValuesAllowed="{Binding Path=EmptyValuesAllowed}" Width="365"-->
+                    <cmn:GenericAdornable Height="25" Value="{Binding Path=Value, Mode=TwoWay}"  
+                                        AdornerContentControlStyle="{StaticResource GenericAdornerTextBox}" 
+                                        AdornerFrwkElementType="{x:Type TextBox}"
+                                        AdornerDataContext="{Binding Path=Value}"
+                                        StartedEditting="{Binding ElementName=lbDataCollection, Path=DataContext.PreEditDataCommand}"
+                                        StartedEdittingParameter="{Binding}"
+                                        FinishedEditting="{Binding ElementName=lbDataCollection, Path=DataContext.AddDataCommand}"
+                                        FinishedEdittingParameter="{Binding}"
+                                        ValidateValueMethod="{Binding ElementName=lbDataCollection, Path=DataContext.ValidateValuesMethod}"
+                                        Style="{StaticResource GenericAdornableFuzzData}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

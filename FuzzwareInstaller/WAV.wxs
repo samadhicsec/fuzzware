@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="WAV" FileSource="g:\Tools\Fuzzware\Examples\WAV\publish">
+      <Component Id="WAV.xsd" Guid="{FDF1DA92-9283-49e0-BFCC-3394C769C05B}" Feature="MainApplication">
+        <File Id="WAV.xsd" Name="WAV.xsd" Source="g:\Tools\Fuzzware\Examples\WAV\publish\WAV.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WAV.ComplexTypeFuzzerConfig.xml" Guid="{3EEEA0BA-3608-482a-8255-8C3A512BF97B}" Feature="MainApplication">
+        <File Id="WAV.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\WAV\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WAV.Configuration.xml" Guid="{28D2285C-E699-4c37-A3B3-F3907623A2E1}" Feature="MainApplication">
+        <File Id="WAV.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\WAV\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WAV.SimpleTypeFuzzerConfig.xml" Guid="{089FE59A-4E7E-4aac-8A44-877604A49898}" Feature="MainApplication">
+        <File Id="WAV.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\WAV\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="start.wav" Guid="{A53B5D63-9B1E-4b93-AD11-9C634B1923D5}" Feature="MainApplication">
+        <File Id="start.wav" Name="start.wav" Source="g:\Tools\Fuzzware\Examples\WAV\publish\start.wav" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WAV.xml" Guid="{E9EE6686-D51A-4dad-B095-BFFB25F85C19}" Feature="MainApplication">
+        <File Id="WAV.xml" Name="WAV.xml" Source="g:\Tools\Fuzzware\Examples\WAV\publish\WAV.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="WAV" Name="WAV">
+        <Component Id="WAV" Guid="{D122C1E9-8D85-4aff-920F-F706086C02E6}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveWAVDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="WAVComponentGroup">
+      <ComponentRef Id="WAV.xsd"/>
+      <ComponentRef Id="WAV.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="WAV.Configuration.xml"/>
+      <ComponentRef Id="WAV.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="start.wav"/>
+      <ComponentRef Id="WAV.xml"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

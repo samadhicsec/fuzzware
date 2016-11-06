@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="XHTML" FileSource="g:\Tools\Fuzzware\Examples\XHTML\publish">
+      <Component Id="xhtml1_frameset.xsd" Guid="{28D4D47C-CB0F-49ca-AF35-7F78710B7A97}" Feature="MainApplication">
+        <File Id="xhtml1_frameset.xsd" Name="xhtml1-frameset.xsd" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\xhtml1-frameset.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="xhtml1_strict.xsd" Guid="{C4D0101A-491C-4603-B208-B4800B23DC9F}" Feature="MainApplication">
+        <File Id="xhtml1_strict.xsd" Name="xhtml1-strict.xsd" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\xhtml1-strict.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="xhtml1_transitional.xsd" Guid="{35AE2895-D488-4eae-88C3-A470BB9BAB32}" Feature="MainApplication">
+        <File Id="xhtml1_transitional.xsd" Name="xhtml1-transitional.xsd" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\xhtml1-transitional.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XHTML.ComplexTypeFuzzerConfig.xml" Guid="{D1A02E93-56AE-4919-A661-5260BEF220C9}" Feature="MainApplication">
+        <File Id="XHTML.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XHTML.Configuration.xml" Guid="{8AD102C6-F754-4357-BC8E-DC229E24A822}" Feature="MainApplication">
+        <File Id="XHTML.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XHTML.SimpleTypeFuzzerConfig.xml" Guid="{3725A5C6-BA75-498e-AD9E-96EF1994FA5F}" Feature="MainApplication">
+        <File Id="XHTML.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="simple.xhtml" Guid="{C1D07DB6-C5F9-4c1b-84B8-6B9D0508CE60}" Feature="MainApplication">
+        <File Id="simple.xhtml" Name="simple.xhtml" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\simple.xhtml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="xml.xsd" Guid="{7B5F431B-F64C-4edb-8E2A-44FA761D3549}" Feature="MainApplication">
+        <File Id="xml.xsd" Name="xml.xsd" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\xml.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XMLSchema.dtd" Guid="{A6E8C52E-4811-4997-B9BE-345E44B1201D}" Feature="MainApplication">
+        <File Id="XMLSchema.dtd" Name="XMLSchema.dtd" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\XMLSchema.dtd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="datatypes.dtd" Guid="{E0348611-18E8-4a22-AC41-F6CDA2681610}" Feature="MainApplication">
+        <File Id="datatypes.dtd" Name="datatypes.dtd" Source="g:\Tools\Fuzzware\Examples\XHTML\publish\datatypes.dtd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="XHTML" Name="XHTML">
+        <Component Id="XHTML" Guid="{D0CA6AAD-9238-4e1e-82E7-41F98341FDAE}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveXHTMLDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="XHTMLComponentGroup">
+      <ComponentRef Id="xhtml1_frameset.xsd"/>
+      <ComponentRef Id="xhtml1_strict.xsd"/>
+      <ComponentRef Id="xhtml1_transitional.xsd"/>
+      <ComponentRef Id="XHTML.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="XHTML.Configuration.xml"/>
+      <ComponentRef Id="XHTML.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="simple.xhtml"/>
+      <ComponentRef Id="xml.xsd"/>
+      <ComponentRef Id="XMLSchema.dtd"/>
+      <ComponentRef Id="datatypes.dtd"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

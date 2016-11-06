@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="MP4" FileSource="g:\Tools\Fuzzware\Examples\MP4\publish">
+      <Component Id="MP4.xsd" Guid="{E76D8291-9D8A-4e19-A168-28887E8971CF}" Feature="MainApplication">
+        <File Id="MP4.xsd" Name="MP4.xsd" Source="g:\Tools\Fuzzware\Examples\MP4\publish\MP4.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="MP4.STSDRedefine.xsd" Guid="{A6917B65-A389-46f7-BF8D-5776936E7F9E}" Feature="MainApplication">
+        <File Id="MP4.STSDRedefine.xsd" Name="MP4 STSD Redefine.xsd" Source="g:\Tools\Fuzzware\Examples\MP4\publish\MP4 STSD Redefine.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="MP4.ComplexTypeFuzzerConfig.xml" Guid="{0677B92F-1255-442a-B9DA-0AAA29217398}" Feature="MainApplication">
+        <File Id="MP4.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\MP4\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="MP4.Configuration.xml" Guid="{2DC6D6E8-4F34-4c9d-98BA-21DCFA5C4B2A}" Feature="MainApplication">
+        <File Id="MP4.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\MP4\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="MP4.SimpleTypeFuzzerConfig.xml" Guid="{EAFB884C-F408-4b73-B738-EA2A53E62F0E}" Feature="MainApplication">
+        <File Id="MP4.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\MP4\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="love.mp4" Guid="{0878C116-85F0-454b-8A03-A58359F0C9B5}" Feature="MainApplication">
+        <File Id="love.mp4" Name="love.mp4" Source="g:\Tools\Fuzzware\Examples\MP4\publish\love.mp4" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="love.mp4.xml" Guid="{E2774693-FC73-46f3-9BD0-40E881109B1E}" Feature="MainApplication">
+        <File Id="love.mp4.xml" Name="love.mp4.xml" Source="g:\Tools\Fuzzware\Examples\MP4\publish\love.mp4.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="MP4" Name="MP4">
+        <Component Id="MP4" Guid="{F3CEECD3-CE42-41a7-8F39-F440F7C365D9}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveMP4Dir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="MP4ComponentGroup">
+      <ComponentRef Id="MP4.xsd"/>
+      <ComponentRef Id="MP4.STSDRedefine.xsd"/>
+      <ComponentRef Id="MP4.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="MP4.Configuration.xml"/>
+      <ComponentRef Id="MP4.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="love.mp4"/>
+      <ComponentRef Id="love.mp4.xml"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

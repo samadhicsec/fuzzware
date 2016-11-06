@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ComplexTypeFuzzerConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:Fuzzware.Schemas.ComplexTypeFuzzerConfig">
+  <AttributeFuzzing />
+  <OccurranceFuzzingCount>
+    <Occurs>0</Occurs>
+    <Occurs>1</Occurs>
+    <Occurs>2</Occurs>
+    <Occurs>3</Occurs>
+    <Occurs>16</Occurs>
+    <Occurs>32</Occurs>
+    <Occurs>128</Occurs>
+    <Occurs>256</Occurs>
+  </OccurranceFuzzingCount>
+</ComplexTypeFuzzerConfig>

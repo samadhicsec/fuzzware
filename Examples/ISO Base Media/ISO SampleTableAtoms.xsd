@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.ISO"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.ISO"
+    xmlns:iso="urn:Fuzzware.Examples.ISO"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:include schemaLocation="ISO Common.xsd" />
+
+  <!--Sample Table Box-->
+  <xs:element name="stbl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstbl" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stblConst" type="xs:string" fixed="stbl" />
+        <xs:element name="stblData">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="iso:stsd" />
+              <xs:element ref="iso:stts" />
+              <xs:element ref="iso:ctts" />
+              <xs:element ref="iso:stsc" />
+              <xs:element ref="iso:stsz" />
+              <!--<xs:element ref="iso:stz2" />-->
+              <xs:element ref="iso:stco" />
+              <xs:element ref="iso:co64" />
+              <xs:element ref="iso:stss" />
+              <xs:element ref="iso:stsh" />
+              <xs:element ref="iso:padb" />
+              <xs:element ref="iso:stdp" />
+              <!--<xs:element ref="iso:sdtp" />-->
+              <!--<xs:element ref="iso:sbgp" />-->
+              <!--<xs:element ref="iso:sgpd" />-->
+              <!--<xs:element ref="iso:subs" />-->
+              <xs:element ref="iso:free" />
+              <xs:element ref="iso:skip" />
+              <xs:element ref="iso:unknown" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Sample Description Box-->
+  <xs:element name="stsd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstsd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stsdConst" type="xs:string" fixed="stsd" />
+        <xs:element name="stsdVersion" type="iso:tVersionInfo" />
+        <xs:element name="stsdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfSampleEntry" type="xs:unsignedInt" minOccurs="0" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="SampleEntry" type="iso:tSampleEntryType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="tSampleEntryType">
+    <xs:choice minOccurs="0">
+      <xs:element ref="iso:hint" />
+      <xs:element ref="iso:vide" />
+      <xs:element ref="iso:soun" />
+      <!--<xs:element ref="iso:unknown" />-->
+    </xs:choice>
+  </xs:complexType>
+
+  <!--Hint Sample Entry-->
+  <xs:element name="hint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfhint" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="hintConst" type="xs:string" fixed="hint" />
+        <xs:element name="hintReserved" sac:outputAs="Decoded">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="6" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="hintData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!--Visual Sample Entry-->
+  <xs:element name="vide">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfvide" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videConst" type="xs:string" fixed="vide" />
+        <xs:element name="videReserved" sac:outputAs="Decoded">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="6" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="videPreDefined1" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videReserved2" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videPreDefined2" type="xs:hexBinary" fixed="000000000000000000000000"  sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videWidth" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videHeight" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videHorizResolution" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videVertResolution" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videReserved3" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videFrameCount" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videCompressorName">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:length value="32" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="videDepth" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videPreDefined3" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Hint Sample Entry-->
+  <xs:element name="soun">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfsoun" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="sounConst" type="xs:string" fixed="soun" />
+        <xs:element name="sounReserved" sac:outputAs="Decoded">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="6" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="videReserved" type="xs:hexBinary" fixed="0000000000000000"  sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videChannelCount" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videSampleSize" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videPreDefined" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videReserved2" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="videSampleRate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Decoding Time to Sample Box-->
+  <xs:element name="stts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstts" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="sttsConst" type="xs:string" fixed="stts" />
+        <xs:element name="sttsVersion" type="iso:tVersionInfo" />
+        <xs:element name="sttsData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfsttsTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="sttsTableEntry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="sttsSampleCount" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="sttsSampleDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Composition Time to Sample Box-->
+  <xs:element name="ctts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfctts" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="cttsConst" type="xs:string" fixed="ctts" />
+        <xs:element name="cttsVersion" type="iso:tVersionInfo" />
+        <xs:element name="cttsData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfcttsTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="cttsTableEntry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cttsSampleCount" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="cttsSampleOffset" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Sample To Chunk Box-->
+  <xs:element name="stsc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstsc" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stscConst" type="xs:string" fixed="stsc" />
+        <xs:element name="stscVersion" type="iso:tVersionInfo" />
+        <xs:element name="stscData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfstscTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="stscTableEntry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="stscFirstChunk" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="stscSamplesPerChunk" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="stscSampleDescId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Sample Size Atoms-->
+  <xs:element name="stsz">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstsz" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stszConst" type="xs:string" fixed="stsz" />
+        <xs:element name="stszVersion" type="iso:tVersionInfo" />
+        <xs:element name="stszData">
+          <xs:complexType>
+            <xs:choice>
+              <xs:sequence>
+                <xs:element name="stszSampleSize" type="xs:unsignedInt" fixed="0" sac:outputAs="BinaryBigEndian" />
+                <xs:element name="CountOfstszEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                <xs:element name="stszEntry" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded" sac:outputAs="BinaryBigEndian" />
+              </xs:sequence>
+              <xs:sequence>
+                <xs:element name="stszAllSamplesSize" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                <xs:element name="stszNumberOfSamples" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              </xs:sequence>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Chunk Offset Atoms-->
+  <xs:element name="stco">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstco" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stcoConst" type="xs:string" fixed="stco" />
+        <xs:element name="stcoVersion" type="iso:tVersionInfo" />
+        <xs:element name="stcoData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfstcoTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="stcoTableEntry" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Chunk Offset Atoms 64-->
+  <xs:element name="co64">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfco64" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="co64Const" type="xs:string" fixed="co64" />
+        <xs:element name="co64Version" type="iso:tVersionInfo" />
+        <xs:element name="co64Data">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfco64TableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="co64TableEntry" type="xs:unsignedLong" minOccurs="0" maxOccurs="unbounded" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Sync Sample Box-->
+  <xs:element name="stss">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstss" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stssConst" type="xs:string" fixed="stss" />
+        <xs:element name="stssVersion" type="iso:tVersionInfo" />
+        <xs:element name="stssData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfstssSampleNumber" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="stssSampleNumber" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Shadow Sync Atoms-->
+  <xs:element name="stsh">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstsh" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stshConst" type="xs:string" fixed="stsh" />
+        <xs:element name="stshVersion" type="iso:tVersionInfo" />
+        <xs:element name="stshData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfstshTabelEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="stshTabelEntry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="stssShadowedSampleNumber" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="stssSyncSampleNumber" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Padding Bits Box-->
+  <xs:element name="padb">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfpadb" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="padbConst" type="xs:string" fixed="padb" />
+        <xs:element name="padbVersion" type="iso:tVersionInfo" />
+        <xs:element name="padbData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Degredation Priority Box-->
+  <xs:element name="stdp">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstdp" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stdpConst" type="xs:string" fixed="stdp" />
+        <xs:element name="stdpVersion" type="iso:tVersionInfo" />
+        <xs:element name="stdpData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

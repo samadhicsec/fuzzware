@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="ISOBaseMedia" FileSource="g:\Tools\Fuzzware\Examples\ISO Base Media\publish">
+      <Component Id="ISOBase.xsd" Guid="{9EB0D653-41D1-4e03-ABC3-7A98DEADD7D8}" Feature="MainApplication">
+        <File Id="ISOBase.xsd" Name="ISO Base.xsd" Source="g:\Tools\Fuzzware\Examples\ISO Base Media\publish\ISO Base.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="ISOCommon.xsd" Guid="{9CFDBC14-2557-4f9b-9CDA-04536CC1D1D5}" Feature="MainApplication">
+        <File Id="ISOCommon.xsd" Name="ISO Common.xsd" Source="g:\Tools\Fuzzware\Examples\ISO Base Media\publish\ISO Common.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="ISOMetadata.xsd" Guid="{9B41742E-4390-423c-9F1B-3416B315FA04}" Feature="MainApplication">
+        <File Id="ISOMetadata.xsd" Name="ISO Metadata.xsd" Source="g:\Tools\Fuzzware\Examples\ISO Base Media\publish\ISO Metadata.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="ISOMovieBox.xsd" Guid="{59EEB47C-45C6-41f2-ABF7-7C96E3A0F54E}" Feature="MainApplication">
+        <File Id="ISOMovieBox.xsd" Name="ISO MovieBox.xsd" Source="g:\Tools\Fuzzware\Examples\ISO Base Media\publish\ISO MovieBox.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="ISOSampleTableAtoms.xsd" Guid="{1225DC7B-5E07-4a1f-AE95-A88D86F6B5FA}" Feature="MainApplication">
+        <File Id="ISOSampleTableAtoms.xsd" Name="ISO SampleTableAtoms.xsd" Source="g:\Tools\Fuzzware\Examples\ISO Base Media\publish\ISO SampleTableAtoms.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+	</Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="ISOBaseMedia" Name="ISO Base Media">
+        <Component Id="ISOBaseMedia" Guid="{A49473CA-BE42-4a57-9D09-8868A90EE61A}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveISOBaseMediaDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ISOBaseMediaComponentGroup">
+      <ComponentRef Id="ISOBase.xsd"/>
+      <ComponentRef Id="ISOCommon.xsd"/>
+      <ComponentRef Id="ISOMetadata.xsd"/>
+      <ComponentRef Id="ISOMovieBox.xsd"/>
+      <ComponentRef Id="ISOSampleTableAtoms.xsd"/>
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

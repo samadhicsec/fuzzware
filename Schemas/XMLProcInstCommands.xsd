@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="XMLProcInstCommands" 
+                  targetNamespace="urn:Fuzzware.Schemas.XMLProcInstCommands"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.XMLProcInstCommands"
+                  xmlns:fuzz="urn:Fuzzware.Schemas.XMLProcInstCommands"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <xs:attribute name="dontFuzz" type="xs:boolean" default="false">
+    <xs:annotation>
+      <xs:documentation>
+        Indicates whether or not the current node, and all child nodes should be fuzzed.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  
+  <xs:attribute name="Id" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        Assigns the node an Id that other processing instructions can use to reference the node.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <xs:attribute name="TypeID" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        To help decode input conversion to XML when a part of a file specifies one choice of type in another part of a file.  For instance,
+        a file format containing records of different types, where the type is part of a header.
+
+        This attribute needs to be both a schema attribute command (as this is where it is specified) and an XML processing instruction command
+        (as it is handled the same as the other XML processing instruction commands).
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  
+  <xs:attribute name="Order" type="xs:int">
+    <xs:annotation>
+      <xs:documentation>
+        Assigns the node an Order that tells the fuzzer in which order to apply/carry out the processing instruction.  The default value 
+        of Order is 100.  A lower value will be applied/carried out before a higher value.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  
+  <xs:attribute name="ByteLength" type="xs:IDREF">
+    <xs:annotation>
+      <xs:documentation>
+        Instructs the fuzzer to assign the value of this node to be the length in bytes of the node referenced.  This
+        will respect the output format of the node referenced.  This should only be applied to numeric type nodes e.g. unsignedInt.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  
+  <xs:attribute name="CharLength" type="xs:IDREF">
+    <xs:annotation>
+      <xs:documentation>
+        Instructs the fuzzer to assign the value of this node to be the length in characters of the node referenced.  This
+        will respect the output format of the node referenced.  This should only be applied to numeric type nodes e.g. unsignedInt.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <xs:attribute name="Count" type="xs:IDREF">
+    <xs:annotation>
+      <xs:documentation>
+        Instructs the fuzzer to assign the value of this node to be the number of occurrences of the node referenced.  This
+        will respect the output format of the node referenced.  This should only be applied to numeric type nodes e.g. unsignedInt.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <xs:attribute name="KeepEndBytes" type="xs:unsignedInt">
+    <xs:annotation>
+      <xs:documentation>
+        Instructs the fuzzer to restrict the output of the byte representation of the node to specified count of end bytes.
+        E.g. Restrict the output of an Int32 length node in Little Endian to 3 bytes.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <xs:attribute name="KeepStartBytes" type="xs:unsignedInt">
+    <xs:annotation>
+      <xs:documentation>
+        Instructs the fuzzer to restrict the output of the byte representation of the node to specified count of start bytes.
+        E.g. Restrict the output of an Int32 length node in Big Endian to 3 bytes.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  
+  <xs:attribute name="CRC32" type="xs:IDREF">
+    <xs:annotation>
+      <xs:documentation>
+        Instructs the fuzzer to assign the value of this node to be the CRC32 of the node referenced.  This
+        will respect the output format of the node referenced.  This should only be applied to hexBinary type nodes, and the endianness
+        of the result corresponds to the endianness of the machine.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <!-- These processing instruction functions relate to user code -->
+  <xs:attribute name="UserCode" type="xs:IDREF">
+    <xs:annotation>
+      <xs:documentation>
+        Instructs the fuzzer to pass the node with this Id to the user code specified by the other related processing instructions.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  <xs:attribute name="LoadAssembly" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        This instruction should contain the name of a dll assembly that implements the required interface.  This instruction
+        is required for user code, and can occur more than once to load dependent assemblies.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  <xs:attribute name="NamespaceDotClass" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        This instruction should contain the namespace and class name, in the format 'namespace.classname' of the class that implements
+        Fuzzware.Extensible.IUserNodeProcessor.  This is a required instruction for user code.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  
+</xs:schema>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BMP" 
+            targetNamespace="urn:Fuzzware.Examples.BMP" 
+            xmlns:bmp="urn:Fuzzware.Examples.BMP" 
+            xmlns="urn:Fuzzware.Examples.BMP" 
+            elementFormDefault="qualified"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+  <xs:element name="BITMAP" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FileHeader" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Signature" type="xs:string" minOccurs="1" fixed="BM" />
+              <xs:element name="FileSize" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="Reserved" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="DataOffset" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="InfoHeader" minOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Size" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="Width" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="Height" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="Planes" type="xs:unsignedShort" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="BitCount" type="xs:unsignedShort" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="Compression" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="ImageSize" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="XpixelsPerM" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="YpixelsPerM" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="ColoursUsed" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="ColoursImportant" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ColourTable" type="xs:hexBinary"  minOccurs="1" sac:outputAs="Decoded" />
+        <xs:element name="RasterData" type="xs:hexBinary" minOccurs="1" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

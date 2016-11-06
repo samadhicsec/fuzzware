@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
+  <!-- G:\Tools\Fuzzware\Examples\WSDL\publish>"c:\Program Files\Windows Installer XMLv3\bin\heat.exe" dir .\ -gg -ke -out g:\Tools\Fuzzware\FuzzwareInstaller\WSDL.wxs -->
+    
+  <Fragment>
+    <DirectoryRef Id="WSDL" FileSource="G:\Tools\Fuzzware\Examples\WSDL\publish">
+      <Component Id="WSDL.ComplexTypeFuzzerConfig.xml" Guid="{99A1DF72-0559-4949-8EF6-711685E73FE1}">
+          <File Id="WSDL.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\ComplexTypeFuzzerConfig.xml" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.Configuration.xml" Guid="{9E01DB4A-0CB1-45FD-B166-6D9F21D8C84E}">
+          <File Id="WSDL.Configuration.xml" Name="Configuration.xml" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\Configuration.xml" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.SimpleTypeFuzzerConfig.xml" Guid="{E348AE84-BDBF-416A-BDD3-181FB29F131B}">
+        <File Id="WSDL.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WSDL.XmlDefaultValues.xml" Guid="{1155A048-5FC3-4B29-944A-9D5640A24C8E}">
+        <File Id="WSDL.XmlDefaultValues.xml" Name="XmlDefaultValues.xml" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\XmlDefaultValues.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="TestWebService" FileSource="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService">
+      <Component Id="WSDL.Service1.asmx" Guid="{9BBDDF02-36C7-4885-9F1C-3F3DB72A214D}">
+          <File Id="Service1.asmx" Name="Service1.asmx" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Service1.asmx" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.Service1.asmx.cs" Guid="{F4321780-3C99-4963-9267-139467E7DCEE}">
+          <File Id="Service1.asmx.cs" Name="Service1.asmx.cs" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Service1.asmx.cs" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.Service1.wsdl" Guid="{B8B5EBB5-B829-4AD9-BBA6-63EC27F9197A}">
+          <File Id="Service1.wsdl" Name="Service1.wsdl" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Service1.wsdl" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.Service2.asmx" Guid="{12D8203E-43E4-4E86-84D7-1AECFA720658}">
+          <File Id="Service2.asmx" Name="Service2.asmx" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Service2.asmx" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.Service2.asmx.cs" Guid="{C35878D4-62C3-4B5E-A6DB-A3E0BB3AB806}">
+          <File Id="Service2.asmx.cs" Name="Service2.asmx.cs" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Service2.asmx.cs" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.Service2.wsdl" Guid="{DE9B1981-F8A4-4AE4-9746-2980AAAE9748}">
+          <File Id="Service2.wsdl" Name="Service2.wsdl" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Service2.wsdl" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.TestWebService.csproj" Guid="{A9B49833-A7C3-483C-B492-27F32E637461}">
+          <File Id="TestWebService.csproj" Name="TestWebService.csproj" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\TestWebService.csproj" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.TestWebService.csproj.user" Guid="{83B94054-36BE-4D44-A10F-173CD159C64B}">
+          <File Id="TestWebService.csproj.user" Name="TestWebService.csproj.user" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\TestWebService.csproj.user" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.TestWebService.sln" Guid="{1A6EB022-4E42-40EB-A26A-D18D403E9F75}">
+          <File Id="TestWebService.sln" Name="TestWebService.sln" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\TestWebService.sln" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+      <Component Id="WSDL.Web.config" Guid="{E48980D2-DB5F-497D-A937-9CF50A5DBB8E}">
+          <File Id="Web.config" Name="Web.config" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Web.config" />
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="Properties" FileSource="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Properties">
+      <Component Id="WSDL.AssemblyInfo.cs" Guid="{32C6F51D-FEFE-4622-9F40-D6E09D1EA1D6}">
+        <File Id="AssemblyInfo.cs" Name="AssemblyInfo.cs" Source="G:\Tools\Fuzzware\Examples\WSDL\publish\TestWebService\Properties\AssemblyInfo.cs" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+    <!--<Fragment>
+        <DirectoryRef Id="TestWebService">
+            <Directory Id="Properties" Name="Properties" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="WSDL">
+            <Directory Id="TestWebService" Name="TestWebService" />
+        </DirectoryRef>
+    </Fragment>-->
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="WSDL" Name="WSDL">
+        <Component Id="WSDLDir" Guid="{4612E3AE-4A5C-4da7-AA7D-1641EFEA7119}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveWSDLDir" On="uninstall"/>
+        </Component>
+        <Directory Id="TestWebService" Name="TestWebService">
+          <Component Id="TestWebServiceDir" Guid="{4A15BCB3-5929-4b09-A7DF-4C64CD6E4EF2}" Feature="MainApplication">
+            <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+              <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+            </RegistryKey>
+            <CreateFolder />
+            <RemoveFolder Id="RemoveTestWebServiceDir" On="uninstall"/>
+          </Component>
+          <Directory Id="Properties" Name="Properties">
+            <Component Id="PropertiesDir" Guid="{C35B0FCD-3F72-41ee-831C-F3AFC1B74661}" Feature="MainApplication">
+              <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+              </RegistryKey>
+              <CreateFolder />
+              <RemoveFolder Id="RemovePropertiesDir" On="uninstall"/>
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="WSDLComponentGroup">
+      <ComponentRef Id="WSDL.AssemblyInfo.cs"/>
+      <ComponentRef Id="WSDL.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="WSDL.Configuration.xml"/>
+      <ComponentRef Id="WSDL.Service1.asmx"/>
+      <ComponentRef Id="WSDL.Service1.asmx.cs"/>
+      <ComponentRef Id="WSDL.Service1.wsdl"/>
+      <ComponentRef Id="WSDL.Service2.asmx"/>
+      <ComponentRef Id="WSDL.Service2.asmx.cs"/>
+      <ComponentRef Id="WSDL.Service2.wsdl"/>
+      <ComponentRef Id="WSDL.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="WSDL.TestWebService.csproj"/>
+      <ComponentRef Id="WSDL.TestWebService.csproj.user"/>
+      <ComponentRef Id="WSDL.TestWebService.sln"/>
+      <ComponentRef Id="WSDL.Web.config"/>
+      <ComponentRef Id="WSDL.XmlDefaultValues.xml"/>
+    </ComponentGroup>
+  </Fragment>
+
+
+
+</Wix>

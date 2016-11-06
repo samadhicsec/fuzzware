@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="HTTP" FileSource="g:\Tools\Fuzzware\Examples\HTTP\publish">
+      <Component Id="HTTP.xsd" Guid="{4BCC80FF-2A31-4e6c-8025-0759E0836C1D}" Feature="MainApplication">
+        <File Id="HTTP.xsd" Name="HTTP.xsd" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTP.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTP.ComplexTypeFuzzerConfig.xml" Guid="{015E7B9E-9230-4a52-8C67-35E50D71EB2E}" Feature="MainApplication">
+        <File Id="HTTP.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTP.Configuration.xml" Guid="{46994D9F-DA94-4f03-8B30-716E2FCF8271}" Feature="MainApplication">
+        <File Id="HTTP.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTP.SimpleTypeFuzzerConfig.xml" Guid="{FD7C96D0-4B63-4eb2-8D59-07401ECF1632}" Feature="MainApplication">
+        <File Id="HTTP.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPGet.xml" Guid="{F7AB1ED0-DFE4-4bf2-8AD3-1B479AEADC82}" Feature="MainApplication">
+        <File Id="HTTPGet.xml" Name="HTTPGet.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPGet.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPost.xml" Guid="{25855126-04E1-4a16-8FD3-3D60CBFCDBD4}" Feature="MainApplication">
+        <File Id="HTTPPost.xml" Name="HTTPPost.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPost.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="HTTP.HTTPPostXML" FileSource="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostXML">
+      <Component Id="HTTPPostXML.Configuration.xml" Guid="{40874B2E-3403-4124-8AC0-A0ABAD290144}" Feature="MainApplication">
+        <File Id="HTTPPostXML.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostXML\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostXML.SimpleTypeFuzzerConfig.xml" Guid="{D29EFE12-B716-4d74-A92B-B468E6408622}" Feature="MainApplication">
+        <File Id="HTTPPostXML.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostXML\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostXML.ComplexTypeFuzzerConfig.xml" Guid="{941C6CFF-A0B7-43a1-BC0A-1DF4C6EA91C9}" Feature="MainApplication">
+        <File Id="HTTPPostXML.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostXML\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostXML.PostXML.xsd" Guid="{6319D7CF-A833-4262-A452-58DAFCEF73DF}" Feature="MainApplication">
+        <File Id="HTTPPostXML.PostXML.xsd" Name="PostXML.xsd" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostXML\PostXML.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostXML.TargetXSD.xsd" Guid="{5A685AE3-9680-4b14-AF55-D585201A1041}" Feature="MainApplication">
+        <File Id="HTTPPostXML.TargetXSD.xsd" Name="TargetXSD.xsd" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostXML\TargetXSD.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostXML.HTTPPostXML.xml" Guid="{84A21830-2032-4bc1-9D47-382910CC195C}" Feature="MainApplication">
+        <File Id="HTTPPostXML.HTTPPostXML.xml" Name="HTTPPostXML.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostXML\HTTPPostXML.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="HTTP.HTTPPostParams" FileSource="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostParams">
+      <Component Id="HTTPPostParams.Configuration.xml" Guid="{D60B9DF7-9242-4fdc-A1EF-2D7BDB535EC3}" Feature="MainApplication">
+        <File Id="HTTPPostParams.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostParams\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostParams.SimpleTypeFuzzerConfig.xml" Guid="{95931AEF-69EF-489e-81AB-5A1C3E57CDDF}" Feature="MainApplication">
+        <File Id="HTTPPostParams.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostParams\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostParams.ComplexTypeFuzzerConfig.xml" Guid="{542D96BD-8184-4919-81A8-45A480EDE171}" Feature="MainApplication">
+        <File Id="HTTPPostParams.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostParams\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostParams.PostParams.xsd" Guid="{FDE18DD8-CB89-4f5b-92C2-7F27863A79C3}" Feature="MainApplication">
+        <File Id="HTTPPostParams.PostParams.xsd" Name="PostParams.xsd" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostParams\PostParams.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HTTPPostParams.HTTPPostParams.xml" Guid="{51F9679A-23C2-4640-8AD4-6443DD5E9B7B}" Feature="MainApplication">
+        <File Id="HTTPPostParams.HTTPPostParams.xml" Name="HTTPPostParams.xml" Source="g:\Tools\Fuzzware\Examples\HTTP\publish\HTTPPostParams\HTTPPostParams.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+	</Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="HTTP" Name="HTTP">
+        <Component Id="HTTP" Guid="{FAF4DB9D-0C57-45d0-A1FC-5E1E25628652}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveHTTPDir" On="uninstall"/>
+        </Component>
+        <Directory Id="HTTP.HTTPPostXML" Name="HTTPPostXML">
+          <Component Id="HTTP.HTTPPostXML" Guid="{D8A677F8-567B-4e6c-9BEE-29D79D0C9B4E}" Feature="MainApplication">
+            <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+              <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+            </RegistryKey>
+            <CreateFolder />
+            <RemoveFolder Id="RemoveHTTPPostXMLDir" On="uninstall"/>
+          </Component>
+        </Directory>
+        <Directory Id="HTTP.HTTPPostParams" Name="HTTPPostParams">
+          <Component Id="HTTP.HTTPPostParams" Guid="{01A02330-3CDF-45da-ADF2-BACDDCF6FB3E}" Feature="MainApplication">
+            <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+              <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+            </RegistryKey>
+            <CreateFolder />
+            <RemoveFolder Id="RemoveHTTPPostParamsDir" On="uninstall"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="HTTPComponentGroup">
+      <ComponentRef Id="HTTP.xsd"/>
+      <ComponentRef Id="HTTP.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="HTTP.Configuration.xml"/>
+      <ComponentRef Id="HTTP.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="HTTPGet.xml"/>
+      <ComponentRef Id="HTTPPost.xml"/>
+      <ComponentRef Id="HTTPPostXML.Configuration.xml"/>
+      <ComponentRef Id="HTTPPostXML.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="HTTPPostXML.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="HTTPPostXML.PostXML.xsd"/>
+      <ComponentRef Id="HTTPPostXML.TargetXSD.xsd"/>
+      <ComponentRef Id="HTTPPostXML.HTTPPostXML.xml"/>
+      <ComponentRef Id="HTTPPostParams.Configuration.xml"/>
+      <ComponentRef Id="HTTPPostParams.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="HTTPPostParams.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="HTTPPostParams.PostParams.xsd"/>
+      <ComponentRef Id="HTTPPostParams.HTTPPostParams.xml"/>
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

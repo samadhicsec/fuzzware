@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.5" testConfig="true" originalFile="Hello World.pdf" xmlns="urn:Fuzzware.Schemas.Configuration">
+  <Input>
+    <DataInputHandler>
+      <Convert2XMLInput>
+        <Convert2XML>
+          <SourceFile>Hello World.pdf</SourceFile>
+          <RootNodeNamespace>urn:Fuzzware.Examples.PDF</RootNodeNamespace>
+          <RootNodeName>PDF</RootNodeName>
+          <OutputNamespacePrefix>c2x</OutputNamespacePrefix>
+          <OutputXMLFile>Hello World.pdf.xml</OutputXMLFile>
+        </Convert2XML>
+        <XSDPathAndFilename>PDF.xsd</XSDPathAndFilename>
+      </Convert2XMLInput>
+    </DataInputHandler>
+  </Input>
+  <XmlConfigFiles>
+    <SimpleTypeFuzzerXML>SimpleTypeFuzzerConfig.xml</SimpleTypeFuzzerXML>
+    <ComplexTypeFuzzerXML>ComplexTypeFuzzerConfig.xml</ComplexTypeFuzzerXML>
+  </XmlConfigFiles>
+  <Output>
+    <ConvertFromXML>
+      <OmitXMLDeclaration>true</OmitXMLDeclaration>
+      <OmitComments>true</OmitComments>
+      <FormatXML>false</FormatXML>
+      <OutputEncoding>us-ascii</OutputEncoding>
+      <VerifyOutputAgainstInputSchema>false</VerifyOutputAgainstInputSchema>
+    </ConvertFromXML>
+    <EvaluationMethod>
+      <OutputToExe>
+        <ExePathAndName>C:\Program Files\Adobe\Reader 9.0\Reader\AcroRd32.exe</ExePathAndName>
+        <InputFromFile>
+          <Directory>out</Directory>
+          <FileExtension>pdf</FileExtension>
+        </InputFromFile>
+        <CommandLineParameters>"[workingdir]\[filename]"</CommandLineParameters>
+        <ExeOpenActions />
+        <ProcessDelay>2000</ProcessDelay>
+        <ExeCloseActions>
+          <CloseWindowAction>
+            <WindowTitle>Adobe Reader</WindowTitle>
+            <KeyboardStrokes>
+              <KeyStroke>{ENTER}</KeyStroke>
+            </KeyboardStrokes>
+          </CloseWindowAction>
+        </ExeCloseActions>
+        <UniqueOutputs>
+          <Directory>out</Directory>
+          <FileExtension>txt</FileExtension>
+        </UniqueOutputs>
+      </OutputToExe>
+    </EvaluationMethod>
+    <Monitoring>
+      <PostMortemDebugger>
+        <CrashOutputDir>crashes</CrashOutputDir>
+      </PostMortemDebugger>
+    </Monitoring>
+  </Output>
+</Configuration>

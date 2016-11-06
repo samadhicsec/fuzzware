@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="WinRAR" 
+                  targetNamespace="urn:Fuzzware.Examples.WinRAR"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.WinRAR"
+                  xmlns:rar="urn:Fuzzware.Examples.WinRAR"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:simpleType name="BYTE" sac:outputAs="Decoded">
+    <xs:restriction base="xs:hexBinary">
+      <xs:length value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="WORD" sac:outputAs="Decoded">
+    <xs:restriction base="xs:hexBinary">
+      <xs:length value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DWORD" sac:outputAs="Decoded">
+    <xs:restriction base="xs:hexBinary">
+      <xs:length value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="HeaderBlock">
+    <xs:sequence>      
+      <xs:element name="Type" type="rar:BYTE" minOccurs="1" />
+      <xs:element name="Flags" type="rar:WORD" minOccurs="1" />
+      <xs:element name="Size" type="xs:unsignedShort" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+      <xs:element name="AddSize" type="rar:WORD" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CommentBlock">
+    <xs:sequence>
+      <xs:element name="CB_CRC" type="xs:unsignedShort" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+      <xs:element name="CB_CRCBlock">
+        <xs:complexType>
+          <xs:sequence>
+            <!-- CommentBlockHeader.Size = CommentBlockHeader size + Comment size -->
+            <xs:element name="CommentBlockHeader" type="HeaderBlock" minOccurs="1" />
+            <xs:element name="UnpSize" type="rar:WORD" minOccurs="1" />
+            <xs:element name="UnpVersion" type="rar:BYTE" minOccurs="1" />
+            <xs:element name="PackingMethod" type="rar:BYTE" minOccurs="1" />
+            <xs:element name="CommentCRC" type="rar:WORD" minOccurs="1" />
+            <xs:element name="Comment" type="xs:string" minOccurs="1" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MarkBlock">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MB_CRC" type="xs:unsignedShort" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="MB_CRCBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MarkBlockHeader" type="rar:HeaderBlock" minOccurs="1" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ArchiveHeader">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AH_CRC" minOccurs="1" sac:outputAs="BinaryLittleEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="2" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="AH_CRCBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ArchiveHeaderBlock" type="rar:HeaderBlock" minOccurs="1" />
+              <xs:element name="Reserved1" type="rar:WORD" minOccurs="1" />
+              <xs:element name="Reserved2" type="rar:DWORD" minOccurs="1" />
+              <!-- Present if ArchiveHeader.ArchiveHeaderBlock.Flags & 0x02 != 0 -->
+              <xs:element name="AH_Comments" type="rar:CommentBlock" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FileHeader">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FH_CRC" minOccurs="1" sac:outputAs="BinaryLittleEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="2" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="FH_CRCBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FileHeaderBlock" type="rar:HeaderBlock" />
+              <xs:element name="CompressedFileSize" type="xs:unsignedInt" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="UncompressedFileSize" type="rar:DWORD" minOccurs="1" />
+              <xs:element name="HostOS" type="rar:BYTE" minOccurs="1" />
+              <xs:element name="FileCRC" type="rar:DWORD" minOccurs="1" />
+              <xs:element name="FileTime" type="rar:DWORD" minOccurs="1" />
+              <xs:element name="UnpVersion" type="rar:BYTE" minOccurs="1" />
+              <xs:element name="PackingMethod" type="rar:BYTE" minOccurs="1" />
+              <xs:element name="FileNameSize" type="xs:unsignedShort" minOccurs="1" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="FileAtt" type="rar:DWORD" minOccurs="1" />
+              <xs:element name="FileName" type="xs:string" minOccurs="1" />
+              <!-- Present if FileHeader.FileHeaderBlock.Flags & 0x08 != 0 -->
+              <xs:element name="FH_Comments" type="rar:CommentBlock" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExtraInfoBlock">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="EIB_CRC" minOccurs="1" sac:outputAs="BinaryLittleEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="2" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="EIB_CRCBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ExtraInfoBLockHeader" type="rar:HeaderBlock" minOccurs="1" />
+              <xs:element name="Info" type="xs:hexBinary" minOccurs="1" sac:outputAs="Decoded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SubBlock">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SB_CRC" minOccurs="1" sac:outputAs="BinaryLittleEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="2" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="SB_CRCBlock">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SubBlockHeader" type="rar:HeaderBlock" minOccurs="1" />
+              <xs:element name="DataSize" type="rar:DWORD" minOccurs="1" />
+              <xs:element name="SubType" type="rar:WORD" minOccurs="1" />
+              <xs:element name="Reserved" type="rar:BYTE" minOccurs="1" fixed="00" />
+              <xs:element name="Other" type="xs:hexBinary" minOccurs="1" sac:outputAs="Decoded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RAR" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="rar:MarkBlock" minOccurs="1" />
+        <xs:element ref="rar:ArchiveHeader" minOccurs="1" />
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:sequence>
+            <xs:element ref="rar:FileHeader" minOccurs="1" />
+            <xs:element name="CompressedFile" type="xs:hexBinary" minOccurs="1" sac:outputAs="Decoded" />
+          </xs:sequence>
+          <xs:element ref="rar:ExtraInfoBlock" minOccurs="1" />
+          <xs:element ref="rar:SubBlock" minOccurs="1" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

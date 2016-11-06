@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dns:Packet xmlns:dns="urn:Fuzzware.Examples.DNS">
+  <dns:dns>
+    <dns:dns.response_in></dns:dns.response_in>
+    <dns:dns.id>0ca1</dns:dns.id>
+    <dns:dns.flags>0100</dns:dns.flags>
+    <dns:dns.count.queries>0001</dns:dns.count.queries>
+    <dns:dns.count.answers>0000</dns:dns.count.answers>
+    <dns:dns.count.auth_rr>0000</dns:dns.count.auth_rr>
+    <dns:dns.count.add_rr>0000</dns:dns.count.add_rr>
+    <dns:dns.qry.name>0377777703636e6e03636f6d00</dns:dns.qry.name>
+    <dns:dns.qry.type>0001</dns:dns.qry.type>
+    <dns:dns.qry.class>0001</dns:dns.qry.class>
+  </dns:dns>
+</dns:Packet>

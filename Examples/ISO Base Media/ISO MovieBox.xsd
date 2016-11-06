@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.ISO"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.ISO"
+    xmlns:iso="urn:Fuzzware.Examples.ISO"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:include schemaLocation="ISO Common.xsd" />
+  <xs:include schemaLocation="ISO SampleTableAtoms.xsd" />
+  
+  <!--Movie Box-->
+  <xs:element name="moov">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmoov" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="moovConst" type="xs:string" fixed="moov" />
+        <xs:element name="moovAtoms">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="iso:mvhd" />
+              <xs:element ref="iso:trak" />
+              <xs:element ref="iso:mvex" />
+              <xs:element ref="iso:ipmc" />
+              <xs:element ref="iso:udta" />
+              <xs:element ref="iso:free" />
+              <xs:element ref="iso:skip" />
+              <xs:element ref="iso:unknown" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Movie Header Box-->
+  <xs:element name="mvhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmvhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mvhdconst" type="xs:string" fixed="mvhd" />
+        <xs:element name="mvhdVersion" type="iso:tVersionInfo" />
+        <xs:element name="mvhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mvhdCreationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdModificationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdTimescale" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdPreferredRate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdPrefVolume" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdReserved" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="mvhdMatrix" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="36" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="mvhdPreviewTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdPreviewDur" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdPosterTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdSelTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdSelDur" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdCurrentTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdNextTrackId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Track Box-->
+  <xs:element name="trak">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftrak" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="trakConst" type="xs:string" fixed="trak" />
+        <xs:element name="trakData">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="iso:tkhd" />
+              <xs:element ref="iso:tref" />
+              <xs:element ref="iso:edts" />
+              <xs:element ref="iso:mdia" />
+              <xs:element ref="iso:udta" />
+              <xs:element ref="iso:free" />
+              <xs:element ref="iso:skip" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Track Header Box-->
+  <xs:element name="tkhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftkhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="tkhdConst" type="xs:string" fixed="tkhd" />
+        <xs:element name="tkhdVersion" type="iso:tVersionInfo" />
+        <xs:element name="tkhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="tkhdCreationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdModificationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdTrackId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdReserved" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdReserved2" type="xs:unsignedLong" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdLayer" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdAltGroup" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdVolume" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdReserved3" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdMatrix" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="36" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="tkhdTrackWidth" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdTrackHeight" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Track Reference Box-->
+  <xs:element name="tref">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftref" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="trefConst" type="xs:string" fixed="tref" />
+        <xs:element name="trefData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Edit Box-->
+  <xs:element name="edts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfedts" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="edtsConst" type="xs:string" fixed="edts" />
+        <xs:element name="edtsData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="iso:elst" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Edit List Box-->
+  <xs:element name="elst">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfelst" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="elstConst" type="xs:string" fixed="elst" />
+        <xs:element name="elstVersion" type="iso:tVersionInfo" />
+        <xs:element name="elstData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfEditListTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="EditListTableEntry" minOccurs="0"  maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="elstTrackDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="elstMediaTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="elstMediaRate" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="elstMediaRateFraction" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Media Box-->
+  <xs:element name="mdia">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmdia" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mdiaConst" type="xs:string" fixed="mdia" />
+        <xs:element name="mdiaData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="iso:mdhd" />
+              <xs:element ref="iso:hdlr" />
+              <xs:element ref="iso:minf" />
+              <xs:element ref="iso:free" minOccurs="0"/>
+              <xs:element ref="iso:skip" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Media Header box-->
+  <xs:element name="mdhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmdhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mdhdConst" type="xs:string" fixed="mdhd" />
+        <xs:element name="mdhdVersion" type="iso:tVersionInfo" />
+        <xs:element name="mdhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mdhdCreationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdModTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdTimescale" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdLanguage" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdQuality" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Handler reference Box-->
+  <xs:element name="hdlr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfhdlr" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="hdlrConst" type="xs:string" fixed="hdlr" />
+        <xs:element name="hdlrVersion" type="iso:tVersionInfo" />
+        <xs:element name="hdlrData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="hdlrPreDefined" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hdlrComponentType" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hdlrReserved1" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hdlrReserved2" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hdlrReserved3" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hdlrName" type="iso:tString" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Media Information Box-->
+  <xs:element name="minf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfminf" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="minfconst" type="xs:string" fixed="minf" />
+        <xs:element name="minfData">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="iso:vmhd" />
+              <xs:element ref="iso:smhd" />
+              <xs:element ref="iso:hmhd" />
+              <xs:element ref="iso:nmhd" />
+              <xs:element ref="iso:dinf" />
+              <xs:element ref="iso:stbl" />
+              <xs:element ref="iso:free" />
+              <xs:element ref="iso:skip" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Video Media Header box-->
+  <xs:element name="vmhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfvmhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="vmhdConst" type="xs:string" fixed="vmhd" />
+        <xs:element name="vmhdVersion" type="iso:tVersionInfo" />
+        <xs:element name="vmhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="vmhdGraphicsMode" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="vmhdOpcolor" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Sound Media Header box-->
+  <xs:element name="smhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfsmhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="smhdConst" type="xs:string" fixed="smhd" />
+        <xs:element name="smhdVersion" type="iso:tVersionInfo" />
+        <xs:element name="smhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="vmhdBalance" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="vmhdReserved" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Hint Media Header box-->
+  <xs:element name="hmhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfhmhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="hmhdConst" type="xs:string" fixed="hmhd" />
+        <xs:element name="hmhdVersion" type="iso:tVersionInfo" />
+        <xs:element name="hmhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="hmhdMaxPDUSize" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hmhdAvgPDUSize" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hmhdMaxBitRate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hmhdAvgBitRate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hmhdReserved" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Null Media Header box-->
+  <xs:element name="nmhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfnmhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="nmhdConst" type="xs:string" fixed="nmhd" />
+        <xs:element name="nmhdVersion" type="iso:tVersionInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Data Information Box-->
+  <xs:element name="dinf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfdinf" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="dinfConst" type="xs:string" fixed="dinf" />
+        <xs:element name="dinfData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="iso:dref" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Data Reference Box-->
+  <xs:element name="dref">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfdref" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="drefConst" type="xs:string" fixed="dref" />
+        <xs:element name="drefVersion" type="iso:tVersionInfo" />
+        <xs:element name="drefData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="drefCountOfDataEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="DataEntry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:choice>
+                    <xs:element ref="iso:url" />
+                    <xs:element ref="iso:urn" />
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Data Entry URL Box-->
+  <xs:element name="url">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfurl" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="urlConst" type="xs:string" fixed="url " />
+        <xs:element name="urlVersion" type="iso:tVersionInfo" />
+        <xs:element name="urlData" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="urlLocation" type="iso:tString" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Data Entry URN Box-->
+  <xs:element name="urn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfurn" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="urnConst" type="xs:string" fixed="urn " />
+        <xs:element name="urnVersion" type="iso:tVersionInfo" />
+        <xs:element name="urnData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="urnName" type="iso:tString" minOccurs="0" />
+              <xs:element name="urnLocation" type="iso:tString" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Movie Extends Box-->
+  <xs:element name="mvex">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmvex" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mvexConst" type="xs:string" fixed="mvex" />
+        <xs:element name="mvexData">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element ref="iso:mehd" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Movie Extends Header Box-->
+  <xs:element name="mehd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmehd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mehdConst" type="xs:string" fixed="mehd" />
+        <xs:element name="mehdVersion" type="iso:tVersionInfo" />
+        <xs:element name="mehdData">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element name="mehdFragmentDuration32" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mehdFragmentDuration64" type="xs:unsignedLong" sac:outputAs="BinaryBigEndian" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Trak Extends Header Box-->
+  <xs:element name="trek">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftrek" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="trekConst" type="xs:string" fixed="trek" />
+        <xs:element name="trekVersion" type="iso:tVersionInfo" />
+        <xs:element name="trekData">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element name="trekTrackId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="trekDescIndex" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="trekDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="trekSampleSize" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="trekSampleFlags" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--IPMP Control Box-->
+  <xs:element name="ipmc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfipmc" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="ipmcConst" type="xs:string" fixed="ipmc" />
+        <xs:element name="ipmcVersion" type="iso:tVersionInfo" />
+        <xs:element name="ipmcData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

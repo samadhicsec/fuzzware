@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Input.View.XMLInputView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>-->
+        
+        <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource BorderStyle}">
+            <HeaderedContentControl Style="{StaticResource HeaderedContentControlStyle}" 
+                                    Header="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Header}">
+                <StackPanel>
+                    <TextBlock Margin="5" Style="{StaticResource CommonText}">
+                        Specify the input XML Schema (.xsd)
+                    </TextBlock>
+                    <cv:FilesControlView x:Name="fiXSDFilenames" DataContext="{Binding Path=XSDFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    
+                    <TextBlock Margin="5" Style="{StaticResource CommonText}">
+                        Specify the input XML
+                    </TextBlock>
+                    <cv:FileControlView x:Name="fiXMLFilename" DataContext="{Binding Path=XMLFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    
+                </StackPanel>
+            </HeaderedContentControl>
+        </Border>
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cfg:ConvertFromXML xmlns:cfg="urn:Fuzzware.Schemas">
+  <cfg:omitXMLDeclaration>true</cfg:omitXMLDeclaration>
+  <cfg:omitComments>true</cfg:omitComments>
+  <cfg:outputEncoding>us-ascii</cfg:outputEncoding>
+  <cfg:verifyOutputAgainstInputSchema>false</cfg:verifyOutputAgainstInputSchema>
+</cfg:ConvertFromXML>

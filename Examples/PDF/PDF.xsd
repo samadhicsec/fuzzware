@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema targetNamespace="urn:Fuzzware.Examples.PDF"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.PDF"
+                  xmlns:pdf="urn:Fuzzware.Examples.PDF"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:element name="WhiteSpace" sac:outputAs="Decoded">
+    <xs:simpleType>
+      <xs:restriction base="xs:hexBinary">
+        <xs:enumeration value="20" />
+        <xs:enumeration value="09" />
+        <xs:enumeration value="0A" />
+        <xs:enumeration value="0D" />
+        <xs:enumeration value="0C" />
+        <xs:enumeration value="00" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  
+  <xs:element name="LineTerm" sac:outputAs="Decoded">
+    <xs:simpleType>
+      <xs:restriction base="xs:hexBinary">
+        <xs:enumeration value="0D0A" />
+        <xs:enumeration value="0D" />
+        <xs:enumeration value="0A" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="Comment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CommentStart" type="xs:string" fixed="%" />
+        <xs:element name="CommentValue" type="xs:hexBinary" sac:outputAs="Decoded" />
+        <xs:element ref="LineTerm" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Bool">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="true" />
+        <xs:enumeration value="false" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="NullObj" type="xs:string" fixed="nullobj" />
+  
+  <xs:element name="LiteralString">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="LSOpenBracket" type="xs:string" fixed="(" />
+        <!-- This is imperfect as matching () are allowed -->
+        <xs:element name="LSValue" type="xs:hexBinary" sac:outputAs="Decoded" />
+        <!-- Note the escape string '\', this stops the string being terminated by an escaped close bracket i.e. "\)" -->
+        <xs:element name="LSCloseBracket" type="xs:string" fixed=")" sac:EscapeStr="\" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="HexString">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="HSOpenBracket" type="xs:string" fixed="&lt;" />
+        <xs:element name="HSValue" type="xs:hexBinary" />
+        <xs:element name="HSCloseBracket" type="xs:string" fixed="&gt;" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="String">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="LiteralString" />
+        <xs:element ref="HexString" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Integer" type="xs:int" />
+
+  <xs:element name="Real" type="xs:float" />
+  
+  <xs:element name="Name">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NameSlash" type="xs:string" fixed="/" />
+        <xs:element name="NameValue">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <!-- Match any string not including whitespace, (, ), <, >, [, ], {, }, /, % -->
+              <xs:pattern value="[^/\s \(\)\&lt;\&gt;\[\]\{\}%]+" />
+              <!--<xs:pattern value="(\w#_)*" />-->
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Null" type="xs:string" fixed="null" />
+
+  <xs:element name="Object">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="WhiteSpace" minOccurs="0" maxOccurs="unbounded" />
+        <xs:choice>
+          <xs:element ref="Null" />
+          <xs:element ref="Bool" />
+          <xs:element ref="IndirectObjRef" />
+          <xs:element ref="Array" />
+          <xs:element ref="Stream" />
+          <xs:element ref="Dictionary" />
+          <xs:element ref="String" />
+          <xs:element ref="Real" />
+          <xs:element ref="Integer" />
+          <xs:element ref="Name" />
+        </xs:choice>
+        <xs:element ref="WhiteSpace" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Array">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ArrayStart" type="xs:string" fixed="[" />
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="Object" />
+        </xs:sequence>
+        <xs:element name="ArrayEnd" type="xs:string" fixed="]" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Dictionary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DictStart" type="xs:string" fixed="&lt;&lt;" />
+        <xs:element ref="WhiteSpace" minOccurs="0" maxOccurs="unbounded" />
+        <xs:sequence maxOccurs="unbounded">
+          <xs:element ref="Name" />
+          <xs:element ref="Object" />
+        </xs:sequence>
+        <xs:element name="DictEnd" type="xs:string" fixed="&gt;&gt;" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Stream">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Dictionary" />
+        <xs:element ref="WhiteSpace" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="StreamStart" type="xs:string" fixed="stream" />
+        <xs:choice>
+          <xs:element name="SSCRLF" type="xs:hexBinary" fixed="0D0A" sac:outputAs="Decoded" />
+          <xs:element name="SSLF" type="xs:hexBinary" fixed="0A" sac:outputAs="Decoded" />
+        </xs:choice>
+        <xs:element name="StreamBytes" type="xs:hexBinary" sac:outputAs="Decoded" />
+        <xs:element name="StreamEnd" type="xs:string" fixed="endstream" />
+        <xs:element ref="WhiteSpace" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="IndirectObj">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Integer" />
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element ref="Integer" />
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element name="Obj" type="xs:string" fixed="obj" />
+        <xs:element ref="Object" />
+        <xs:element name="EndObj" type="xs:string" fixed="endobj" />
+        <xs:element ref="WhiteSpace" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="IndirectObjRef">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Integer" />
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element ref="Integer" />
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element name="R" type="xs:string" fixed="R" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  
+  <xs:element name="FileHeader">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="VersionString" type="xs:string" />
+        <xs:element ref="LineTerm" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="FileBody">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="WhiteSpace" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="IndirectObj" maxOccurs="unbounded" />
+        <xs:element ref="WhiteSpace" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="XRefSubSection">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Integer" />
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element ref="Integer" />
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+        <!--<xs:element ref="LineTerm" />-->
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="XRefEntry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Offset">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:length value="10" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element name="GenerationNum">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:length value="5" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+        <xs:choice>
+          <xs:element name="InUse" type="xs:string" fixed="n" />
+          <xs:element name="Free" type="xs:string" fixed="f" />
+        </xs:choice>
+        <xs:element ref="WhiteSpace" minOccurs="1" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="CrossRefTable">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="XRef" type="xs:string" fixed="xref" />
+        <xs:element ref="LineTerm" />
+        <xs:sequence maxOccurs="unbounded">
+          <xs:element ref="XRefSubSection" />
+          <xs:element ref="XRefEntry" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Trailer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="TrailerStart" type="xs:string" fixed="trailer" />
+        <xs:element ref="LineTerm" />
+        <xs:element ref="Dictionary" />
+        <xs:element ref="LineTerm" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="FileTrailer">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded">
+        <xs:element ref="CrossRefTable" />
+        <xs:element ref="Trailer" />
+        <xs:element name="StartXRef" type="xs:string" fixed="startxref" />
+        <xs:element ref="LineTerm" />
+        <xs:element name="PreviousXRefOffset" type="xs:unsignedInt" />
+        <xs:element ref="LineTerm" />
+        <xs:element name="EOFMarker" type="xs:string" fixed="%%EOF" />
+        <xs:element ref="LineTerm" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PDF" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="FileHeader" />
+        <xs:element ref="Comment" minOccurs="0" />
+        <xs:sequence maxOccurs="unbounded">
+          <xs:element ref="FileBody" />
+          <xs:element ref="FileTrailer" />
+        </xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

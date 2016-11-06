@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Input.View.C2XInputView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Input.View"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"         
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <cmn:AppendString x:Key="AppendString" />
+            <local:NodesDataTemplateSelector x:Key="NodesDataTemplateSelector" />
+
+            <DataTemplate x:Key="ErrorNode">
+                <ComboBoxItem IsEnabled="False">
+                    <TextBlock Text="{Binding}" />
+                </ComboBoxItem>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="XmlQualifiedNameNode">
+                <ComboBoxItem IsEnabled="True">
+                    <TextBlock Text="{Binding}" />
+                </ComboBoxItem>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid>
+        <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource BorderStyle}">
+            <HeaderedContentControl Style="{StaticResource HeaderedContentControlStyle}" 
+                                    Header="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Header}">
+                <StackPanel>
+                    <TextBlock Margin="5" Style="{StaticResource CommonText}">
+                        Specify the input XML Schema (.xsd)
+                    </TextBlock>
+                    <cv:FilesControlView DataContext="{Binding Path=XSDFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock Margin="5" Style="{StaticResource CommonText}">
+                        Choose the XML root node
+                    </TextBlock>
+                    <ComboBox Name="cmbRootNode" Height="25" cmn:Common.Command="{Binding Path=UpdateNodesCommand}" 
+                              DropDownOpened="ComboBox_DropDownOpened" Style="{StaticResource DataText}"
+                              ItemsSource="{Binding Path=Nodes}" ItemTemplateSelector="{StaticResource NodesDataTemplateSelector}"
+                              SelectedItem="{Binding Path=RootNode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </ComboBox>
+                    
+                    <TextBlock Margin="5" Style="{StaticResource CommonText}">
+                        Specify the input file to convert
+                    </TextBlock>
+                    <cv:FileControlView x:Name="fiRawFilename" DataContext="{Binding Path=RawFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource CommonText}">
+                        <TextBlock Margin="5">Output XML:</TextBlock>
+                        <TextBlock Name="txtOutputXML" Margin="5" Text="{Binding Path=RawFile.Filename, Converter={StaticResource AppendString}, ConverterParameter='.xml', UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <Button Style="{StaticResource CommonSubHeaderText}" Content="Test the Conversion" Click="TestConversion_Click"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Margin="20" Background="{StaticResource BackgroundBrush}" />
+                </StackPanel>
+            </HeaderedContentControl>
+        </Border>
+    </Grid>
+
+</UserControl>

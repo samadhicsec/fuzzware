@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="ChangeCipherSpec" 
+                  targetNamespace="urn:Fuzzware.Examples.TLS"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.TLS"
+                  xmlns:tls="urn:Fuzzware.Examples.TLS"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:element name="ChangeCipherSpec" sac:outputAs="BinaryBigEndian">
+    <xs:simpleType>
+      <xs:restriction base="xs:unsignedByte">
+        <!-- change_sipher_spec -->
+        <xs:enumeration value="1" />
+        <xs:enumeration value="255" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  
+</xs:schema>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="WAV" 
+                  targetNamespace="urn:Fuzzware.Examples.WAV"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.WAV"
+                  xmlns:wav="urn:Fuzzware.Examples.WAV"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+  <xs:complexType name="BinaryChunkType">
+    <xs:sequence>
+      <xs:element name="BinaryChunkID" type="xs:string" />
+      <xs:element name="ByteLengthOfBinaryData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+      <xs:element name="BinaryData" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StringChunkType">
+    <xs:sequence>
+      <xs:element name="StringChunkID" type="xs:string" />
+      <xs:element name="ByteLengthOfStringChunk" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+      <xs:element name="StringChunk">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="StringData" type="xs:string" />
+            <xs:element name="TermNull" type="xs:hexBinary" fixed="00" minOccurs="1" maxOccurs="1" sac:outputAs="Decoded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="BufferNull" type="xs:hexBinary" fixed="00" minOccurs="0" maxOccurs="1" sac:outputAs="Decoded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FormatChunk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FmtChunkID" type="xs:string" fixed="fmt " />
+        <xs:element name="ByteLengthOfFmtData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="FmtData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CompressionCode" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="NumberOfChannels" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="SampleRate" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="AvgBytesPerSec" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="BlockAlign" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="SigBitsPerSample" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="Extra" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ByteLengthOfExtraFmtBytes" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+                    <xs:element name="ExtraFmtBytes" type="xs:hexBinary" sac:outputAs="Decoded" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DataChunk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DataChunkID" type="xs:string" fixed="data" />
+        <xs:element name="ByteLengthOfDataData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="DataData" type="xs:hexBinary" sac:outputAs="Decoded" />
+        <xs:element name="DataWordAlign" type="xs:hexBinary" fixed="00" minOccurs="0" maxOccurs="1" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FactChunk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="FactChunkID" type="xs:string" fixed="fact" />
+        <xs:element name="ByteLengthOfFactData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="FactData" type="xs:hexBinary" sac:outputAs="Decoded" />
+        <xs:element name="FactWordAlign" type="xs:hexBinary" fixed="00" minOccurs="0" maxOccurs="1" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListChunk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ListChunkID" type="xs:string" fixed="LIST" />
+        <xs:element name="ByteLengthOfListData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="ListData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ListStringChunk" type="wav:StringChunkType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WAV" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="HeaderChunkID" type="xs:string" fixed="RIFF" />
+        <xs:element name="ByteLengthOfContents" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="Contents">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RIFFType" type="xs:string" fixed="WAVE" />
+              <xs:element name="WAVEData">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="wav:FormatChunk" />
+                    <xs:choice maxOccurs="unbounded">
+                      <xs:element ref="wav:DataChunk" />
+                      <xs:element ref="wav:FactChunk" />
+                      <xs:element ref="wav:ListChunk" />
+                      <xs:element name="UnknownChunk" type="wav:BinaryChunkType" />
+                    </xs:choice>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>                
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

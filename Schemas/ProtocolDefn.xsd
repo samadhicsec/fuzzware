@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="ProtocolDefn" 
+                  targetNamespace="urn:Fuzzware.Schemas.Configuration"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:cfg="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="Common.xsd" />
+  <xs:include schemaLocation="Convert2XML.xsd" />  
+  
+  <xs:element name="ProtocolDefinition">
+    <xs:annotation>
+      <xs:documentation>
+        A protocol definition consists of a sequence of messages sent between the client and server.  It also consists of possible error
+        messages, should the protocol terminate unexpectedly.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cfg:OutputToNetwork" minOccurs="0" />
+        <xs:element name="Message" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Direction">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="ClientToServer" />
+                    <xs:enumeration value="ServerToClient" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:choice>
+                <xs:element name="RawMessageFilePath" type="xs:string" />
+                <xs:element name="XMLMessage">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:choice>
+                        <xs:element name="InputMessageXMLFilePath" type="xs:string">
+                          <xs:annotation>
+                            <xs:documentation>
+                              For ClientToServer messages this node should contain the XML representation of the data that will be sent.  For
+                              ServerToClient messages, this choice option should not be used, only the Convert2XML option should be used.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="cfg:Convert2XML">
+                          <xs:annotation>
+                            <xs:documentation>
+                              For ClientToServer messages this will create the XML representation of the data to be sent.  For ServerToClient
+                              messages, the SourceFile node should contain the location where the server response will be written, then the
+                              reponse will be converted to XML.
+                            </xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                      </xs:choice>
+                      <xs:element name="OutputRawMessageFilePath" type="xs:string">
+                        <xs:annotation>
+                          <xs:documentation>
+                            For ClientToServer messages this node contains the destination filename of the actual data that will be sent.  For 
+                            ServerToClient messages this node is not used.
+                          </xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="Fuzz" type="xs:boolean" default="false">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Indicates whether or not to fuzz this message.  One message, and only one message, should be specified as the message
+                          to fuzz.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ErrorMessage">
+          <xs:annotation>
+            <xs:documentation>
+              An error message is determined by specify nodes that if they are exist in the ServerToClient converted XML, an error has occurred.  
+              Numerous ContainsErrorNodes can be specified, but each is checked independently (an error state is the OR of them).  However, in
+              each ContainsErrorNodes are NodeName's where all the node names must occur (the AND of them)
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ContainsErrorNodes" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="NodeName" type="xs:string" maxOccurs="unbounded" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

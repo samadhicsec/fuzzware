@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Execution.View.ExecuteControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    xmlns:fzs="clr-namespace:Fuzzware.Fuzzsaw"
+    >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="ConfigContent" TargetType="HeaderedContentControl">
+                
+                <Setter Property="HeaderTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel Margin="5">
+                                <TextBlock Style="{StaticResource CommonSubHeaderText}"
+                                           Text="{Binding}">
+                                </TextBlock>
+                                <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="3" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="HeaderedContentControl">
+                            <Border Style="{StaticResource BorderStyle}">
+                                <StackPanel>
+                                    <ContentPresenter ContentSource="Header" />
+                                    <ContentPresenter ContentSource="Content" />
+                                </StackPanel>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <StackPanel Margin="10,10,10,0">
+        <HeaderedContentControl Margin="0,0,0,5" Style="{StaticResource ConfigContent}" Header="Specify Start &amp; End States (optional)">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Margin="5" Style="{StaticResource CommonText}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+                    Start State
+                </TextBlock>
+                <TextBox Name="tbStartState" Margin="5" Height="25" Width="Auto" Grid.Column="1" Grid.Row="0"
+                         Text="{Binding Path=StartState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), Converter={StaticResource GetError}}"
+                         Style="{StaticResource DataText}"></TextBox>
+                <TextBlock Margin="5" Style="{StaticResource CommonText}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+                    End State
+                </TextBlock>
+                <TextBox Name="tbEndState" Margin="5" Height="25" Width="Auto" Grid.Column="1" Grid.Row="1"
+                         Text="{Binding Path=EndState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), Converter={StaticResource GetError}}"
+                         Style="{StaticResource DataText}"></TextBox>
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">
+                    <TextBlock Style="{StaticResource HelpText}">
+                        State descriptions have the format: NamespacePrefix-NodeName-NodeIndex-FuzzerType-FuzzerIndex
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource HelpText}">
+                        e.g. nsp-firstname-0-StringLength-10
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </HeaderedContentControl>
+        <HeaderedContentControl Margin="0,5,0,5" Style="{StaticResource ConfigContent}" Header="Test Mode">
+            <StackPanel>
+                <TextBlock Margin="5,0,0,0" Style="{StaticResource CommonText}" TextWrapping="Wrap">
+                    Test Mode executes the fuzzer without doing any fuzzing.  Use it to test the input and output configuration.
+                </TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Style="{StaticResource CommonText}" Margin="5" VerticalAlignment="Center">
+                        Test Mode is
+                    </TextBlock>
+                    <cv:OnOffControlView Margin="5" DataContext="{Binding Path=TestMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                <StackPanel Margin="0,5">
+                    <TextBlock Margin="5,0,0,0" Style="{StaticResource CommonText}" TextWrapping="Wrap">
+                        Optionally, you can provide a file for binary comparision against the testcase output by the fuzzer.  Typically the 
+                        provided file is the template file provided as input.
+                    </TextBlock>
+                    <cv:FileControlView DataContext="{Binding Path=OriginalFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+        <StackPanel HorizontalAlignment="Center" Margin="20">
+            <TextBlock Margin="10" Style="{StaticResource CommonHeaderText}">
+                Execute Fuzzer
+            </TextBlock>
+            <Button Width="80" Name="bExecute" Command="{Binding Path=(fzs:HelperCommands.ExecuteFuzzer)}">
+                <TextBlock Margin="5" Style="{StaticResource CommonHeaderText}">
+                    Start
+                </TextBlock>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

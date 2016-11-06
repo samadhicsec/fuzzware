@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<SimpleTypeFuzzerConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:Fuzzware.Schemas.SimpleTypeFuzzerConfig">
+  <StringLengthFuzzer>
+    <LengthRepetitionString>a</LengthRepetitionString>
+    <DefaultFuzzers />
+    <CustomFuzzer NodeNamespace="" NodeName="FontUri">
+      <StringLength ValueGroupRef="ref-564bf79c-e629-4b62-8401-dd4eee453831" />
+    </CustomFuzzer>
+    <CustomFuzzer NodeNamespace="" NodeName="Name" />
+    <CustomFuzzer NodeNamespace="" NodeName="Indices" />
+    <CustomFuzzer NodeNamespace="" NodeName="Matrix" />
+    <CustomFuzzer NodeNamespace="" NodeName="Color" />
+    <CustomFuzzer NodeNamespace="" NodeName="Clip" />
+    <LengthGroup ID="default-ReplaceWithLongStringsFuzzData" />
+    <LengthGroup ID="default-InsertLongStringsFuzzData" />
+    <LengthGroup ID="default-InsertToLengthLongStringsFuzzData" />
+    <LengthGroup ID="ref-564bf79c-e629-4b62-8401-dd4eee453831">
+      <StringLength>1023</StringLength>
+      <StringLength>1024</StringLength>
+      <StringLength>1025</StringLength>
+      <StringLength>2047</StringLength>
+      <StringLength>2048</StringLength>
+      <StringLength>2049</StringLength>
+      <StringLength>4095</StringLength>
+      <StringLength>4096</StringLength>
+      <StringLength>4097</StringLength>
+    </LengthGroup>
+  </StringLengthFuzzer>
+  <StringValueFuzzer>
+    <DefaultFuzzers>
+      <ReplaceString ValueGroupRef="default-ReplaceStringsFuzzData" />
+      <InsertString ValueGroupRef="default-InsertStringsFuzzData" />
+    </DefaultFuzzers>
+    <CustomFuzzer NodeNamespace="" NodeName="FontUri" />
+    <CustomFuzzer NodeNamespace="" NodeName="Name">
+      <ReplaceString ValueGroupRef="ref-34b7b4a7-56d7-45d2-952f-45fe850e3b7a" />
+      <InsertString ValueGroupRef="ref-dfcd21d6-253b-4fb7-ba62-0c139062dbda" />
+    </CustomFuzzer>
+    <CustomFuzzer NodeNamespace="" NodeName="Indices">
+      <ReplaceString ValueGroupRef="ref-9a4102d2-38ec-4fcb-aecd-be0ae7875645" />
+      <InsertString ValueGroupRef="ref-5a18ab39-5cc4-45f0-8e8b-11a63f9f962f" />
+    </CustomFuzzer>
+    <CustomFuzzer NodeNamespace="" NodeName="Matrix">
+      <ReplaceString ValueGroupRef="ref-9e907505-9ecc-4881-abbb-df03f297bbe2" />
+      <InsertString ValueGroupRef="ref-cbfb308b-9ef6-4c8b-9fee-56ee852fb44f" />
+    </CustomFuzzer>
+    <CustomFuzzer NodeNamespace="" NodeName="Color">
+      <ReplaceString ValueGroupRef="ref-fdf84502-7510-4f08-8512-e665531523cb" />
+      <InsertString ValueGroupRef="ref-14aaacba-0c15-41e7-84aa-ab9a7b4a41b9" />
+    </CustomFuzzer>
+    <CustomFuzzer NodeNamespace="" NodeName="Clip">
+      <ReplaceString ValueGroupRef="ref-be8732f7-7ae5-4943-bc6a-d3489222df72" />
+      <InsertString ValueGroupRef="ref-cee4d678-deeb-49da-ab04-874572025969" />
+    </CustomFuzzer>
+    <StringGroup ID="default-ReplaceStringsFuzzData">
+      <StringValue>..</StringValue>
+      <StringValue>..\</StringValue>
+      <StringValue>../</StringValue>
+      <StringValue>:</StringValue>
+      <StringValue>:\\</StringValue>
+      <StringValue>://</StringValue>
+      <StringValue>\\</StringValue>
+      <StringValue>//</StringValue>
+    </StringGroup>
+    <StringGroup ID="default-InsertStringsFuzzData">
+      <StringValue>1</StringValue>
+      <StringValue>-1</StringValue>
+      <StringValue>2</StringValue>
+      <StringValue>3</StringValue>
+      <StringValue>4</StringValue>
+      <StringValue>5</StringValue>
+      <StringValue>6</StringValue>
+      <StringValue>7</StringValue>
+      <StringValue>8</StringValue>
+      <StringValue>9</StringValue>
+      <StringValue>0</StringValue>
+      <StringValue>18446744073709551615</StringValue>
+      <StringValue>9223372036854775807</StringValue>
+      <StringValue>-9223372036854775807</StringValue>
+      <StringValue>4294967295</StringValue>
+      <StringValue>-4294967295</StringValue>
+      <StringValue>2147483647</StringValue>
+      <StringValue>-2147483647</StringValue>
+      <StringValue>!</StringValue>
+      <StringValue>@</StringValue>
+      <StringValue>#</StringValue>
+      <StringValue>$</StringValue>
+      <StringValue>%</StringValue>
+      <StringValue>^</StringValue>
+      <StringValue>&amp;</StringValue>
+      <StringValue>*</StringValue>
+      <StringValue>(</StringValue>
+      <StringValue>)</StringValue>
+      <StringValue>-</StringValue>
+      <StringValue>=</StringValue>
+      <StringValue>_</StringValue>
+      <StringValue>+</StringValue>
+      <StringValue>[</StringValue>
+      <StringValue>{</StringValue>
+      <StringValue>]</StringValue>
+      <StringValue>}</StringValue>
+      <StringValue>\</StringValue>
+      <StringValue>|</StringValue>
+      <StringValue>;</StringValue>
+      <StringValue>:</StringValue>
+      <StringValue>'</StringValue>
+      <StringValue>"</StringValue>
+      <StringValue>&lt;</StringValue>
+      <StringValue>&gt;</StringValue>
+      <StringValue>,</StringValue>
+      <StringValue>.</StringValue>
+      <StringValue>/</StringValue>
+      <StringValue>?</StringValue>
+      <StringValue>`</StringValue>
+      <StringValue>~</StringValue>
+    </StringGroup>
+    <StringGroup ID="default-EncodeStringsFuzzData" />
+    <StringGroup ID="ref-34b7b4a7-56d7-45d2-952f-45fe850e3b7a">
+      <StringValue>a1</StringValue>
+      <StringValue>a2</StringValue>
+      <StringValue>a3</StringValue>
+      <StringValue />
+      <StringValue>a999999999999999999999999999999999999999999999999999999999999999999999999</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-dfcd21d6-253b-4fb7-ba62-0c139062dbda">
+      <StringValue>1</StringValue>
+      <StringValue>-1</StringValue>
+      <StringValue>2</StringValue>
+      <StringValue>3</StringValue>
+      <StringValue>4</StringValue>
+      <StringValue>5</StringValue>
+      <StringValue>6</StringValue>
+      <StringValue>7</StringValue>
+      <StringValue>8</StringValue>
+      <StringValue>9</StringValue>
+      <StringValue>0</StringValue>
+      <StringValue>18446744073709551615</StringValue>
+      <StringValue>9223372036854775807</StringValue>
+      <StringValue>-9223372036854775807</StringValue>
+      <StringValue>4294967295</StringValue>
+      <StringValue>-4294967295</StringValue>
+      <StringValue>2147483647</StringValue>
+      <StringValue>-2147483647</StringValue>
+      <StringValue>!</StringValue>
+      <StringValue>@</StringValue>
+      <StringValue>#</StringValue>
+      <StringValue>$</StringValue>
+      <StringValue>%</StringValue>
+      <StringValue>^</StringValue>
+      <StringValue>&amp;</StringValue>
+      <StringValue>*</StringValue>
+      <StringValue>(</StringValue>
+      <StringValue>)</StringValue>
+      <StringValue>-</StringValue>
+      <StringValue>=</StringValue>
+      <StringValue>_</StringValue>
+      <StringValue>+</StringValue>
+      <StringValue>[</StringValue>
+      <StringValue>{</StringValue>
+      <StringValue>]</StringValue>
+      <StringValue>}</StringValue>
+      <StringValue>\</StringValue>
+      <StringValue>|</StringValue>
+      <StringValue>;</StringValue>
+      <StringValue>:</StringValue>
+      <StringValue>'</StringValue>
+      <StringValue>"</StringValue>
+      <StringValue>&lt;</StringValue>
+      <StringValue>&gt;</StringValue>
+      <StringValue>,</StringValue>
+      <StringValue>.</StringValue>
+      <StringValue>/</StringValue>
+      <StringValue>?</StringValue>
+      <StringValue>`</StringValue>
+      <StringValue>~</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-9a4102d2-38ec-4fcb-aecd-be0ae7875645">
+      <StringValue>,53.261;</StringValue>
+      <StringValue>(1),53.261;</StringValue>
+      <StringValue>(1:1,53.261;</StringValue>
+      <StringValue>(-1:1,53.261;</StringValue>
+      <StringValue>(1:-1,53.261;</StringValue>
+      <StringValue>(1:1.1,53.261;</StringValue>
+      <StringValue>(1:,53.261;</StringValue>
+      <StringValue>(),53.261;</StringValue>
+      <StringValue>),53.261;</StringValue>
+      <StringValue>,53.261;,53.261;</StringValue>
+      <StringValue>,53.261;,53.261;</StringValue>
+      <StringValue>,53.261;,</StringValue>
+      <StringValue>53.261</StringValue>
+      <StringValue>,53.261</StringValue>
+      <StringValue>,53;261;</StringValue>
+      <StringValue>,53.261111111111111111111111111111111111111111111111111111111111111111111111111111111;</StringValue>
+      <StringValue>,5333333333333333333333333333333333333333333333333333333333333333333333333333333333333.261;</StringValue>
+      <StringValue>,53.-261;</StringValue>
+      <StringValue>,-53.261;</StringValue>
+      <StringValue>-1,53.261;</StringValue>
+      <StringValue>1:1,53.261;</StringValue>
+      <StringValue>1,1,53.261;</StringValue>
+      <StringValue>,53.261;;</StringValue>
+      <StringValue>;53.261;</StringValue>
+      <StringValue>,53.261;</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-5a18ab39-5cc4-45f0-8e8b-11a63f9f962f">
+      <StringValue>1</StringValue>
+      <StringValue>-1</StringValue>
+      <StringValue>2</StringValue>
+      <StringValue>3</StringValue>
+      <StringValue>4</StringValue>
+      <StringValue>5</StringValue>
+      <StringValue>6</StringValue>
+      <StringValue>7</StringValue>
+      <StringValue>8</StringValue>
+      <StringValue>9</StringValue>
+      <StringValue>0</StringValue>
+      <StringValue>18446744073709551615</StringValue>
+      <StringValue>9223372036854775807</StringValue>
+      <StringValue>-9223372036854775807</StringValue>
+      <StringValue>4294967295</StringValue>
+      <StringValue>-4294967295</StringValue>
+      <StringValue>2147483647</StringValue>
+      <StringValue>-2147483647</StringValue>
+      <StringValue>!</StringValue>
+      <StringValue>@</StringValue>
+      <StringValue>#</StringValue>
+      <StringValue>$</StringValue>
+      <StringValue>%</StringValue>
+      <StringValue>^</StringValue>
+      <StringValue>&amp;</StringValue>
+      <StringValue>*</StringValue>
+      <StringValue>(</StringValue>
+      <StringValue>)</StringValue>
+      <StringValue>-</StringValue>
+      <StringValue>=</StringValue>
+      <StringValue>_</StringValue>
+      <StringValue>+</StringValue>
+      <StringValue>[</StringValue>
+      <StringValue>{</StringValue>
+      <StringValue>]</StringValue>
+      <StringValue>}</StringValue>
+      <StringValue>\</StringValue>
+      <StringValue>|</StringValue>
+      <StringValue>;</StringValue>
+      <StringValue>:</StringValue>
+      <StringValue>'</StringValue>
+      <StringValue>"</StringValue>
+      <StringValue>&lt;</StringValue>
+      <StringValue>&gt;</StringValue>
+      <StringValue>,</StringValue>
+      <StringValue>.</StringValue>
+      <StringValue>/</StringValue>
+      <StringValue>?</StringValue>
+      <StringValue>`</StringValue>
+      <StringValue>~</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-9e907505-9ecc-4881-abbb-df03f297bbe2">
+      <StringValue>1.333333333</StringValue>
+      <StringValue>1.333333333,0</StringValue>
+      <StringValue>1.333333333,0,0</StringValue>
+      <StringValue>1.333333333,0,0,1.333333333</StringValue>
+      <StringValue>1.333333333,0,0,1.333333333,0</StringValue>
+      <StringValue>1.333333333,0,0,1.333333333,0,0,0</StringValue>
+      <StringValue>a,0,0,0,0,0</StringValue>
+      <StringValue>0x,0,0,0,0,0</StringValue>
+      <StringValue>?,0,0,0,0,0</StringValue>
+      <StringValue>%n,0,0,0,0,0</StringValue>
+      <StringValue>+,0,0,0,0,0</StringValue>
+      <StringValue>1e,0,0,0,0,0</StringValue>
+      <StringValue>e1,0,0,0,0,0</StringValue>
+      <StringValue>1.1.1,0,0,0,0,0</StringValue>
+      <StringValue>	
+			  1,
+			  0,
+			  0,
+			  0,
+			  0,
+			  0		  </StringValue>
+      <StringValue>-,0,0,0,0,0</StringValue>
+      <StringValue>-1,0,0,0,0,0</StringValue>
+      <StringValue>1000000000000000000000000000000000000000000000000000000000000,0,0,0,0,0</StringValue>
+      <StringValue>-1000000000000000000000000000000000000000000000000000000000000,0,0,0,0,0</StringValue>
+      <StringValue>18446744073709551615,0,0,0,0,0</StringValue>
+      <StringValue>9223372036854775807,0,0,0,0,0</StringValue>
+      <StringValue>-9223372036854775809,0,0,0,0,0</StringValue>
+      <StringValue>4294967295,0,0,0,0,0</StringValue>
+      <StringValue>-4294967295,0,0,0,0,0</StringValue>
+      <StringValue>2147483647,0,0,0,0,0</StringValue>
+      <StringValue>-2147483647,0,0,0,0,0</StringValue>
+      <StringValue>-0.0,0,0,0,0,0</StringValue>
+      <StringValue>-.0000000000000000000000000000000000000000000000000000000000000000000000000000000000001,0,0,0,0,0</StringValue>
+      <StringValue>-..0,0,0,0,0,0</StringValue>
+      <StringValue>-%0,0,0,0,0,0</StringValue>
+      <StringValue>1ee1,0,0,1.333333333,0,0</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-cbfb308b-9ef6-4c8b-9fee-56ee852fb44f">
+      <StringValue>1</StringValue>
+      <StringValue>-1</StringValue>
+      <StringValue>2</StringValue>
+      <StringValue>3</StringValue>
+      <StringValue>4</StringValue>
+      <StringValue>5</StringValue>
+      <StringValue>6</StringValue>
+      <StringValue>7</StringValue>
+      <StringValue>8</StringValue>
+      <StringValue>9</StringValue>
+      <StringValue>0</StringValue>
+      <StringValue>18446744073709551615</StringValue>
+      <StringValue>9223372036854775807</StringValue>
+      <StringValue>-9223372036854775807</StringValue>
+      <StringValue>4294967295</StringValue>
+      <StringValue>-4294967295</StringValue>
+      <StringValue>2147483647</StringValue>
+      <StringValue>-2147483647</StringValue>
+      <StringValue>!</StringValue>
+      <StringValue>@</StringValue>
+      <StringValue>#</StringValue>
+      <StringValue>$</StringValue>
+      <StringValue>%</StringValue>
+      <StringValue>^</StringValue>
+      <StringValue>&amp;</StringValue>
+      <StringValue>*</StringValue>
+      <StringValue>(</StringValue>
+      <StringValue>)</StringValue>
+      <StringValue>-</StringValue>
+      <StringValue>=</StringValue>
+      <StringValue>_</StringValue>
+      <StringValue>+</StringValue>
+      <StringValue>[</StringValue>
+      <StringValue>{</StringValue>
+      <StringValue>]</StringValue>
+      <StringValue>}</StringValue>
+      <StringValue>\</StringValue>
+      <StringValue>|</StringValue>
+      <StringValue>;</StringValue>
+      <StringValue>:</StringValue>
+      <StringValue>'</StringValue>
+      <StringValue>"</StringValue>
+      <StringValue>&lt;</StringValue>
+      <StringValue>&gt;</StringValue>
+      <StringValue>,</StringValue>
+      <StringValue>.</StringValue>
+      <StringValue>/</StringValue>
+      <StringValue>?</StringValue>
+      <StringValue>`</StringValue>
+      <StringValue>~</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-fdf84502-7510-4f08-8512-e665531523cb">
+      <StringValue>FF808080</StringValue>
+      <StringValue>#qq808080</StringValue>
+      <StringValue>#FF</StringValue>
+      <StringValue>#FF80</StringValue>
+      <StringValue>#FF8080</StringValue>
+      <StringValue>#FF80808080</StringValue>
+      <StringValue>#FF808080FF</StringValue>
+      <StringValue>#FFqq8080</StringValue>
+      <StringValue>#FF80qq80</StringValue>
+      <StringValue>#FF8080qq</StringValue>
+      <StringValue>#FF808080qq</StringValue>
+      <StringValue>sc# 0</StringValue>
+      <StringValue>sc# ,0</StringValue>
+      <StringValue>sc# 0, 0</StringValue>
+      <StringValue>sc# 0, 0, 0, 0</StringValue>
+      <StringValue>sc# 0,0,0</StringValue>
+      <StringValue>sc# 0,	0,	0</StringValue>
+      <StringValue>sc# 0,
+		  0,
+		  0,
+		  </StringValue>
+      <StringValue>ContextColor</StringValue>
+      <StringValue>ContextColor 0</StringValue>
+      <StringValue>ContextColor ,0</StringValue>
+      <StringValue>ContextColor 0, 0</StringValue>
+      <StringValue>ContextColor 0, 0, 0</StringValue>
+      <StringValue>ContextColor ,0, 0, 0</StringValue>
+      <StringValue>ContextColor 0, 0, 0, 0</StringValue>
+      <StringValue>ContextColor 0, 0, 0, 0, 0</StringValue>
+      <StringValue>ContextColor 0, 0, 0, 0, 0, 0</StringValue>
+      <StringValue>ContextColor 0, 0, 0, 0, 0, 0, 0</StringValue>
+      <StringValue>ContextColor 0, 0, 0, 0, 0, 0, 0, 0</StringValue>
+      <StringValue>ContextColor 0, 0, 0, 0, 0, 0, 0, 0, 0</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-14aaacba-0c15-41e7-84aa-ab9a7b4a41b9">
+      <StringValue>1</StringValue>
+      <StringValue>-1</StringValue>
+      <StringValue>2</StringValue>
+      <StringValue>3</StringValue>
+      <StringValue>4</StringValue>
+      <StringValue>5</StringValue>
+      <StringValue>6</StringValue>
+      <StringValue>7</StringValue>
+      <StringValue>8</StringValue>
+      <StringValue>9</StringValue>
+      <StringValue>0</StringValue>
+      <StringValue>18446744073709551615</StringValue>
+      <StringValue>9223372036854775807</StringValue>
+      <StringValue>-9223372036854775807</StringValue>
+      <StringValue>4294967295</StringValue>
+      <StringValue>-4294967295</StringValue>
+      <StringValue>2147483647</StringValue>
+      <StringValue>-2147483647</StringValue>
+      <StringValue>!</StringValue>
+      <StringValue>@</StringValue>
+      <StringValue>#</StringValue>
+      <StringValue>$</StringValue>
+      <StringValue>%</StringValue>
+      <StringValue>^</StringValue>
+      <StringValue>&amp;</StringValue>
+      <StringValue>*</StringValue>
+      <StringValue>(</StringValue>
+      <StringValue>)</StringValue>
+      <StringValue>-</StringValue>
+      <StringValue>=</StringValue>
+      <StringValue>_</StringValue>
+      <StringValue>+</StringValue>
+      <StringValue>[</StringValue>
+      <StringValue>{</StringValue>
+      <StringValue>]</StringValue>
+      <StringValue>}</StringValue>
+      <StringValue>\</StringValue>
+      <StringValue>|</StringValue>
+      <StringValue>;</StringValue>
+      <StringValue>:</StringValue>
+      <StringValue>'</StringValue>
+      <StringValue>"</StringValue>
+      <StringValue>&lt;</StringValue>
+      <StringValue>&gt;</StringValue>
+      <StringValue>,</StringValue>
+      <StringValue>.</StringValue>
+      <StringValue>/</StringValue>
+      <StringValue>?</StringValue>
+      <StringValue>`</StringValue>
+      <StringValue>~</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-be8732f7-7ae5-4943-bc6a-d3489222df72">
+      <StringValue>F</StringValue>
+      <StringValue>M 306.05,125.54</StringValue>
+      <StringValue>M 306.05,125.54 M 306.05,125.54 M 306.05,125.54</StringValue>
+      <StringValue>M 306.05,125.54 L 425.71,</StringValue>
+      <StringValue>M 306.05,125.54 L 425.71,125.54 </StringValue>
+      <StringValue>M 306.05,125.54 L 425.71,125.54 L </StringValue>
+      <StringValue>M 306.05,125.54 L 425.71,125.54 L 425.71,138.98 Z </StringValue>
+      <StringValue>L 425.71,125.54 L 425.71,138.98 L 306.05,138.98 Z </StringValue>
+      <StringValue>Z </StringValue>
+      <StringValue>L 425.71,125.54 L 425.71,138.98 L 306.05,138.98</StringValue>
+      <StringValue>L 425.71,125.54</StringValue>
+      <StringValue>L 425.71,125.54 L 425.71,138.98 Z </StringValue>
+      <StringValue>M 306.05,125.54 H 306.05 125.54 425.71 125.54 425.71 138.98 306.05 138.98</StringValue>
+      <StringValue>M 306.05,125.54 V 306.05 125.54 425.71 125.54 425.71 138.98 306.05 138.98</StringValue>
+      <StringValue>M 306.05,125.54 HV 306.05 125.54 425.71 125.54 425.71 138.98 306.05 138.98</StringValue>
+      <StringValue>M 306.05,125.54 Q 306.05,125.54 425.71,125.54 425.71,138.98 306.05,138.98 Z </StringValue>
+      <StringValue>M 306.05,125.54 Q 306.05,125.54 425.71,125.54 306.05,138.98 Z </StringValue>
+      <StringValue>M 306.05,125.54 Q 306.05,125.54 425.71,125.54 Z </StringValue>
+      <StringValue>M 306.05,125.54 Q 306.05,125.54 Z </StringValue>
+      <StringValue>M 306.05,125.54 C 306.05,125.54 425.71,125.54 425.71,138.98 306.05,138.98 425.71,138.98 306.05,138.98 Z </StringValue>
+      <StringValue>M 306.05,125.54 C 306.05,125.54 425.71,125.54 306.05,138.98 425.71,138.98 306.05,138.98 Z </StringValue>
+      <StringValue>M 306.05,125.54 C 306.05,125.54 425.71,125.54 425.71,138.98 306.05,138.98 Z </StringValue>
+      <StringValue>M 306.05,125.54 C 306.05,125.54 425.71,125.54 425.71,138.98 Z </StringValue>
+      <StringValue>M 306.05,125.54 C 306.05,125.54 425.71,125.54 Z </StringValue>
+      <StringValue>M 306.05,125.54 C 306.05,125.54 Z </StringValue>
+      <StringValue>M 306.05,125.54 A 425.71,125.54 425.71 0 0 425.71,138.98 Z</StringValue>
+      <StringValue>M 306.05,125.54 A 425.71 125.54 425.71 0 0 425.71 138.98 Z</StringValue>
+      <StringValue>M 306.05,125.54 A 425.71,125.54 425.71 0 10 425.71,138.98 Z</StringValue>
+      <StringValue>M 306.05,125.54 A 425.71,125.54 425.71 -10 0 425.71,138.98 Z</StringValue>
+      <StringValue>M 306.05,125.54 A 425.71,125.54 425.71 10 0 425.71,138.98 Z</StringValue>
+      <StringValue>M 306.05,125.54 A 425.71,125.54 425.71 0 -10 425.71,138.98 Z</StringValue>
+      <StringValue>M 306.05,125.54 A 425.71,125.54 425.71 0 -1 425.71,138.98 Z</StringValue>
+      <StringValue>M 306.05,125.54 A 425.71,125.54 425.71 0.5 0.5 425.71,138.98 Z</StringValue>
+      <StringValue>{StaticResource}</StringValue>
+    </StringGroup>
+    <StringGroup ID="ref-cee4d678-deeb-49da-ab04-874572025969">
+      <StringValue>1</StringValue>
+      <StringValue>-1</StringValue>
+      <StringValue>2</StringValue>
+      <StringValue>3</StringValue>
+      <StringValue>4</StringValue>
+      <StringValue>5</StringValue>
+      <StringValue>6</StringValue>
+      <StringValue>7</StringValue>
+      <StringValue>8</StringValue>
+      <StringValue>9</StringValue>
+      <StringValue>0</StringValue>
+      <StringValue>18446744073709551615</StringValue>
+      <StringValue>9223372036854775807</StringValue>
+      <StringValue>-9223372036854775807</StringValue>
+      <StringValue>4294967295</StringValue>
+      <StringValue>-4294967295</StringValue>
+      <StringValue>2147483647</StringValue>
+      <StringValue>-2147483647</StringValue>
+      <StringValue>!</StringValue>
+      <StringValue>@</StringValue>
+      <StringValue>#</StringValue>
+      <StringValue>$</StringValue>
+      <StringValue>%</StringValue>
+      <StringValue>^</StringValue>
+      <StringValue>&amp;</StringValue>
+      <StringValue>*</StringValue>
+      <StringValue>(</StringValue>
+      <StringValue>)</StringValue>
+      <StringValue>-</StringValue>
+      <StringValue>=</StringValue>
+      <StringValue>_</StringValue>
+      <StringValue>+</StringValue>
+      <StringValue>[</StringValue>
+      <StringValue>{</StringValue>
+      <StringValue>]</StringValue>
+      <StringValue>}</StringValue>
+      <StringValue>\</StringValue>
+      <StringValue>|</StringValue>
+      <StringValue>;</StringValue>
+      <StringValue>:</StringValue>
+      <StringValue>'</StringValue>
+      <StringValue>"</StringValue>
+      <StringValue>&lt;</StringValue>
+      <StringValue>&gt;</StringValue>
+      <StringValue>,</StringValue>
+      <StringValue>.</StringValue>
+      <StringValue>/</StringValue>
+      <StringValue>?</StringValue>
+      <StringValue>`</StringValue>
+      <StringValue>~</StringValue>
+    </StringGroup>
+  </StringValueFuzzer>
+  <DecimalValueFuzzer>
+    <DefaultFuzzers>
+      <ReplaceDecimal ValueGroupRef="default-ReplaceDecimalsFuzzData" />
+    </DefaultFuzzers>
+    <DecimalGroup ID="default-ReplaceDecimalsFuzzData">
+      <DecimalValue>0.0</DecimalValue>
+      <DecimalValue>0.1</DecimalValue>
+      <DecimalValue>-0.1</DecimalValue>
+      <DecimalValue>1.0</DecimalValue>
+      <DecimalValue>1.1</DecimalValue>
+      <DecimalValue>-1.0</DecimalValue>
+      <DecimalValue>-1.1</DecimalValue>
+      <DecimalValue>0.00000000000000000001</DecimalValue>
+      <DecimalValue>-79,228,162,514,264,337,593,543,950,335</DecimalValue>
+      <DecimalValue>79,228,162,514,264,337,593,543,950,335</DecimalValue>
+      <DecimalValue>1.79769313486232e308</DecimalValue>
+      <DecimalValue>-1.79769313486232e308</DecimalValue>
+      <DecimalValue>1.79769313486232e-308</DecimalValue>
+      <DecimalValue>0.0</DecimalValue>
+      <DecimalValue>0.0</DecimalValue>
+      <DecimalValue>0.0</DecimalValue>
+      <DecimalValue>0.0</DecimalValue>
+      <DecimalValue>0.0</DecimalValue>
+      <DecimalValue>0.0</DecimalValue>
+      <DecimalValue>0.0</DecimalValue>
+      <DecimalValue>0.0</DecimalValue>
+    </DecimalGroup>
+  </DecimalValueFuzzer>
+  <IntegerValueFuzzer>
+    <DefaultFuzzers />
+    <IntegerGroup ID="default-ReplaceIntegersFuzzData" />
+    <IntegerGroup ID="default-AddIntegersFuzzData" />
+    <IntegerGroup ID="default-SubtractIntegersFuzzData" />
+    <IntegerGroup ID="default-MultiplyIntegersFuzzData" />
+    <IntegerGroup ID="default-DivideIntegersFuzzData" />
+  </IntegerValueFuzzer>
+  <BooleanValueFuzzer>
+    <BooleanValue>true</BooleanValue>
+    <BooleanValue>false</BooleanValue>
+  </BooleanValueFuzzer>
+  <BinaryValueFuzzer>
+    <DefaultFuzzers />
+    <ByteGroup ID="default-ReplaceBytesFuzzData" />
+    <ByteGroup ID="default-InsertBytesFuzzData" />
+    <ByteGroup ID="default-XORBytesFuzzData" />
+    <ByteGroup ID="default-ANDBytesFuzzData" />
+    <ByteGroup ID="default-ORBytesFuzzData" />
+  </BinaryValueFuzzer>
+</SimpleTypeFuzzerConfig>

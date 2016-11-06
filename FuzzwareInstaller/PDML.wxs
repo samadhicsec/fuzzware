@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="PDML" FileSource="g:\Tools\Fuzzware\Examples\PDML\publish">
+      <Component Id="PDML.ComplexTypeFuzzerConfig.xml" Guid="{CFB37364-B159-4d9d-A385-78542F613FA2}" Feature="MainApplication">
+        <File Id="PDML.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\PDML\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="PDML.Configuration.xml" Guid="{3A3C1677-DC96-4b0d-9FBD-AF11219DF43A}" Feature="MainApplication">
+        <File Id="PDML.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\PDML\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="PDML.SimpleTypeFuzzerConfig.xml" Guid="{A547FFCE-CF93-4b16-9807-BF6659C9E51A}" Feature="MainApplication">
+        <File Id="PDML.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\PDML\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="dns.pdml" Guid="{5A18816C-C0ED-466c-ABC6-E26C49D5E5E1}" Feature="MainApplication">
+        <File Id="dns.pdml" Name="dns.pdml" Source="g:\Tools\Fuzzware\Examples\PDML\publish\dns.pdml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="dns.xml" Guid="{6F26214C-58BD-467a-85DC-DB9FC604AB0B}" Feature="MainApplication">
+        <File Id="dns.xml" Name="dns.xml" Source="g:\Tools\Fuzzware\Examples\PDML\publish\dns.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="dns.xsd" Guid="{E8D71BA7-EA2A-4f78-8D0B-36044FA0ED0F}" Feature="MainApplication">
+        <File Id="dns.xsd" Name="dns.xsd" Source="g:\Tools\Fuzzware\Examples\PDML\publish\dns.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="PDML" Name="PDML">
+        <Component Id="PDML" Guid="{73552936-9D45-43ad-A047-858678EE8DCC}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemovePDMLDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="PDMLComponentGroup">
+      <ComponentRef Id="PDML.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="PDML.Configuration.xml"/>
+      <ComponentRef Id="PDML.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="dns.pdml"/>
+      <ComponentRef Id="dns.xml"/>
+      <ComponentRef Id="dns.xsd"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

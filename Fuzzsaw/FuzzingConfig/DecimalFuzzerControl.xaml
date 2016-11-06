@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.FuzzingConfig.DecimalFuzzerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fzc="clr-namespace:Fuzzware.Fuzzsaw.FuzzingConfig"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common\Common.xaml" />
+                <ResourceDictionary Source="BaseFuzzerResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DecimalFuzzerView, Mode=TwoWay}">
+            <Border Name="FuzzDataBorder" Style="{StaticResource BorderStyle}" Width="Auto" Height="Auto">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Name="DeleteFuzzer" Click="DeleteFuzzer_Click" Grid.Column="1" Template="{StaticResource DeleteButtonTemplate}" VerticalAlignment="Top" Margin="3"
+                                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IsCustom, Converter={StaticResource BooleanToVisability}}"></Button>
+                        <!--<cv:OnOffControlView x:Name="OnOffDefaultFuzzer" Grid.Column="1" Margin="3" VerticalAlignment="Top" On="{Binding Path=IsConfigEnabled, Mode=TwoWay}" 
+                                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IsDefault, Converter={StaticResource BooleanToVisability}}" />-->
+
+                        <ContentControl Template="{StaticResource CustomNodeName}" Grid.Column="0" />
+
+                    </Grid>
+                    <TabControl Width="Auto" Height="Auto" Name="tcDecimalFuzzers" TabStripPlacement="Left" Style="{StaticResource ControlCommonText}"
+                                IsEnabled="{Binding Path=IsConfigEnabled}">
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Replace decimals
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Replace decimals with the values</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">given in the list.</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <fzc:FuzzDataSelector Source="{Binding Path=ReplaceDecimalsFuzzData, Mode=TwoWay}" EmptyValuesAllowed="False" 
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" Width="Auto" />
+                        </TabItem>
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Replace with random decimals
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Replace decimals with a random</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">decimal.  </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <ContentControl DataContext="{Binding Path=RandomDecimalsFuzzData}" Template="{StaticResource RandomFuzzerIterations}" />
+                        </TabItem>
+                    </TabControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

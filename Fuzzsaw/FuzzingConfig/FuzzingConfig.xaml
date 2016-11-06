@@ -1,0 +1,53 @@
+﻿<Page x:Class="Fuzzware.Fuzzsaw.FuzzingConfig.FuzzingConfig"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+    Title="FuzzingConfig">
+    <StackPanel>
+        <TabControl>
+            <TabItem Header="Fuzzers">
+                <StackPanel>
+                    <GroupBox Header="Add fuzzer for nodes">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="0, 0, 10, 0">
+                                <Label Content="Node Namespace" />
+                                <TextBox Name="tbCustomNodeNS" Width="120" />
+                            </StackPanel>
+                            <StackPanel Margin="0, 0, 10, 0">
+                                <Label Content="Node Name" />
+                                <TextBox Name="tbCustomNodeName" Width="120" />
+                            </StackPanel>
+                            <StackPanel Margin="0, 0, 10, 0">
+                                <Label Content=" " />
+                                <Button Content="Add" Name="bAddFuzzerForNode" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Nodes With Fuzzers">
+                        <StackPanel Orientation="Horizontal">
+                            <ListBox Name="lbNodesWithFuzzers" Height="100" Width="230" Margin="0,0,10,0" ItemsSource="{Binding Path=NodesWithFuzzers}" 
+                                     diag:PresentationTraceSources.TraceLevel="High"/>
+                            <Button Content="Delete" Height="25" />
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Node Fuzzers">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <ListView Name="lvAvailableFuzzers" Width="130" Margin="0,0,5,0" />
+                                <ListView Name="lvAvailableFuzzerGroups" Width="50" Margin="0,0,5,0" />
+                                <ListView Name="lvAvailableFuzzerRanges" Width="50" Margin="0,0,10,0"/>
+                                <Button Content="Add" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <ListBox Name="lbFuzzers" Height="100" Width="230" Margin="0,0,10,0" ItemsSource="{Binding Path=Fuzzers}" />
+                                <Button Content="Delete" Height="25" />
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Value Groups"></TabItem>
+            <TabItem Header="Range Groups"></TabItem>
+        </TabControl>
+    </StackPanel>
+</Page>

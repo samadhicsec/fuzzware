@@ -1,0 +1,679 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.MOV"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.MOV"
+    xmlns:mov="urn:Fuzzware.Examples.MOV"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:include schemaLocation="SampleTableAtoms.xsd" />
+  
+  <xs:element name="MOV" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="mov:ftyp" />
+        <xs:element ref="mov:moov" />
+        <xs:element ref="mov:mdat" />
+        <xs:element ref="mov:free" />
+        <xs:element ref="mov:skip" />
+        <xs:element ref="mov:wide" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ftyp">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfftyp" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="ftypconst" type="xs:string" fixed="ftyp" />
+        <xs:element name="ftypData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Major_Brand" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="Minor_Version" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="Compatible_Brands">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Compatible_Brand" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="moov">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmoov" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="moovconst" type="xs:string" fixed="moov" />
+        <xs:element name="moovAtoms">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="mov:prfl" />
+              <xs:element ref="mov:mvhd" />
+              <xs:element ref="mov:clip" />
+              <xs:element ref="mov:udta" />
+              <xs:element ref="mov:trak" />
+              <xs:element ref="mov:ctab" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- moov atoms -->
+  <xs:element name="prfl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfprfl" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="prflconst" type="xs:string" fixed="prfl" />
+        <xs:element name="prflData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="mvhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmvhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mvhdconst" type="xs:string" fixed="mvhd" />
+        <xs:element name="mvhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mvhdversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdflags" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="mvhdCreationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdModificationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdTimescale" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdPreferredRate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdPrefVolume" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdReserved" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="mvhdMatrix" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="36" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="mvhdPreviewTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdPreviewDur" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdPosterTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdSelTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdSelDur" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdCurrentTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mvhdNextTrackId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="clip">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfclip" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="clipconst" type="xs:string" fixed="clip" />
+        <xs:element name="clipData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="crgn" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="crgn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfcrgn" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="crgnconst" type="xs:string" fixed="crgn" />
+        <xs:element name="crgnData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="crgnRegionSize" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="crgnRegionBoundaryBox" type="xs:unsignedLong" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="crgnRegionData" type="xs:hexBinary" sac:outputAs="Decoded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="udta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfudta" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="udtaconst" type="xs:string" fixed="udta" />
+        <!--this can be expanded-->
+        <xs:element name="udtaData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="trak">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftrak" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="trakconst" type="xs:string" fixed="trak" />
+        <xs:element name="trakData">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="mov:tkhd" />
+              <xs:element ref="mov:clip" />
+              <xs:element ref="mov:matt" />
+              <xs:element ref="mov:edts" />
+              <xs:element ref="mov:load" />
+              <xs:element ref="mov:tref" />
+              <xs:element ref="mov:imap" />
+              <xs:element ref="mov:mdia" />
+              <xs:element ref="mov:udta" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--trak atoms-->
+
+  <xs:element name="tkhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftkhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="tkhdconst" type="xs:string" fixed="tkhd" />
+        <xs:element name="tkhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="tkhdversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdflags" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="tkhdCreationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdModificationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdTrackId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdReserved" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdReserved2" type="xs:unsignedLong" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdLayer" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdAltGroup" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdVolume" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdReserved3" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdMatrix" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="36" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="tkhdTrackWidth" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tkhdTrackHeight" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="matt">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmatt" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mattconst" type="xs:string" fixed="matt" />
+        <!--this can be expanded-->
+        <xs:element name="mattData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="edts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfedts" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="edtsconst" type="xs:string" fixed="edts" />
+        <xs:element name="edtsData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="mov:elst" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="elst">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfelst" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="elstconst" type="xs:string" fixed="elst" />
+        <xs:element name="elstData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="elstversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="elstflags" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CountOfEditListTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="EditListTableEntry">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="eltTrackDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="eltMediaTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="eltMediaRate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="load">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfload" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="loadconst" type="xs:string" fixed="load" />
+        <xs:element name="loadData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="loadPreloadStartTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="loadPreloadDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="loadPreloadFlags" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="loadDefaultHints" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="tref">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftref" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="trefconst" type="xs:string" fixed="tref" />
+        <xs:element name="trefData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="imap">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfimap" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="imapconst" type="xs:string" fixed="imap" />
+        <xs:element name="imapData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="mov:in" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="  in">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfin" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="inconst" type="xs:hexBinary" fixed="0000696E" sac:outputAs="Decoded" />
+        <xs:element name="inData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="inAtomId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="inReserved" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="CountOfinChildAtoms" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="ChildAtoms" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:choice>
+                    <xs:element ref="mov:ty" />
+                    <xs:element ref="mov:obid" />
+                  </xs:choice>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ty">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfty" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="tyconst" type="xs:hexBinary" fixed="00007479" sac:outputAs="Decoded" />
+        <xs:element name="tyData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="tyInputType" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="obid">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfobid" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="obidconst" type="xs:string" fixed="obid" />
+        <xs:element name="obidData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="obidObjectId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="mdia">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmdia" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mdiaconst" type="xs:string" fixed="mdia" />
+        <xs:element name="mdiaData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="mov:mdhd" />
+              <xs:element ref="mov:hdlr" />
+              <xs:element ref="mov:minf" minOccurs="0" />
+              <xs:element ref="mov:udta" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="mdhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmdhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mdhdconst" type="xs:string" fixed="mdhd" />
+        <xs:element name="mdhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mdhdversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdflags" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="mdhdCreationTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdModTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdTimescale" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdLanguage" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdQuality" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hdlr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfhdlr" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="hdlrconst" type="xs:string" fixed="hdlr" />
+        <xs:element name="hdlrData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="hdlrversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="hdlrflags" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="mdhdComponentType" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdComponentSubType" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdComponentManufacturer" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdComponentFlags" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdComponentFlagMask" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="ByteLengthOfmdhdComponentName" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mdhdComponentName" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="minf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfminf" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="minfconst" type="xs:string" fixed="minf" />
+        <xs:element name="minfData">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+              <xs:element ref="mov:vmhd" />
+              <xs:element ref="mov:hdlr" />
+              <xs:element ref="mov:dinf" />
+              <xs:element ref="mov:stbl" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="vmhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfvmhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="vmhdconst" type="xs:string" fixed="vmhd" />
+        <xs:element name="vmhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="vmhdversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="vmhdflags" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="vmhdGraphicsMode" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="vmhdOpcolor" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="dinf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfdinf" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="dinfconst" type="xs:string" fixed="dinf" />
+        <xs:element name="dinfData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="mov:dref" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="dref">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfdref" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="drefconst" type="xs:string" fixed="dref" />
+        <xs:element name="drefversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="drefflags" sac:outputAs="Decoded">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CountOfDataReference" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="DataReference">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ByteLengthOfDataReference" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="drtype" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="drversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="drflags" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="drdata" type="xs:hexBinary" sac:outputAs="Decoded" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!--/trak atoms-->
+  
+  <xs:element name="ctab">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfctab" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="ctabconst" type="xs:hexBinary" fixed="63746162" sac:outputAs="Decoded" />
+        <xs:element name="ctabData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ctabSeed" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="ctabFlags" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="CountOfctabColourArrayEntry" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="ctabColourArrayEntry" minOccurs="0" maxOccurs="unbounded" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- /moov atoms -->
+
+  <xs:element name="mdat">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmdat" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mdatconst" type="xs:hexBinary" fixed="6D646174" sac:outputAs="Decoded" />
+        <xs:element name="mdatData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="free">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOffree" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="freeconst" type="xs:string" fixed="free" />
+        <xs:element name="freeData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="skip">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfskip" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="skipconst" type="xs:string" fixed="skip" />
+        <xs:element name="skipData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="wide">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfwide" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="wideconst" type="xs:string" fixed="wide" />
+        <xs:element name="wideData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="pnot">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfpnot" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="pnotconst" type="xs:string" fixed="pnot" />
+        <xs:element name="pnotData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="pnotModificationDate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="pnotVersionNumber" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="pnotAtomType" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="pnotAtomIndex" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

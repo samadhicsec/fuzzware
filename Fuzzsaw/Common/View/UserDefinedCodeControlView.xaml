@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.View.UserDefinedCodeControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock Margin="5,5,0,-5" Style="{StaticResource CommonText}" TextWrapping="Wrap">
+                Select the custom .Net assemblies to load.
+            </TextBlock>
+            <cv:FilesControlView DataContext="{Binding Path=Assemblies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Margin="5" Grid.Row="1">
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource CommonText}" TextWrapping="Wrap" xml:space="preserve">Specify the Namespace.Classname of the class that implements </TextBlock>
+                <TextBlock Style="{StaticResource CommonText}" TextWrapping="Wrap" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=InterfaceName}" />
+                <TextBlock Style="{StaticResource CommonText}" TextWrapping="Wrap" xml:space="preserve"> (in Extensible.dll).</TextBlock>
+            </WrapPanel>
+            <TextBox Name="tbNSdotClass" Style="{StaticResource DataText}" Text="{Binding Path=NamespaceDotClass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Margin="5" Grid.Row="2">
+            <TextBlock Style="{StaticResource CommonText}" TextWrapping="Wrap">
+                Optionally, provide custom XML that will be passed to the custom code.
+            </TextBlock>
+            <TextBox Name="tbCustomParameters" Style="{StaticResource DataText}" MinHeight="50" Height="150" MaxHeight="450" 
+                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True"
+                     Text="{Binding Path=UserDefinedData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+    </Grid>
+
+</UserControl>

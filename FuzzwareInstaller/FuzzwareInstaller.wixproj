@@ -1,0 +1,95 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.0</ProductVersion>
+    <ProjectGuid>{9bb0f412-3b2a-49a2-b107-0df8d0927194}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>FuzzwareInstaller</OutputName>
+    <OutputType>Package</OutputType>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <Cultures>en-US</Cultures>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="3GP.wxs" />
+    <Compile Include="ActiveX.wxs" />
+    <Compile Include="AVI.wxs" />
+    <Compile Include="BMP.wxs" />
+    <Compile Include="HTTP.wxs" />
+    <Compile Include="ISOBaseMedia.wxs" />
+    <Compile Include="MOV.wxs" />
+    <Compile Include="MP4.wxs" />
+    <Compile Include="PDF.wxs" />
+    <Compile Include="PDML.wxs" />
+    <Compile Include="Product.wxs" />
+    <Compile Include="TLS.wxs" />
+    <Compile Include="WAV.wxs" />
+    <Compile Include="WinRAR.wxs" />
+    <Compile Include="WSDL.wxs" />
+    <Compile Include="XHTML.wxs" />
+    <Compile Include="XPS.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+    </WixExtension>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+  <PropertyGroup>
+    <PreBuildEvent>REM DID YOU OBFUSCATE THE BINARIES%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f
+REM DID YOU OBFUSCATE THE BINARIES%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f
+REM DID YOU OBFUSCATE THE BINARIES%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f
+REM DID YOU OBFUSCATE THE BINARIES%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f
+REM DID YOU OBFUSCATE THE BINARIES%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f%3f
+
+mkdir build\Fuzzware
+
+REM Copy binaries
+copy $(ProjectDir)..\Schemer\Dotfuscated\%2a.dll build\Fuzzware\
+copy $(ProjectDir)..\Schemer\Dotfuscated\%2a.exe build\Fuzzware\
+copy $(ProjectDir)..\Schemer\bin\Release\Extensible.dll build\Fuzzware\
+copy $(ProjectDir)..\Fuzzsaw\bin\Release\Fuzzsaw.exe build\Fuzzware\
+copy $(ProjectDir)..\FuzzwareDBG\Release\FuzzwareDBG.exe build\Fuzzware\
+copy $(ProjectDir)..\FuzzwareDBG\Release\FuzzwareDBGStub.dll build\Fuzzware\
+copy $(ProjectDir)..\FuzzwareDBG\IFuzzwareDBGProxy.dll build\Fuzzware\
+
+REM Sign the binaries
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\Common.dll $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\Monitoring.dll $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\ConvertFromXML.dll $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\Convert2XML.dll $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\Evaluate.dll $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\Schemer.exe $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\TapProxy.exe $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\TapProxyClient.exe $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\MITMService.dll $(ProjectDir)..\Common\Common.snk
+"C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\sn.exe" -Ra build\Fuzzware\Fuzzsaw.exe $(ProjectDir)..\Common\Common.snk</PreBuildEvent>
+    <PostBuildEvent>REM Delete build
+rmdir /S /Q build</PostBuildEvent>
+  </PropertyGroup>
+</Project>

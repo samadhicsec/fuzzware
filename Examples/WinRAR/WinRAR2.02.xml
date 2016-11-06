@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rar:RAR xmlns:rar="urn:Fuzzware.Examples.WinRAR">
+  <rar:MarkBlock>
+    <rar:MB_CRC>24914</rar:MB_CRC>
+    <rar:MB_CRCBlock>
+      <rar:MarkBlockHeader>
+        <rar:Type>72</rar:Type>
+        <rar:Flags>211a</rar:Flags>
+        <rar:Size>7</rar:Size>
+      </rar:MarkBlockHeader>
+    </rar:MB_CRCBlock>
+  </rar:MarkBlock>
+  <rar:ArchiveHeader>
+    <?Schemer CRC32="CRCBlock0" KeepStartBytes="2"?>
+    <rar:AH_CRC>0800</rar:AH_CRC>
+    <?Schemer Id="CRCBlock0"?>
+    <rar:AH_CRCBlock>
+      <rar:ArchiveHeaderBlock>
+        <rar:Type>73</rar:Type>
+        <rar:Flags>0800</rar:Flags>
+        <rar:Size>13</rar:Size>
+      </rar:ArchiveHeaderBlock>
+      <rar:Reserved1>0000</rar:Reserved1>
+      <rar:Reserved2>00000000</rar:Reserved2>
+    </rar:AH_CRCBlock>
+  </rar:ArchiveHeader>
+  <?Schemer Id="FileHeader1" ?>
+  <rar:FileHeader>
+    <?Schemer CRC32="CRCBlock1" KeepStartBytes="2"?>
+    <rar:FH_CRC>0000</rar:FH_CRC>
+    <?Schemer Id="CRCBlock1"?>
+    <rar:FH_CRCBlock>
+      <rar:FileHeaderBlock>
+        <rar:Type>74</rar:Type>
+        <rar:Flags>4080</rar:Flags>
+        <?Schemer ByteLength="FileHeader1" Order="10" ?>
+        <rar:Size>43</rar:Size>
+      </rar:FileHeaderBlock>
+      <?Schemer ByteLength="ComFile1" Order="10"?>
+      <rar:CompressedFileSize>156</rar:CompressedFileSize>
+      <rar:UncompressedFileSize>E3020000</rar:UncompressedFileSize>
+      <rar:HostOS>02</rar:HostOS>
+      <rar:FileCRC>43255035</rar:FileCRC>
+      <rar:FileTime>89787535</rar:FileTime>
+      <rar:UnpVersion>14</rar:UnpVersion>
+      <rar:PackingMethod>33</rar:PackingMethod>
+      <?Schemer ByteLength="Filename1" Order="10" ?>
+      <rar:FileNameSize>11</rar:FileNameSize>
+      <rar:FileAtt>20000000</rar:FileAtt>
+      <?Schemer Id="Filename1" ?>
+      <rar:FileName>EvilDoc.txt</rar:FileName>
+    </rar:FH_CRCBlock>
+  </rar:FileHeader>
+  <?Schemer Id="ComFile1"?>
+  <rar:CompressedFile>0E21D510CC8C00001D1F375B902908DEB7240BC043D6E43E9C6C7F424223814D1C918A25642048438D446E8C941281210FA538556B5795BC2A555FC06BE155BCC45EF5032DE75541216F3A286C944AD451935C92A15A591E5DF9BA47BAE5F6EB8AFD385FC08CCCD5EF67BE6EE7BDF3DEF3C7F87FFFF66259EE59CF3962C3E6F3BA4996A67413E67579D8E9CDC8E5A7CFF6B9B31961C3F47943AFF180</rar:CompressedFile>
+  <?Schemer Id="FileHeader2" ?>
+  <rar:FileHeader>
+    <?Schemer CRC32="CRCBlock2" KeepStartBytes="2"?>
+    <rar:FH_CRC>0000</rar:FH_CRC>
+    <?Schemer Id="CRCBlock2"?>
+    <rar:FH_CRCBlock>
+      <rar:FileHeaderBlock>
+        <rar:Type>74</rar:Type>
+        <rar:Flags>5080</rar:Flags>
+        <?Schemer ByteLength="FileHeader2" Order="10" ?>
+        <rar:Size>47</rar:Size>
+      </rar:FileHeaderBlock>
+      <?Schemer ByteLength="ComFile2" Order="10"?>
+      <rar:CompressedFileSize>00000000</rar:CompressedFileSize>
+      <rar:UncompressedFileSize>AE040000</rar:UncompressedFileSize>
+      <rar:HostOS>02</rar:HostOS>
+      <rar:FileCRC>858A5203</rar:FileCRC>
+      <rar:FileTime>070A5335</rar:FileTime>
+      <rar:UnpVersion>14</rar:UnpVersion>
+      <rar:PackingMethod>33</rar:PackingMethod>
+      <?Schemer ByteLength="Filename2" Order="10" ?>
+      <rar:FileNameSize>15</rar:FileNameSize>
+      <rar:FileAtt>20000000</rar:FileAtt>
+      <?Schemer Id="Filename2" ?>
+      <rar:FileName>SmallBitmap.bmp</rar:FileName>
+    </rar:FH_CRCBlock>
+  </rar:FileHeader>
+  <?Schemer Id="ComFile2"?>
+  <rar:CompressedFile>937FD77A6771BF24EF4FB4D8F1036CDD6FD637FEE273BA34E9D590E6494A0C8CFDF3ADF67CC6326A2E96720139EC281D56226C6513604A2843A8750EA1D4393267612CF2CB64B096796796775E0C271E71DC7C4E6138F38E4B33B09E79E79E79E4D27B09E7241A80503D03D072386051D9A8302D3382A754EA9D53AA7555AD1F1932F1CCCB5D38F3CF40EAD62D264391FD8800400256B1D8BD4110E47F1000801D924B99C8701000801D95CB99C8701000801D994B99C8701000801D9CCB99C8701000801CA04C4C18080040025762B7A6E9D452EB57B23F8A83056B51A60C44380800400ED365CCE4391B04051A0809F8ED5223FB390E02001003B5B89C8CE4397B8272DED811FE71DDB0A06721C040020076C9973390E020010039684C4C180800400256B59F0395B58A5BA755E9E0E655AD6B447F6221C040020076DD973390E02001003B724B99C8701000801DBAE5CCE4380808E82028F1DBCA23FB390E02001003B7CC5123390E4EC1017C8B79A99BE57253B9380D4DDD33D3AC8732E32737FF785DFB2FBACBD3712E6C1C5F4BE531D7FD7A7B1F5FFCE4FFC758</rar:CompressedFile>
+  <?Schemer Id="FileHeader3" ?>
+  <rar:FileHeader>
+    <?Schemer CRC32="CRCBlock3" KeepStartBytes="2"?>
+    <rar:FH_CRC>0000</rar:FH_CRC>
+    <?Schemer Id="CRCBlock3"?>
+    <rar:FH_CRCBlock>
+      <rar:FileHeaderBlock>
+        <rar:Type>74</rar:Type>
+        <rar:Flags>5080</rar:Flags>
+        <?Schemer ByteLength="FileHeader3" Order="10" ?>
+        <rar:Size>41</rar:Size>
+      </rar:FileHeaderBlock>
+      <?Schemer ByteLength="ComFile3" Order="10"?>
+      <rar:CompressedFileSize>00000000</rar:CompressedFileSize>
+      <rar:UncompressedFileSize>A8040000</rar:UncompressedFileSize>
+      <rar:HostOS>02</rar:HostOS>
+      <rar:FileCRC>474D2E5A</rar:FileCRC>
+      <rar:FileTime>00200431</rar:FileTime>
+      <rar:UnpVersion>14</rar:UnpVersion>
+      <rar:PackingMethod>33</rar:PackingMethod>
+      <?Schemer ByteLength="Filename3" Order="10" ?>
+      <rar:FileNameSize>9</rar:FileNameSize>
+      <rar:FileAtt>20000000</rar:FileAtt>
+      <?Schemer Id="Filename3" ?>
+      <rar:FileName>start.wav</rar:FileName>
+    </rar:FH_CRCBlock>
+  </rar:FileHeader>
+  <?Schemer Id="ComFile3"?>
+  <rar:CompressedFile>E3DF4A953CBAA7E4F0F12F71B9FD34E46B2322598989E7F79C92D8F6A66BABA6F364E757CE04E470ED255893F6A11A9FBE87A74F1A672FA6E75E9F3D4F34D99D39862D88A3BD35D1BE0A79087050EA9B026D776B71F55864DD4EEB7E5A983F7FE91627474E8EA606D967F977F71DBFE13894BBB629C9F0D1B76C1868C5F8F66E73C9E8BF490C1B6A5ABA16225B72F16C8DE673E8DE1CD7EAF0BDEFCF15EA50293F687DEEFBFC1D3ECEE37D66D93ADDF25F478A147EF51F776E6561402E963B947944E252E345B0FD5D28599F0ED13B5CFDC486E38DF77D345F41CCF5EBD57D2ED33BC90A1E7EAD37F1BA5E5CDB7BB7B97A84ED6CC81C3D3F38850F1C247B1E28B25AB793DCE23CF055DD157578BBE78BDC6B979F26CEABDAC128F069534B2AB96EED827AC7C17F79BED27C5C076BC556A7951FA3BC41684D1737AF61111AB74CBA7997AE5B49F1EAA97A5024D6A8FCD532A931E437B27D2D936D192CCA31797BFB2F3FEC57ACAB9C3E87179171A4FD2AB06A65E6C58723EBF6EEAD51D713BDD7FDE369D4CC5B991A5DCE0DC233BD26A08248AD170ECE85516211E4D93B6429F09EA51E076EDDB635B71AD0CB3404A0EBE7A1920A5C4181492D1259A0E1D92512C904ECA0BC99FABF6C569A81B06BDB38D1EEF5C9DCF476F5758D8DA5AB1AD8A761B86F4BBC389DB7E9DA65F2AF5E1A4DE6EE913A9343E2F34B6C940B31ACF3BC18B6D9FAE85DDA48CFEEEA60F97B4F9278A625B68D3C1DDA0AC582553B3B0390F55B16EAF23E593789B682936D09F882CFE0A3C2AEA51B2AE7F1DACBAF57B363AD96A3937566E5BAD5A1A648AE4B2B77224348574277E1B5420418725E40B2B2CCD54B31F4090F78D8D67509A5A50F49552523978B7256A0548E0B5C937A8F63C70AD514AEFAB88D76AD96BA39B630E0B25416C1DD209C1562DE616EAA6C7EA5EEC7FDB7A3D8FE7C9EB5F6161CA24DF604AE2DF5DF1EF2C0978FC0E06FFD48D219AE89BDEE0710BF6B9A4F3B1F1D3E4E463E364654D26B852B0D23E164753A13539550FD9E627716F18C</rar:CompressedFile>
+</rar:RAR>
+

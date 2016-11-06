@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.MP4"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.MP4"
+    xmlns:tgp="urn:Fuzzware.Examples.MP4"
+    xmlns:iso="urn:Fuzzware.Examples.ISO"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:import namespace="urn:Fuzzware.Examples.ISO" schemaLocation="..\ISO Base Media\ISO Base.xsd" />
+  
+  <xs:element name="mp4v">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmp4v" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mp4vConst" type="xs:string" fixed="mp4v" />
+        <xs:element name="mp4vData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mp4vReserved1" type="xs:hexBinary" fixed="000000000000" sac:outputAs="Decoded" />
+              <xs:element name="mp4vDataRefIndex" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4vReserved2" type="xs:hexBinary" fixed="00000000000000000000000000000000" sac:outputAs="Decoded" />
+              <xs:element name="mp4vWidth" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4vHeight" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4vReserved3" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4vReserved4" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4vReserved5" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4vReserved6" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4vReserved7" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="mp4vReserved8" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4vReserved9" type="xs:short" sac:outputAs="BinaryBigEndian" />
+              <xs:element ref="tgp:esds" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="esds">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfesds" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="esdsConst" type="xs:string" fixed="esds" />
+        <xs:element name="esdsVersion" type="iso:tVersionInfo" />
+        <xs:element name="esdsData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="mp4a">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmp4a" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mp4aConst" type="xs:string" fixed="mp4a" />
+        <xs:element name="mp4aData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mp4aReserved1" type="xs:hexBinary" fixed="000000000000" sac:outputAs="Decoded" />
+              <xs:element name="mp4aDataRefIndex" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4aReserved2" type="xs:hexBinary" fixed="0000000000000000" sac:outputAs="Decoded" />
+              <xs:element name="mp4aReserved3" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4aReserved4" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4aReserved5" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4aTimeScale" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="mp4aReserved6" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element ref="tgp:esds" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

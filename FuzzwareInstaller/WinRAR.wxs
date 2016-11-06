@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="WinRAR" FileSource="g:\Tools\Fuzzware\Examples\WinRAR\publish">
+      <Component Id="WinRAR2.02.xsd" Guid="{90377C42-986F-426b-9876-13837AED05AA}" Feature="MainApplication">
+        <File Id="WinRAR2.02.xsd" Name="WinRAR2.02.xsd" Source="g:\Tools\Fuzzware\Examples\WinRAR\publish\WinRAR2.02.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WinRAR.ComplexTypeFuzzerConfig.xml" Guid="{B25402B6-63BB-48c5-8814-8AB04FF551F2}" Feature="MainApplication">
+        <File Id="WinRAR.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\WinRAR\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WinRAR.Configuration.xml" Guid="{6D102830-8F79-40b6-88CC-3F6933166BD5}" Feature="MainApplication">
+        <File Id="WinRAR.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\WinRAR\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WinRAR.SimpleTypeFuzzerConfig.xml" Guid="{88BAE8D7-1849-434a-8948-E0D05E4B9397}" Feature="MainApplication">
+        <File Id="WinRAR.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\WinRAR\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="archive.rar" Guid="{BD0DFB35-5A13-4734-8DFA-BE919021011B}" Feature="MainApplication">
+        <File Id="archive.rar" Name="archive.rar" Source="g:\Tools\Fuzzware\Examples\WinRAR\publish\archive.rar" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="WinRAR2.02.xml" Guid="{D639787A-183F-4f26-90DE-F1741393E41E}" Feature="MainApplication">
+        <File Id="WinRAR2.02.xml" Name="WinRAR2.02.xml" Source="g:\Tools\Fuzzware\Examples\WinRAR\publish\WinRAR2.02.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="WinRAR" Name="WinRAR">
+        <Component Id="WinRAR" Guid="{B6254116-361E-4462-9807-6F1346B14EB2}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveWinRARDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="WinRARComponentGroup">
+      <ComponentRef Id="WinRAR2.02.xsd"/>
+      <ComponentRef Id="WinRAR.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="WinRAR.Configuration.xml"/>
+      <ComponentRef Id="WinRAR.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="archive.rar"/>
+      <ComponentRef Id="WinRAR2.02.xml"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

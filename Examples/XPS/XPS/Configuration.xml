@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.5" testConfig="true" originalFile="docfuzzme2.xps" xmlns="urn:Fuzzware.Schemas.Configuration">
+  <Input>
+    <DataInputHandler>
+      <UserDefinedInput>
+        <LoadAssembly>..\XPSHandlers\bin\Release\XPSHandlers.dll</LoadAssembly>
+        <NamespaceDotClass>XPSHandlers.XPSInputHandler</NamespaceDotClass>
+        <UserDefinedData>
+          <ZipExePath xmlns="">c:\Program Files\WinRAR\WinRAR.exe</ZipExePath>
+          <XPSPathAndFilename xmlns="">docfuzzme2.xps</XPSPathAndFilename>
+          <XMLPathAndFilenameInXPS xmlns="">Documents\1\Pages\1.fpage</XMLPathAndFilenameInXPS>
+          <OutputXMLPathAndFilename xmlns="">out\1.fpage</OutputXMLPathAndFilename>
+          <XSDPathAndFilename xmlns="">xml.xsd</XSDPathAndFilename>
+          <XSDPathAndFilename xmlns="">..\XPS_1_0\Schemas\DiscardControl.xsd</XSDPathAndFilename>
+          <XSDPathAndFilename xmlns="">..\XPS_1_0\Schemas\DocStructure.xsd</XSDPathAndFilename>
+          <XSDPathAndFilename xmlns="">..\XPS_1_0\Schemas\RDKey.xsd</XSDPathAndFilename>
+          <XSDPathAndFilename xmlns="">..\XPS_1_0\Schemas\S0schema2.xsd</XSDPathAndFilename>
+          <XSDPathAndFilename xmlns="">..\XPS_1_0\Schemas\SignatureDefinitions.xsd</XSDPathAndFilename>
+        </UserDefinedData>
+      </UserDefinedInput>
+    </DataInputHandler>
+  </Input>
+  <XmlConfigFiles>
+    <SimpleTypeFuzzerXML>SimpleTypeFuzzerConfig.xml</SimpleTypeFuzzerXML>
+    <ComplexTypeFuzzerXML>ComplexTypeFuzzerConfig.xml</ComplexTypeFuzzerXML>
+  </XmlConfigFiles>
+  <Output>
+    <ConvertFromXML>
+      <OmitXMLDeclaration>true</OmitXMLDeclaration>
+      <OmitComments>true</OmitComments>
+      <FormatXML>false</FormatXML>
+      <OutputEncoding>utf-16</OutputEncoding>
+      <VerifyOutputAgainstInputSchema>false</VerifyOutputAgainstInputSchema>
+    </ConvertFromXML>
+    <PreOutput>
+      <UserDefinedPreOutput>
+        <LoadAssembly>..\XPSHandlers\bin\Release\XPSHandlers.dll</LoadAssembly>
+        <NamespaceDotClass>XPSHandlers.XPSPreOutputHandler</NamespaceDotClass>
+        <UserDefinedData>
+          <TestcaseOutputDir xmlns="">out</TestcaseOutputDir>
+        </UserDefinedData>
+      </UserDefinedPreOutput>
+    </PreOutput>
+    <EvaluationMethod>
+      <OutputToExe>
+        <ExePathAndName>C:\Program Files\Internet Explorer\iexplore.exe</ExePathAndName>
+        <InputFromFile>
+          <Directory>out</Directory>
+          <FileExtension>xps</FileExtension>
+        </InputFromFile>
+        <CommandLineParameters>"[workingdir]\[filename]"</CommandLineParameters>
+        <ExeOpenActions />
+        <ProcessDelay>4000</ProcessDelay>
+        <ExeCloseActions />
+        <UniqueOutputs>
+          <Directory>out</Directory>
+          <FileExtension>txt</FileExtension>
+        </UniqueOutputs>
+      </OutputToExe>
+    </EvaluationMethod>
+    <Monitoring />
+  </Output>
+</Configuration>

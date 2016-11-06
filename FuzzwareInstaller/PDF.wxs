@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="PDF" FileSource="g:\Tools\Fuzzware\Examples\PDF\publish">
+      <Component Id="PDF.xsd" Guid="{D329C9E6-DD90-495b-BF6D-84CDB7B5FF5E}" Feature="MainApplication">
+        <File Id="PDF.xsd" Name="PDF.xsd" Source="g:\Tools\Fuzzware\Examples\PDF\publish\PDF.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="PDF.ComplexTypeFuzzerConfig.xml" Guid="{9E82AF49-36C8-4cb7-8708-C90FA5AF6EE7}" Feature="MainApplication">
+        <File Id="PDF.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\PDF\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="PDF.Configuration.xml" Guid="{4B58E41A-F4F3-4fe0-ADE8-BEA7BB42DD44}" Feature="MainApplication">
+        <File Id="PDF.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\PDF\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="PDF.SimpleTypeFuzzerConfig.xml" Guid="{300D9964-A3DA-4120-8453-E6BD677F7D91}" Feature="MainApplication">
+        <File Id="PDF.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\PDF\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="HelloWorld.pdf" Guid="{6327ACB9-BB42-4ab8-BE5C-F7BA423B0C61}" Feature="MainApplication">
+        <File Id="HelloWorld.pdf" Name="Hello World.pdf" Source="g:\Tools\Fuzzware\Examples\PDF\publish\Hello World.pdf" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="PDF.xml" Guid="{796477EA-F612-4859-B4C2-352E657229FE}" Feature="MainApplication">
+        <File Id="PDF.xml" Name="PDF.xml" Source="g:\Tools\Fuzzware\Examples\PDF\publish\PDF.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="PDF" Name="PDF">
+        <Component Id="PDF" Guid="{3C2CCB28-9D41-496c-A105-51367F33E4D6}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemovePDFDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="PDFComponentGroup">
+      <ComponentRef Id="PDF.xsd"/>
+      <ComponentRef Id="PDF.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="PDF.Configuration.xml"/>
+      <ComponentRef Id="PDF.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="HelloWorld.pdf"/>
+      <ComponentRef Id="PDF.xml"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

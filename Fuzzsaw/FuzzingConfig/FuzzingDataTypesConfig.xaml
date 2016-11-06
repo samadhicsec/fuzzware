@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.FuzzingConfig.FuzzingDataTypesConfig"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fzc="clr-namespace:Fuzzware.Fuzzsaw.FuzzingConfig"
+    Height="Auto" Width="Auto">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common\Common.xaml" />
+                <ResourceDictionary Source="..\Common\FuzzingDataTypesConfigStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style x:Key="UnselectableStackPanelStyle" TargetType="StackPanel">
+                <EventSetter Event="Loaded" Handler="UpdateTreeViewItem" /> 
+            </Style>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="700" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="700" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>-->
+
+        <ScrollViewer Grid.Column="1" Grid.Row="1">
+            <StackPanel Width="Auto" 
+                        DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=STFCView}">
+                <TextBlock Style="{StaticResource CommonText}" TextWrapping="Wrap" Margin="8,0,0,0" >
+                    Fuzzware uses the data type information provided by the input XML Schema to apply specfic fuzzing techniques
+                    to each data value in the input XML.  Listed below are the different data types that can be fuzzed, and within
+                    each are the fuzzing techniques available and the values that will be used with each technique.
+                </TextBlock>
+                <TreeView Name="tvDataTypesConfig" Background="Transparent" BorderBrush="Transparent">
+                    <TreeViewItem Style="{StaticResource FuzzDataSelectionStyle}" IsExpanded="False">
+                        <TreeViewItem.Header>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CommonHeaderText}">Strings</TextBlock>
+                                <TextBlock Style="{StaticResource CommonText}">
+                                    Configure the String type fuzzers.
+                                </TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                        <StackPanel Style="{StaticResource UnselectableStackPanelStyle}">
+                            <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                            <TextBlock Style="{StaticResource CommonSubHeaderText}">
+                                The default fuzzing values used with all XML Schema elements of type String.
+                            </TextBlock>
+                            <fzc:StringFuzzerControl IsDefault="True" IsCustom="False" StringFuzzerData="{Binding Path=DefaultStringFuzzer}" />
+                            <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                            <TextBlock Style="{StaticResource CommonSubHeaderText}">
+                                Custom fuzzing values to use with specific XML Schema elements of type String.
+                            </TextBlock>
+                            <Border Name="bdAddCustomStringFuzzer" Width="250" MouseUp="bdAddCustomStringFuzzer_MouseUp" Style="{StaticResource SelectableBorderStyle}">
+                                <TextBlock Style="{StaticResource CommonText}" HorizontalAlignment="Center">
+                                    Add custom fuzzing values
+                                </TextBlock>
+                            </Border>
+                            <ItemsControl ItemsSource="{Binding Path=CustomStringFuzzers, Mode=TwoWay}" Background="Transparent" BorderBrush="Transparent">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <fzc:StringFuzzerControl IsCustom="True" IsDefault="False" StringFuzzerData="{Binding}" Focusable="False" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </TreeViewItem>
+                    <TreeViewItem Style="{StaticResource FuzzDataSelectionStyle}" IsExpanded="False">
+                        <TreeViewItem.Header>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CommonHeaderText}">Integers</TextBlock>
+                                <TextBlock Style="{StaticResource CommonText}">
+                                    Configure the Integer type fuzzers.
+                                </TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                        <StackPanel Style="{StaticResource UnselectableStackPanelStyle}">
+                            <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                            <TextBlock Style="{StaticResource CommonSubHeaderText}">
+                                The default fuzzing values used with all XML Schema elements of type Integer.
+                            </TextBlock>
+                            <fzc:IntegerFuzzerControl IsDefault="True" IntegerFuzzerView="{Binding Path=DefaultIntegerFuzzer}" />
+                            <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                            <TextBlock Style="{StaticResource CommonSubHeaderText}">
+                                Custom fuzzing values to use with specific XML Schema elements of type Integer.
+                            </TextBlock>
+                            <Border Name="bdAddCustomIntegerFuzzer" Width="250" MouseUp="bdAddCustomIntegerFuzzer_MouseUp" Style="{StaticResource SelectableBorderStyle}">
+                                <TextBlock Style="{StaticResource CommonText}" HorizontalAlignment="Center">
+                                    Add custom fuzzing values
+                                </TextBlock>
+                            </Border>
+                            <ItemsControl ItemsSource="{Binding Path=CustomIntegerFuzzers, Mode=TwoWay}" Background="Transparent" BorderBrush="Transparent">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <fzc:IntegerFuzzerControl IsCustom="True" IntegerFuzzerView="{Binding}" Focusable="False" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </TreeViewItem>
+                    <TreeViewItem Style="{StaticResource FuzzDataSelectionStyle}" IsExpanded="False">
+                        <TreeViewItem.Header>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CommonHeaderText}">Decimals</TextBlock>
+                                <TextBlock Style="{StaticResource CommonText}">
+                                    Configure the Decimal type fuzzers.
+                                </TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                        <StackPanel Style="{StaticResource UnselectableStackPanelStyle}">
+                            <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                            <TextBlock Style="{StaticResource CommonSubHeaderText}">
+                                The default fuzzing values used with all XML Schema elements of type Decimal.
+                            </TextBlock>
+                            <fzc:DecimalFuzzerControl IsDefault="True" DecimalFuzzerView="{Binding Path=DefaultDecimalFuzzer}" />
+                            <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                            <TextBlock Style="{StaticResource CommonSubHeaderText}">
+                                Custom fuzzing values to use with specific XML Schema elements of type Decimal.
+                            </TextBlock>
+                            <Border Name="bdAddCustomDecimalFuzzer" Width="250" MouseUp="bdAddCustomDecimalFuzzer_MouseUp" Style="{StaticResource SelectableBorderStyle}">
+                                <TextBlock Style="{StaticResource CommonText}" HorizontalAlignment="Center">
+                                    Add custom fuzzing values
+                                </TextBlock>
+                            </Border>
+                            <ItemsControl ItemsSource="{Binding Path=CustomDecimalFuzzers, Mode=TwoWay}" Background="Transparent" BorderBrush="Transparent">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <fzc:DecimalFuzzerControl IsCustom="True" DecimalFuzzerView="{Binding}" Focusable="False" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </TreeViewItem>
+                    <TreeViewItem Style="{StaticResource FuzzDataSelectionStyle}" IsExpanded="False">
+                        <TreeViewItem.Header>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CommonHeaderText}">Bytes</TextBlock>
+                                <TextBlock Style="{StaticResource CommonText}">
+                                    Configure the Byte type fuzzers.
+                                </TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                        <StackPanel Style="{StaticResource UnselectableStackPanelStyle}">
+                            <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                            <TextBlock Style="{StaticResource CommonSubHeaderText}">
+                                The default fuzzing values used with all XML Schema elements of type HexBinary.
+                            </TextBlock>
+                            <fzc:ByteFuzzerControl IsDefault="True" ByteFuzzerView="{Binding Path=DefaultByteFuzzer}" />
+                            <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                            <TextBlock Style="{StaticResource CommonSubHeaderText}">
+                                Custom fuzzing values to use with specific XML Schema elements of type HexBinary.
+                            </TextBlock>
+                            <Border Name="bdAddCustomByteFuzzer" Width="250" MouseUp="bdAddCustomByteFuzzer_MouseUp" Style="{StaticResource SelectableBorderStyle}">
+                                <TextBlock Style="{StaticResource CommonText}" HorizontalAlignment="Center">
+                                    Add custom fuzzing values
+                                </TextBlock>
+                            </Border>
+                            <ItemsControl ItemsSource="{Binding Path=CustomByteFuzzers, Mode=TwoWay}" Background="Transparent" BorderBrush="Transparent">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <fzc:ByteFuzzerControl IsCustom="True" ByteFuzzerView="{Binding}" Focusable="False" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </TreeViewItem>
+                </TreeView>
+            </StackPanel>
+        </ScrollViewer>        
+    </Grid>
+</UserControl>

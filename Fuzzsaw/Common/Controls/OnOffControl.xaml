@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.Controls.OnOffControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="25" Width="70">
+    <Grid MouseUp="Grid_MouseUp">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="1" CornerRadius="5"
+                Background="Transparent" Width="70" Height="25"></Border>
+
+        
+        <Border Name="bdOn" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="25" Width="40" BorderBrush="Transparent" BorderThickness="0" CornerRadius="5" Background="Green">
+            <TextBlock Height="25" FontFamily="Berlin Sans FB Demi" FontWeight="Bold" FontSize="14" Padding="4,5" VerticalAlignment="Center" Foreground="White">
+                ON
+                <TextBlock.BitmapEffect>
+                    <BlurBitmapEffect Radius="1" />
+                </TextBlock.BitmapEffect>
+            </TextBlock>
+        </Border>
+        
+        <Border Name="bdOff" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Height="25" Width="40" BorderBrush="Transparent" BorderThickness="0" 
+                CornerRadius="5" Background="Red">
+            <TextBlock Height="25" FontFamily="Berlin Sans FB Demi" FontWeight="Bold" FontSize="14" Padding="11,5" VerticalAlignment="Center" Foreground="White">
+                OFF
+                <TextBlock.BitmapEffect>
+                    <BlurBitmapEffect Radius="1" />
+                </TextBlock.BitmapEffect>
+            </TextBlock>
+        </Border>
+        
+        <Canvas Panel.ZIndex="1" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent">
+            <Rectangle Name="rectCover" Canvas.Left="0" Height="25" Width="40" Fill="Gray" RadiusX="5" RadiusY="5" />
+        </Canvas>
+        
+        <!--<Grid.Triggers>
+            <EventTrigger RoutedEvent="ContentElement.MouseDown">
+                <BeginStoryboard>
+                    <Storyboard Storyboard.TargetProperty="{Binding ElementName=rectCover, Path=(Canvas.Left)}">
+                        <Int32Animation From="0" To="30" Duration="0:0:1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>-->
+    </Grid>
+</UserControl>

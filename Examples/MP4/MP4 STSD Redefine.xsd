@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.ISO"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.ISO"
+    xmlns:iso="urn:Fuzzware.Examples.ISO"
+    xmlns:mp4="urn:Fuzzware.Examples.MP4"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:import namespace="urn:Fuzzware.Examples.MP4" schemaLocation="mp4.xsd" />
+  
+  <xs:redefine schemaLocation="..\ISO Base Media\ISO SampleTableAtoms.xsd">
+
+    <xs:complexType name="tSampleEntryType">
+      <xs:complexContent>
+        <xs:extension base="iso:tSampleEntryType">
+          <xs:choice>
+            <xs:element ref="mp4:mp4v" />
+            <xs:element ref="mp4:mp4a" />
+            <!-- Depending on the codec used any number of atoms could exist here.  For better fuzzing they should
+            be defined, but we add a catch all -->
+            <xs:element ref="iso:unknown" />
+          </xs:choice>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+  </xs:redefine>
+  
+</xs:schema>

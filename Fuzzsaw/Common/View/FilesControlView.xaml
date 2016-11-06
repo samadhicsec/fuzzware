@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.View.FilesControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <ListBox Name="lbFiles" Grid.Column="0" MinWidth="170" Width="Auto" MaxHeight="400"
+                 Style="{StaticResource DataText}" SelectionMode="Extended"
+                 ItemsSource="{Binding Path=Filenames, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <StackPanel Grid.Column="1">
+            <Button Name="butBrowse" Margin="5,0,0,0" Height="25" VerticalAlignment="Top" Command="{Binding Path=ChooseFilesCommand}">
+                <TextBlock Style="{StaticResource CommonText}">
+                    Browse
+                </TextBlock>
+            </Button>
+            <Button Name="butRemove" Margin="5,5,0,0" Height="25" VerticalAlignment="Top"
+                    Command="{Binding Path=RemoveFilesCommand}" CommandParameter="{Binding ElementName=lbFiles, Path=SelectedItems}">
+                <TextBlock Style="{StaticResource CommonText}">
+                    Remove
+                </TextBlock>
+            </Button>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

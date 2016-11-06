@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="ServerCertificate" 
+                  targetNamespace="urn:Fuzzware.Examples.TLS"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.TLS"
+                  xmlns:tls="urn:Fuzzware.Examples.TLS"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Scehmas.SchemaAttributeCommands">
+
+  <xs:element name="ASN1CertVector">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfASN1Cert" sac:outputAs="BinaryBigEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ASN1Cert" type="xs:hexBinary" maxOccurs="16777215" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Certificate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfCertificateChain" sac:outputAs="BinaryBigEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CertificateChain">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="ASN1CertVector" maxOccurs="16777215" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="SignatureVector">
+    <xs:sequence>
+      <xs:element name="ByteLengthOfSignature" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="Signature" type="xs:hexBinary" sac:outputAs="Decoded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="Finished" sac:outputAs="Decoded">
+    <xs:simpleType>
+      <xs:restriction base="xs:hexBinary">
+        <xs:length value="12" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+</xs:schema>

@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.ISO"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.ISO"
+    xmlns:iso="urn:Fuzzware.Examples.ISO"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:include schemaLocation="ISO Common.xsd" />
+  <xs:include schemaLocation="ISO MovieBox.xsd" />
+  <xs:include schemaLocation="ISO SampleTableAtoms.xsd" />
+  <xs:include schemaLocation="ISO Metadata.xsd" />
+
+  <xs:element name="ISO" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="iso:ftyp" />
+        <xs:element ref="iso:pdin" />
+        <xs:element ref="iso:moov" />
+        <xs:element ref="iso:moof" />
+        <xs:element ref="iso:mfra" />
+        <xs:element ref="iso:mdat" />
+        <xs:element ref="iso:free" />
+        <xs:element ref="iso:skip" />
+        <xs:element ref="iso:meta" />
+        <xs:element ref="iso:unknown" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  
+  <!--File Type Box-->
+  <xs:element name="ftyp">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfftyp" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="ftypconst" type="xs:string" fixed="ftyp" />
+        <xs:element name="ftypData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ftypMajorBrand" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="ftypMinorVersion" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="ftypCompatibleBrands">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ftypCompatibleBrand" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!--Progressive Download Information Box-->
+  <xs:element name="pdin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfpdin" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="pdinConst" type="xs:string" fixed="pdin" />
+        <xs:element name="pdinVersion" type ="iso:tVersionInfo" />
+        <xs:element name="pdinData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="pdinRate" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="pdinInitialDelay" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Movie Fragment-->
+  <xs:element name="moof">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmoof" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="moofConst" type="xs:string" fixed="moof" />
+        <xs:element name="moofData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="iso:mfhd" />
+              <xs:element ref="iso:traf" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element ref="iso:free" minOccurs="0"/>
+              <xs:element ref="iso:skip" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Movie Fragment Header Box-->
+  <xs:element name="mfhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmfhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mfhdConst" type="xs:string" fixed="mfhd" />
+        <xs:element name="mfhdVersion" type ="iso:tVersionInfo" />
+        <xs:element name="mfhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mfhdSeqNumber" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Track Fragment box-->
+  <xs:element name="traf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftraf" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="trafConst" type="xs:string" fixed="traf" />
+        <xs:element name="trafData">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element ref="iso:tfhd" />
+              <xs:element ref="iso:trun" />
+              <!--<xs:element ref="iso:sdtp" />-->
+              <!--<xs:element ref="iso:sbgp" />-->
+              <!--<xs:element ref="iso:subs" />-->
+              <xs:element ref="iso:free" />
+              <xs:element ref="iso:skip" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Track Fragment Header box-->
+  <xs:element name="tfhd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftfhd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="tfhdConst" type="xs:string" fixed="tfhd" />
+        <xs:element name="tfhdVersion" type ="iso:tVersionInfo" />
+        <xs:element name="tfhdData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="tfhdTrackId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tfhdBaseDataOffset" type="xs:unsignedLong" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tfhdSampleDescIndex" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tfhdDefSampleDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tfhdDefSampleSize" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tfhdDefSampleFlags" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Track Fragment Header box-->
+  <xs:element name="trun">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftrun" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="trunConst" type="xs:string" fixed="trun" />
+        <xs:element name="trunVersion" type ="iso:tVersionInfo" />
+        <xs:element name="trunData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Media Fragment Random Access Box-->
+  <xs:element name="mfra">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmfra" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mfraConst" type="xs:string" fixed="mfra" />
+        <xs:element name="mfraData">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element ref="iso:tfra" />
+              <xs:element ref="iso:mfro" />
+              <xs:element ref="iso:free" />
+              <xs:element ref="iso:skip" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Track Fragment Random Access Box-->
+  <xs:element name="tfra">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOftfra" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="tfraConst" type="xs:string" fixed="tfra" />
+        <xs:element name="tfraVersion" type ="iso:tVersionInfo" />
+        <xs:element name="tfraData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="tfraTrackId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tfraLengths" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="CountOftfraEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="tfraEntry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="tfraTime" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="tfraMoofOffset" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="tfraTrafNumber" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="tfraTrunNumber" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                    <xs:element name="tfraSampleNumber" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Movie Fragment Random Access Offset Box-->
+  <xs:element name="mfro">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmfro" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mfroConst" type="xs:string" fixed="mfro" />
+        <xs:element name="mfroVersion" type="iso:tVersionInfo" />
+        <xs:element name="mfroData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="mfroSize" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Media data Container-->
+  <xs:element name="mdat">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmdat" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="mdatConst" type="xs:string" fixed="mdat" />
+        <xs:element name="mdatData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

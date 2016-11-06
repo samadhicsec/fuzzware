@@ -1,0 +1,181 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.View.ExeOutputControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Common.View">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Keystrokes Data Template -->
+            <DataTemplate x:Key="KeystrokesDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Template="{StaticResource DeleteButtonTemplate}" Command="{Binding Path=Delete}" CommandParameter="{Binding}"
+                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <TextBox Grid.Column="1" MinWidth="200" MaxWidth="700" Style="{StaticResource DataText}"
+                             Text="{Binding Path=Keys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+            </DataTemplate>
+
+            <!-- WindowActions DataTemplate -->
+            <DataTemplate x:Key="WindowActionsDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Margin="0,5" Template="{StaticResource SubtractButtonTemplate}" 
+                            HorizontalAlignment="Center" VerticalAlignment="Top" Command="{Binding Path=Delete}" CommandParameter="{Binding}"/>
+                    <Border Grid.Column="1" Style="{StaticResource BorderStyle}" Focusable="True" cmn:Common.Command="{Binding Path=AddKeystrokeCommand}"
+                            Mouse.MouseEnter="Border_MouseEnter" Keyboard.KeyDown="WindowActionKeystroke">
+                        <StackPanel Style="{StaticResource CommonText}" >
+                            <StackPanel Margin="5" Orientation="Horizontal">
+                                <TextBlock Margin="0,0,10,0" VerticalAlignment="Center">Window Title</TextBlock>
+                                <TextBox MinWidth="200" MaxWidth="500" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DataText}"
+                                         Text="{Binding Path=WindowTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  />
+                            </StackPanel>
+                            <StackPanel Margin="5">
+                                <TextBlock TextWrapping="Wrap">
+                                    With the mouse inside this border, type the keys to use.  You can also enter text directly 
+                                    into the boxes.  Note, prepend '+'(SHIFT), '^'(CTRL) or '%'(ALT) for modifier keys.
+                                </TextBlock>
+                                <ItemsControl Margin="5" ItemsSource="{Binding Path=Keystrokes, Mode=TwoWay}" ItemTemplate="{StaticResource KeystrokesDataTemplate}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <HeaderedContentControl Style="{StaticResource SubHeaderedContentControlStyle}" Header="Executable Configuration">
+            <StackPanel Style="{StaticResource CommonText}">
+
+                <StackPanel>
+                    <TextBlock Margin="5,5,5,-5">
+                        Select the executable to run
+                    </TextBlock>
+                    <local:FileControlView DataContext="{Binding Path=Executable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <StackPanel>
+                    <StackPanel Margin="5,0,5,0" Orientation="Horizontal">
+                        <TextBlock>
+                            Use command line (
+                        </TextBlock>
+                        <CheckBox Name="ckbxConstantFilename" Margin="5,0" IsChecked="{Binding Path=UseConstantFilename, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CommonText}">
+                            with constant filename
+                        </CheckBox>
+                        <TextBlock>
+                            )
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBox Name="tbCommandLine" Margin="5,0,0,0" Text="{Binding Path=CommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             MinWidth="300" Style="{StaticResource DataText}" />
+                    <StackPanel Margin="5,0,0,0" Style="{StaticResource HelpText}" >
+                        <TextBlock>
+                            Example of current command line: 
+                        </TextBlock>
+                        <TextBlock Name="txtExampleCommandLine" Margin="10,0,0,0" TextWrapping="Wrap"
+                                   Text="{Binding Path=ExampleCommandLine, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <local:FileStoreControlView x:Name="ucOutputDir" Margin="0,10,0,0" 
+                       Description="Choose an output directory and file extension for testcases"
+                       DataContext="{Binding Path=FileStore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            </StackPanel>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Margin="5,10,5,5" Style="{StaticResource SubHeaderedContentControlStyle}" Header="Executable Timing">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,5,5,0" Style="{StaticResource CommonText}">Open Delay (ms)</TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5,5,5,0" Style="{StaticResource DataText}" Width="100" HorizontalAlignment="Left" 
+                         Text="{Binding Path=OpenDelay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), Converter={StaticResource GetError}}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0,0,5" Style="{StaticResource HelpText}" TextWrapping="Wrap">
+                    The delay between when the application is executed and the Open Window Actions are sent.
+                </TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0" Margin="5,5,5,0" Style="{StaticResource CommonText}">Process Delay (ms)</TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="5,5,5,0" Style="{StaticResource DataText}" Width="100" HorizontalAlignment="Left" 
+                         Text="{Binding Path=ProcessDelay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), Converter={StaticResource GetError}}"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0,0,5" Style="{StaticResource HelpText}" TextWrapping="Wrap">
+                    The delay that gives the application time to process the testcase.
+                </TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="0" Margin="5,5,5,0" Style="{StaticResource CommonText}">Close Delay (ms)</TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="1" Margin="5,5,5,0" Style="{StaticResource DataText}" Width="100" HorizontalAlignment="Left" 
+                         Text="{Binding Path=CloseDelay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), Converter={StaticResource GetError}}"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,0,0,5" Style="{StaticResource HelpText}" TextWrapping="Wrap">
+                    If the application has not already exited, it is told to close. This is the delay to wait for the application to close.
+                    If the application has not closed then the Close Window Actions are sent and this delay is waited again.  
+                    After this the application is killed.
+                </TextBlock>
+            </Grid>
+        </HeaderedContentControl>
+
+        <HeaderedContentControl Margin="5,10,5,5" Style="{StaticResource SubHeaderedContentControlStyle}" Header="Window Actions Configuration">
+            <StackPanel Style="{StaticResource CommonText}">
+                <TextBlock Margin="5" TextWrapping="Wrap">
+                    When fuzzing an application with a User Interface often in order to successfully open or close the application certain
+                    pop-up windows of the application need to be handled.  Window Actions Configuration allows specific key-strokes to be
+                    entered into named Windows of the application during open and close.
+                </TextBlock>
+                <TabControl Style="{StaticResource CommonText}">
+                    <TabItem Style="{StaticResource CommonText}" Header="Open Actions" Width="200">
+                        <StackPanel>
+                            <TextBlock Margin="5" TextWrapping="Wrap">
+                                These actions are performed on the named windows during opening of the application.
+                            </TextBlock>
+
+                            <ItemsControl Name="icOpenWindowActions" Style="{StaticResource CommonText}" Margin="5"
+                                          ItemsSource="{Binding Path=OpenActions, Mode=TwoWay}"
+                                          ItemTemplate="{StaticResource WindowActionsDataTemplate}"/>
+                            <Button Template="{StaticResource AddButtonTemplate}" HorizontalAlignment="Left" Margin="5" Command="{Binding Path=AddOpenWindowActionCommand}" />
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Style="{StaticResource CommonText}" Header="Close Actions" Width="200">
+                        <StackPanel>
+                            <TextBlock Margin="5" TextWrapping="Wrap">
+                                These actions are performed on the named windows during closing of the application.
+                            </TextBlock>
+
+                            <ItemsControl Name="icCloseWindowActions" Style="{StaticResource CommonText}" Margin="5"
+                                          ItemsSource="{Binding Path=CloseActions, Mode=TwoWay}"
+                                          ItemTemplate="{StaticResource WindowActionsDataTemplate}"/>
+                            <Button Template="{StaticResource AddButtonTemplate}" HorizontalAlignment="Left" Margin="5" Command="{Binding Path=AddCloseWindowActionCommand}" />
+
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+
+            </StackPanel>
+        </HeaderedContentControl>
+    </StackPanel>
+</UserControl>

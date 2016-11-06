@@ -1,0 +1,153 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.FuzzingConfig.View.IntegerFuzzerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.FuzzingConfig.View"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+                <ResourceDictionary Source="BaseFuzzerResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <Border Name="FuzzDataBorder" Style="{StaticResource BorderStyle}" Width="Auto" Height="Auto">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Name="DeleteFuzzer" Grid.Column="1" 
+                                Command="{Binding Path=(cmn:Common.Command)}"
+                                CommandParameter="{Binding}"
+                                Template="{StaticResource DeleteButtonTemplate}" VerticalAlignment="Top" Margin="3"
+                                Visibility="{Binding Path=CustomFuzzer, Converter={StaticResource BooleanToVisability}}"></Button>
+                        <cv:OnOffControlView x:Name="OnOffDefaultFuzzer" Grid.Column="1" Margin="3" VerticalAlignment="Top" 
+                                             Visibility="{Binding ElementName=FuzzDataBorder, Path=DataContext.DefaultFuzzer, Converter={StaticResource BooleanToVisability}}"
+                                             DataContext="{Binding Path=OnOffControl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Style="{StaticResource CommonSubHeaderText}" Grid.Column="0" VerticalAlignment="Center"
+                                   Visibility="{Binding Path=DefaultFuzzer, Converter={StaticResource BooleanToVisability}}">
+                            The default fuzzing values used with all XML Schema elements of type Integer.
+                        </TextBlock>
+                        <ContentControl Template="{StaticResource CustomNodeName}" />
+
+                    </Grid>
+                    <TabControl Width="Auto" Height="Auto" Name="tcStringFuzzers" TabStripPlacement="Left" Style="{StaticResource CommonText}"
+                                IsEnabled="{Binding Path=OnOffControl.On}">
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Replace integers
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Replace integers with the values</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">given in the list</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=ReplaceIntegersFuzzData, Mode=TwoWay}"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" Width="Auto" />
+                        </TabItem>
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Replace with random integers
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Replace integers with a random</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">integer.  </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <ContentControl DataContext="{Binding Path=RandomIntegersFuzzData}" Template="{StaticResource RandomFuzzerIterations}" />
+                        </TabItem>
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Add integers
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Add to the current value of an </TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">integer the values listed.</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=AddIntegersFuzzData, Mode=TwoWay}"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" Width="Auto" />
+                        </TabItem>
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Subtract integers
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,3" Style="{StaticResource HelpTextStyle}">Subtract from the current value of</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">an integer the values listed.</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=SubtractIntegersFuzzData, Mode=TwoWay}"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" Width="Auto" />
+                        </TabItem>
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Multiply integers
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,3" Style="{StaticResource HelpTextStyle}">Multiply the current value of</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">an integer by the values listed.</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=MultiplyIntegersFuzzData, Mode=TwoWay}"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" Width="Auto" />
+                        </TabItem>
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Divide integers
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,3" Style="{StaticResource HelpTextStyle}">Divide the current value of</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">an integer by the values listed.</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=DivideIntegersFuzzData, Mode=TwoWay}"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" Width="Auto" />
+                        </TabItem>
+                    </TabControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

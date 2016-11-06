@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="Evaluate"
+                  targetNamespace="urn:Fuzzware.Schemas.Configuration"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:cfg="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="Common.xsd" />
+  
+  <xs:element name="OutputToFile" type="cfg:FileStore" nillable="true">
+    <xs:annotation>
+      <xs:documentation>
+        Choosing this output Evaluation Function causes all example files to be output to the specified directory, and have the specified
+        file extension.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  
+  <xs:complexType name="WindowAction">
+    <xs:annotation>
+      <xs:documentation>
+        Applications often require user interaction to open or close, to accomodate this a sequence of key strokes can be
+        provided that will be passed to the application or its pop-up windows.  Schemer will search for each Window by title,
+        but only pass key strokes to the first one it finds.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="WindowTitle" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            The name of the window as it appears in the title bar of the window.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="KeyboardStrokes" minOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="KeyStroke" type="xs:string" minOccurs="1" maxOccurs="unbounded" nillable="false">
+              <xs:annotation>
+                <xs:documentation>
+                  The value of the KeyStroke nodes will be passed in order, and should contain single characters or strings. Example of special
+                  characters are {TAB} and {ENTER}, note the curly braces are required. See MSDN help for System.Windows.Forms.SendKeys for a 
+                  complete description of possible input.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="DelayMilliSecs" type="xs:unsignedInt" default="2000" />
+  </xs:complexType>
+  
+  <xs:element name="OutputToExe">
+    <xs:annotation>
+      <xs:documentation>
+        Choosing this output Evaluation Function causes all examples to be temporarily written to the InputFromFile directory (with specified
+        file extension), and then passed to the executable ExePathAndName, with a command line of CommandLineParameters.  The standard output
+        of the executable is redirected to the fuzzer, which records all examples that produce a unique response, which is stored in the
+        UniqueOutputs directory (with specified file extension).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ExePathAndName" minOccurs="1">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="UseDebugger" type="xs:boolean" default="false">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Run the executable in the FuzzwareDBG debugger.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="InputFromFile" type="cfg:FileStore" minOccurs="1" nillable="true" />
+        <xs:element name="CommandLineParameters" minOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              The complete command line to pass to the application.  The filename inserted into the command line will be the path specified
+              as the input directory for the application, with the testcase filename appended.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="SingleTestcaseFilename" type="xs:boolean" default="true">
+                  <xs:annotation>
+                    <xs:documentation>
+                      Whether the same name is always used for the testcase file created, or a name depending on the state is used.
+                      This does not affect saved testcases, they will always be stored using the state as the file name.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="FilenameToken" type="xs:string" default="[filename]">
+                  <xs:annotation>
+                    <xs:documentation>
+                      The token that will be searched for, that will be replaced with the actual filename (input directory path
+                      concatenated with the testcase filename) on the command line.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="WorkingDirToken" type="xs:string" default="[workingdir]">
+                  <xs:annotation>
+                    <xs:documentation>
+                      The token that will be searched for, that will be replaced with the current working directory.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ExeOpenActions" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="OpenDelayMilliSecs" type="xs:unsignedInt" default="1000" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    How long Schemer waits until it sends the Open Window Actions (it will wait this long even if there are
+                    no Open Window Actions).  Useful if an application has a significant load time.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="OpenWindowAction" type="cfg:WindowAction" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ProcessDelay" type="xs:unsignedInt" default="1000" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              How long Schemer will wait for the application to terminate itself.  If it has not terminated itself within the 
+              time specified, it will be told to close.  If the application does not terminate itself, this time should be just
+              long enough to process the input file, but not too long as Schemer will always wait this amount of time.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ExeCloseActions" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CloseDelayMilliSecs" type="xs:unsignedInt" default="1000" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>
+                    How long Schemer waits until it sends the Close Window Actions (it will wait this long even if there are
+                    no Close Window Actions).  Useful if an application has a significant unload time.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="CloseWindowAction" type="cfg:WindowAction" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="UniqueOutputs" type="FileStoreWithTolerance" minOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="OutputToWebService">
+    <xs:annotation>
+      <xs:documentation>
+        Output calls to Web Service methods.  Assumes that the Input handler is a WSDLInput.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SOAPRequestTemplate" type="xs:string" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              The XML file that will be the basis for the fuzzing testcases.  SOAP methods will be inserted into the
+              SOAP request template and sent to the target service.  This file may need to be customized to
+              include SOAP headers or other namespaces.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ReuseResponseParameters" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              A list of XML node names whose values will be recorded if they exist in the responses to a SOAP method requests.  These
+              values will then be reused in subsequent SOAP method requests if a matching request XML node is found.  The node named
+              can be of simple or complex type.  The request node will not be replaced if it, or any of it's children, are the current
+              target of fuzzing.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Parameter" type="xs:string" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="UniqueResponses" type="cfg:FileStoreWithTolerance" minOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="OutputToCOM">
+    <xs:annotation>
+      <xs:documentation>
+        Output calls to a COM component.  Assumes that the Input handler is COMInput.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="EvaluateInScript">
+            <xs:annotation>
+              <xs:documentation>
+                The COM component needs to implement IDispatch and be able to be invoked JavaScript.
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ActiveXScriptTemplate" type="xs:string" minOccurs="0">
+                  <xs:annotation>
+                    <xs:documentation>
+                      A file that will be the basis for the fuzzing testcases.  Script will be inserted into 
+                      this file and the file loaded into the specified executable.  This file may need to be customised
+                      depending on the script engine (e.g. browser, wscript, csript) and ActiveX control being invoked.
+                      By default, the Resources\ActiveXInvoke.htm template is used.
+                    </xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element ref="cfg:OutputToExe" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="EvaluateAsStandAlone">
+            <xs:annotation>
+              <xs:documentation>
+                The COM component will be invoked as a DLL or EXE (depending on how it is registered).
+              </xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="OutputDirectory" type="cfg:FileStore" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="OutputToCode" type="cfg:UserDefinedCode">
+    <xs:annotation>
+      <xs:documentation>
+        Outputs the testcase to user code.  The user code should implement Fuzzware.Extensible.IUserOutputHandler 
+        (defined in Extensible.dll).
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  
+  <xs:element name="EvaluationMethod">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cfg:OutputToFile" />
+        <xs:element ref="cfg:OutputToNetwork" />
+        <xs:element ref="cfg:OutputToExe" />
+        <xs:element ref="cfg:OutputToWebService" />
+        <xs:element ref="cfg:OutputToCOM" />
+        <xs:element ref="cfg:OutputToCode" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

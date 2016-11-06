@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Input.View.PDMLInputView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <cmn:ChangeFileExtension x:Key="ChangeFileExtension" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>-->
+
+        <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource BorderStyle}">
+            <HeaderedContentControl Style="{StaticResource HeaderedContentControlStyle}" Header="Fuzz PDML">
+                <StackPanel>
+                    <TextBlock Margin="5" Style="{StaticResource CommonText}">
+                        Specify the PDML file
+                    </TextBlock>
+                    <cv:FileControlView x:Name="fiPDMLFilename"
+                                        DataContext="{Binding Path=PDMLFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Grid Margin="5" Style="{StaticResource CommonText}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" Margin="5" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">
+                            Output XSD File:
+                        </TextBlock>
+                        <TextBlock Name="txtXSDFile" VerticalAlignment="Center" Margin="5" TextWrapping="Wrap" 
+                                   Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding Path=PDMLFile.Filename, Converter={StaticResource ChangeFileExtension}, ConverterParameter='.xsd', UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock VerticalAlignment="Center" Margin="5" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">
+                            Output XML File:
+                        </TextBlock>
+                        <TextBlock Name="txtXMLFile" VerticalAlignment="Center" Margin="5" TextWrapping="Wrap"
+                                   Grid.Column="1" Grid.Row="1"
+                                   Text="{Binding Path=PDMLFile.Filename, Converter={StaticResource ChangeFileExtension}, ConverterParameter='.xml', UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    
+                    <HeaderedContentControl Style="{StaticResource HeaderedCollaspableGroupStyle}">
+                        <HeaderedContentControl.Header>
+                            <TextBlock Style="{StaticResource CommonText}">
+                                Advanced Options
+                            </TextBlock>
+                        </HeaderedContentControl.Header>
+                        <HeaderedContentControl.Content>
+                            <StackPanel>
+                                <TextBlock Margin="5" Style="{StaticResource CommonText}" TextWrapping="Wrap">
+                                    Fuzzware converts the input PDML to XSD and XML using XML Style Sheets (XSLT).  If the default
+                                    XSLTs provided do not achieve the desired XSD or XML you can specify your own.
+                                </TextBlock>
+                                <TextBlock Margin="5,5,5,0" Style="{StaticResource CommonText}">
+                                    XSLT to convert PDML to XSD
+                                </TextBlock>
+                                <cv:FileControlView x:Name="fiPDML2XSD_XSLT"
+                                    DataContext="{Binding Path=XSDXLST, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Margin="5,5,5,0" Style="{StaticResource CommonText}">
+                                    XSLT to convert PDML to XML
+                                </TextBlock>
+                                <cv:FileControlView x:Name="fiPDML2XML_XSLT"
+                                    DataContext="{Binding Path=XMLXLST, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </HeaderedContentControl.Content>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </HeaderedContentControl>
+        </Border>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="TLSRecord" 
+                  targetNamespace="urn:Fuzzware.Examples.TLS"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.TLS"
+                  xmlns:tls="urn:Fuzzware.Examples.TLS"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+  <xs:include schemaLocation="Handshake.xsd" />
+  <xs:include schemaLocation="ChangeCipherSpec.xsd" />
+  <xs:include schemaLocation="Alert.xsd" />
+
+  <xs:simpleType name="ContentType" sac:outputAs="BinaryBigEndian" >
+    <xs:restriction base="xs:unsignedByte">
+      <!-- change_cipher_spec -->
+      <xs:enumeration value="20" />
+      <!-- alert -->
+      <xs:enumeration value="21" />
+      <!-- handshake -->
+      <xs:enumeration value="22" />
+      <!-- application_data -->
+      <xs:enumeration value="23" />
+      <xs:enumeration value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="ProtocolVersion">
+    <xs:sequence>
+      <xs:element name="major" type="xs:unsignedByte" default="3" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="minor" type="xs:unsignedByte" default="1" sac:outputAs="BinaryBigEndian" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="TLSPlaintext" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded">
+        <xs:element name="TypeIDOfFragment" type="ContentType" />
+        <xs:element name="version" type="ProtocolVersion" />
+        <xs:element name="ByteLengthOfFragment" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="Fragment">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element ref="Handshake" sac:TypeID="22" />
+              <xs:element ref="ChangeCipherSpec" sac:TypeID="20" />
+              <xs:element ref="Alert" sac:TypeID="21" />
+              <xs:element name="ApplicationData" type="xs:hexBinary" sac:TypeID="23" sac:outputAs="Decoded" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="Handshake" 
+                  targetNamespace="urn:Fuzzware.Examples.TLS"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.TLS"
+                  xmlns:tls="urn:Fuzzware.Examples.TLS"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+  <xs:include schemaLocation="HelloMessages.xsd" />
+  <xs:include schemaLocation="CommonMessages.xsd" />
+  <xs:include schemaLocation="ServerSpecificMessages.xsd" />
+  <xs:include schemaLocation="ClientSpecificMessages.xsd" />
+  
+  <xs:simpleType name="HandshakeType" sac:outputAs="BinaryBigEndian">
+    <xs:restriction base="xs:unsignedByte">
+      <!-- hello_request -->
+      <xs:enumeration value="0" />
+      <!-- client_hello -->
+      <xs:enumeration value="1" />
+      <!-- server_hello -->
+      <xs:enumeration value="2" />
+      <!-- certificate -->
+      <xs:enumeration value="11" />
+      <!-- server_key_exchange -->
+      <xs:enumeration value="12" />
+      <!-- certificate_request -->
+      <xs:enumeration value="13" />
+      <!-- server_hello_done -->
+      <xs:enumeration value="14" />
+      <!-- certificate_verify -->
+      <xs:enumeration value="15" />
+      <!-- client_key_exchange -->
+      <xs:enumeration value="16" />
+      <!-- finished -->
+      <xs:enumeration value="20" />
+      <xs:enumeration value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:element name="Handshake" sac:TypeID="22">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="TypeIDOfBody" type="HandshakeType" />
+          <xs:element name="ByteLengthOfBody" sac:outputAs="BinaryBigEndian">
+            <xs:simpleType>
+              <xs:restriction base="xs:hexBinary">
+                <xs:length value="3" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="Body" minOccurs="0">
+            <xs:complexType>
+              <xs:choice>
+                <xs:element ref="HelloRequest" sac:TypeID="0" />
+                <xs:element ref="ClientHello" sac:TypeID="1" />
+                <xs:element ref="ServerHello" sac:TypeID="2" />
+                <xs:element ref="Certificate" sac:TypeID="11" />
+                <xs:element ref="ServerKeyExchange" sac:TypeID="12" />
+                <xs:element ref="CertificateRequest" sac:TypeID="13" />
+                <xs:element ref="ServerHelloDone" sac:TypeID="14" />
+                <xs:element ref="CertificateVerify" sac:TypeID="15" />
+                <xs:element ref="ClientKeyExchange" sac:TypeID="16" />
+                <xs:element ref="Finished" sac:TypeID="20" />
+              </xs:choice>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:element name="EncryptedHandshakeData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.AVI"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.AVI"
+    xmlns:avi="urn:Fuzzware.Examples.AVI"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <!-- The AVI container format is inconsistent because over the years lots of AVI file
+  creator programs haven't obeyed the format, so this format description certainly will 
+  not work for every AVI file you could find, but hopefully only minor changes will be 
+  needed. -->
+  
+  <xs:element name="AVI" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="avi:RIFF" minOccurs="1" maxOccurs="unbounded" />
+        <xs:element name="PaddingData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="RIFF">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="RIFFHeader" type="xs:string" fixed="RIFF" />
+        <xs:element name="ByteLengthOfAVIFileType" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element ref="avi:AVIFileType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="AVIFileType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AVIHeader" type="xs:string" fixed="AVI "/>
+        <xs:element ref="avi:AVIData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="AVIData">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="avi:LIST" maxOccurs="unbounded" />
+        <xs:element ref="avi:idx1" minOccurs="0" />
+        <xs:element ref="avi:JunkChunk" minOccurs="0" maxOccurs="unbounded" />
+        <!-- Final catch all -->
+        <xs:element ref="avi:Chunk" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="LISTconst" type="xs:string" fixed="LIST" />
+  
+  <xs:element name="LIST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="avi:LISTconst" />
+        <xs:element name="ByteLengthOfListContents" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="ListContents">
+          <xs:complexType>
+            <xs:choice>
+              <xs:element ref="avi:hdrlLIST" />
+              <xs:element ref="avi:moviLIST" />
+              <xs:element ref="avi:strlLIST" />   <!-- Occurs in the LIST hdrl -->
+              <!--<xs:element ref="odmlLIST" />-->
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="JunkChunk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="JunkChunkconst" type="xs:string" fixed="JUNK" />
+        <xs:element name="ByteLengthOfJunkData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="JunkData" type="xs:hexBinary" sac:outputAs="Decoded" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Chunk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ChunkId" sac:outputAs="Decoded">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="4" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ByteLengthOfChunkData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="ChunkData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="hdrlLIST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hdrlconst" type="xs:string" fixed="hdrl" />
+        <xs:element ref="avi:aviMainHeader" />
+        <xs:element ref="avi:LIST" maxOccurs="unbounded" />
+        <xs:element ref="avi:Chunk" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="moviLIST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="moviconst" type="xs:string" fixed="movi" />
+        <!--<xs:element name="ChunkeData" type="xs:hexBinary" sac:outputAs="Decoded" />-->
+        <xs:element ref="avi:Chunk" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="idx1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="idx1const" type="xs:string" fixed="idx1" />
+        <xs:element name="ByteLengthOfIndexEntries" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <!--
+        <xs:element name="IndexEntries" type="xs:hexBinary" sac:outputAs="Decoded" />
+        -->
+        <xs:element name="IndexEntries">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IndexEntry" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="dwChunkId" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+                    <xs:element name="dwFlags" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+                    <xs:element name="dwOffset" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+                    <xs:element name="dwSize" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="aviMainHeader">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="aviMHconst" type="xs:string" fixed="avih" />
+        <xs:element name="ByteLengthOfMainHeader" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="MainHeader">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dwMicroSecPerFrame" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwMaxBytesPerSec" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwPaddingGranularity" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwFlags" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwTotalFrames" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwInitialFrames" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwStreams" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwSuggestedBufferSize" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwWidth" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwHeight" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwReserved1" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwReserved2" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwReserved3" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwReserved4" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="strlLIST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="strlLISTconst" type="xs:string" fixed="strl" />
+        <xs:element ref="avi:strh" />
+        <xs:element ref="avi:strf" />
+        <xs:element ref="avi:strd" minOccurs="0" />
+        <xs:element ref="avi:strn" minOccurs="0" />
+        <xs:element ref="avi:JunkChunk" minOccurs="0" />
+        <!-- OpenDML defined chunk -->
+        <xs:element ref="avi:indx" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="strh">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="strhconst" type="xs:string" fixed="strh" />
+        <xs:element name="ByteLengthOfstrhHeader" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="strhHeader">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="fccType" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="fccHandler" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="dwFlags" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="wPriority" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="wLanguage" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwInitialFrames" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwScale" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwRate" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwStart" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwLength" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwSuggestedBufferSize" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwQuality" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="dwSampleSize" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+              <xs:element name="rcFrame">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="left" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+                    <xs:element name="top" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+                    <xs:element name="right" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+                    <xs:element name="bottom" type="xs:unsignedShort" sac:outputAs="BinaryLittleEndian" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <!-- This isn't part of the format, but some avi files have bad ByteLengthOfstrhHeader values -->
+              <xs:element name="buffer" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="strf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="strfconst" type="xs:string" fixed="strf" />
+        <xs:element name="ByteLengthOfstrfData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="strfData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="strd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="strdconst" type="xs:string" fixed="strd" />
+        <xs:element name="ByteLengthOfstrdData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="strdData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="strn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="strnconst" type="xs:string" fixed="strn" />
+        <xs:element name="ByteLengthOfstrdData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="strnData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="indx">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="indxconst" type="xs:string" fixed="indx" />
+        <xs:element name="ByteLengthOfindxData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="indxData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+<!--  <xs:element name="odmlLIST">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="odmlconst" type="xs:string" fixed="odml" />
+        <xs:element name="dmlhconst" type="xs:string" fixed="dmlh" />
+        <xs:element name="ByteLengthOfdmlhData" type="xs:unsignedInt" sac:outputAs="BinaryLittleEndian" />
+        <xs:element name="dmlhData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  -->
+</xs:schema>

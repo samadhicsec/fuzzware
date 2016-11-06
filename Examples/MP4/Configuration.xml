@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.5" testConfig="true" originalFile="love.mp4" xmlns="urn:Fuzzware.Schemas.Configuration">
+  <Input>
+    <DataInputHandler>
+      <Convert2XMLInput>
+        <Convert2XML>
+          <SourceFile>love.mp4</SourceFile>
+          <RootNodeNamespace>urn:Fuzzware.Examples.ISO</RootNodeNamespace>
+          <RootNodeName>ISO</RootNodeName>
+          <OutputNamespacePrefix>c2x</OutputNamespacePrefix>
+          <OutputXMLFile>love.mp4.xml</OutputXMLFile>
+        </Convert2XML>
+        <XSDPathAndFilename>MP4 STSD Redefine.xsd</XSDPathAndFilename>
+        <XSDPathAndFilename>mp4.xsd</XSDPathAndFilename>
+      </Convert2XMLInput>
+    </DataInputHandler>
+  </Input>
+  <XmlConfigFiles>
+    <SimpleTypeFuzzerXML>SimpleTypeFuzzerConfig.xml</SimpleTypeFuzzerXML>
+    <ComplexTypeFuzzerXML>ComplexTypeFuzzerConfig.xml</ComplexTypeFuzzerXML>
+  </XmlConfigFiles>
+  <Output>
+    <ConvertFromXML>
+      <OmitXMLDeclaration>true</OmitXMLDeclaration>
+      <OmitComments>true</OmitComments>
+      <FormatXML>false</FormatXML>
+      <OutputEncoding>us-ascii</OutputEncoding>
+      <VerifyOutputAgainstInputSchema>false</VerifyOutputAgainstInputSchema>
+    </ConvertFromXML>
+    <EvaluationMethod>
+      <OutputToExe>
+        <ExePathAndName>C:\Program Files\QuickTime\QuickTimePlayer.exe</ExePathAndName>
+        <InputFromFile>
+          <Directory>out</Directory>
+          <FileExtension>mp4</FileExtension>
+        </InputFromFile>
+        <CommandLineParameters SingleTestcaseFilename="false">"[workingdir]\[filename]"</CommandLineParameters>
+        <ExeOpenActions>
+          <OpenDelayMilliSecs>3000</OpenDelayMilliSecs>
+        </ExeOpenActions>
+        <ProcessDelay>3500</ProcessDelay>
+        <ExeCloseActions>
+          <CloseWindowAction>
+            <WindowTitle>Error</WindowTitle>
+            <KeyboardStrokes>
+              <KeyStroke>{ENTER}</KeyStroke>
+            </KeyboardStrokes>
+          </CloseWindowAction>
+        </ExeCloseActions>
+        <UniqueOutputs>
+          <Directory>out</Directory>
+          <FileExtension>txt</FileExtension>
+        </UniqueOutputs>
+      </OutputToExe>
+    </EvaluationMethod>
+    <Monitoring>
+      <PostMortemDebugger>
+        <CrashOutputDir>crashes</CrashOutputDir>
+      </PostMortemDebugger>
+    </Monitoring>
+  </Output>
+</Configuration>

@@ -1,0 +1,176 @@
+﻿<Window x:Class="Fuzzware.Fuzzsaw.MainWindow2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:src="clr-namespace:Fuzzware.Fuzzsaw"
+    xmlns:inp="clr-namespace:Fuzzware.Fuzzsaw.Input.View"
+    xmlns:out="clr-namespace:Fuzzware.Fuzzsaw.Output.View"
+    xmlns:exe="clr-namespace:Fuzzware.Fuzzsaw.Execution.View"
+    xmlns:fzv="clr-namespace:Fuzzware.Fuzzsaw.FuzzingConfig.View"
+    Title="{Binding Path=Title}" Height="768" Width="1024" Name="wMainWindow" Loaded="wMainWindow_Loaded" Closing="wMainWindow_Closing"
+    WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <LinearGradientBrush x:Key="WindowBackgroundBrush" StartPoint="0.5, 0" EndPoint="0.5, 1" Opacity="0.3">
+                <GradientStop Color="White" Offset="0" />
+                <GradientStop Color="Black" Offset="1" />
+            </LinearGradientBrush>
+            
+            <src:WindowToWorkingAreaHeight x:Key="WindowToWorkingAreaHeight" />
+            
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Window.CommandBindings>
+        <!-- Helper Commands -->
+        <CommandBinding Command="src:HelperCommands.ShowError"
+                        Executed="ShowError" />
+        <CommandBinding Command="src:HelperCommands.AddToMainMenu"
+                        Executed="AddToMainMenu" />
+        <CommandBinding Command="src:HelperCommands.RemoveFromMainMenu"
+                        Executed="RemoveFromMainMenu" />
+        <CommandBinding Command="src:HelperCommands.ShowProjectProperties"
+                        Executed="ShowProjectProperties" />
+        <CommandBinding Command="src:HelperCommands.ShowProperties"
+                        Executed="ShowProperties" />
+        <CommandBinding Command="src:HelperCommands.ExitApplication"
+                        Executed="ExitApplication" />
+        
+        <!-- Application Commands -->
+        <CommandBinding Command="ApplicationCommands.New"
+                        Executed="NewProject"/>
+        <CommandBinding Command="ApplicationCommands.Open" 
+                        Executed="OpenProject"/>
+        <CommandBinding Command="ApplicationCommands.Save" 
+                        Executed="SaveProject" />
+        <CommandBinding Command="ApplicationCommands.Close" 
+                        Executed="CloseProject"/>
+        
+    </Window.CommandBindings>
+    
+    <StackPanel OverridesDefaultStyle="True" Name="spRootStackPanel" Width="Auto" Background="{StaticResource CommonBackground}">
+        <!--<r:Ribbon>
+            <r:Ribbon.Resources>
+                <r:RibbonCommand x:Key="NewProjectCommand" LabelTitle="New Project" />
+                <r:RibbonCommand x:Key="OpenProjectCommand" LabelTitle="Open Project" />
+                <r:RibbonCommand x:Key="SaveProjectCommand" LabelTitle="Save Project" />
+            </r:Ribbon.Resources>
+            <r:RibbonTab Label="General">
+                <r:RibbonGroup>
+                    <r:RibbonButton Command="{StaticResource NewProjectCommand}" />
+                    <r:RibbonButton Command="{StaticResource OpenProjectCommand}"/>
+                    <r:RibbonButton Command="{StaticResource SaveProjectCommand}"/>
+                </r:RibbonGroup>
+            </r:RibbonTab>
+        </r:Ribbon>-->
+
+
+        <DockPanel Width="Auto" VerticalAlignment="Stretch"
+                   Height="{Binding ElementName=wMainWindow, Path=ActualHeight, Converter={StaticResource WindowToWorkingAreaHeight}}">
+            <Menu Name="menuMain" DockPanel.Dock="Top" Style="{StaticResource CommonText}">
+                <MenuItem Header="Project">
+                    <MenuItem Header="New" Command="ApplicationCommands.New" />
+                    <MenuItem Header="Open" Command="ApplicationCommands.Open" />
+                    <MenuItem Name="miSave" Header="Save" Command="ApplicationCommands.Save" IsEnabled="{Binding Path=ProjectLoaded, UpdateSourceTrigger=PropertyChanged}" />
+                    <MenuItem Name="miProjProps" Header="Project Properties" Command="src:HelperCommands.ShowProjectProperties" IsEnabled="{Binding Path=ProjectLoaded, UpdateSourceTrigger=PropertyChanged}" />
+                    <MenuItem Name="miClose" Header="Close" Command="ApplicationCommands.Close" IsEnabled="{Binding Path=ProjectLoaded, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Separator />
+                    <MenuItem Name="miGenProps" Header="Properties" Command="src:HelperCommands.ShowProperties"/>
+                    <Separator />
+                    <MenuItem Name="miExit" Header="Exit" Command="src:HelperCommands.ExitApplication"/>
+                </MenuItem>
+            </Menu>
+            <src:NavPane x:Name="ucNavPane" DockPanel.Dock="Left" VerticalAlignment="Stretch"
+                         DataContext="{Binding Path=NavPaneViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Grid Name="gWorkingArea" VerticalAlignment="Stretch">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                </Grid.ColumnDefinitions>
+
+                <src:WelcomeMessageView x:Name="ucWelcome" Panel.ZIndex="0"
+                              DataContext="{Binding Path=WelcomeScreen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" />
+                
+                <!-- Input Sources -->
+                <inp:InputSelection x:Name="ucInputSelection" Panel.ZIndex="0" Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"
+                                    DataContext="{Binding Path=InputSelectionViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <inp:XMLInputView x:Name="ucXMLInput" Panel.ZIndex="0" Header="Fuzz an XML file" 
+                              DataContext="{Binding Path=XMLInputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <inp:C2XInputView x:Name="ucC2XInput" Panel.ZIndex="0" Header="Fuzz a non-XML file" 
+                              DataContext="{Binding Path=C2XInputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <inp:XMLInputView x:Name="ucXMLNetworkInput" Panel.ZIndex="0" Header="Fuzz a packet in XML format" 
+                              DataContext="{Binding Path=XMLNetworkInputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <inp:C2XInputView x:Name="ucC2XNetworkInput" Panel.ZIndex="0" Header="Fuzz a packet in a non-XML format" 
+                              DataContext="{Binding Path=C2XNetworkInputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <inp:PDMLInputView x:Name="ucPDMLNetworkInput" Panel.ZIndex="0" 
+                              DataContext="{Binding Path=PDMLInputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <inp:WSDLInputView x:Name="ucWSDLInterfaceInput" Panel.ZIndex="0" 
+                              DataContext="{Binding Path=WSDLInputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <inp:ActiveXInputView x:Name="ucCOMInterfaceInput" Panel.ZIndex="0" 
+                              DataContext="{Binding Path=ActiveXInputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <inp:CustomInputView x:Name="ucCustomInput" Panel.ZIndex="0" 
+                              DataContext="{Binding Path=CustomInputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                
+                <!-- Fuzzing Configuration -->
+                <fzv:DataTypesConfigView x:Name="ucFuzzingDataTypesConfig" Panel.ZIndex="0" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                            DataContext="{Binding Path=TypesConfigViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <fzv:DataStructuresConfigView x:Name="ucFuzzingDataStructuresConfig" Panel.ZIndex="0" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                                            DataContext="{Binding Path=StructuresConfigViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                
+                <!-- Output Destinations -->
+                <out:OutputSelection x:Name="ucOutputSelection" Panel.ZIndex="0" 
+                                     DataContext="{Binding Path=OutputSelectionViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <out:OutputFileStoreView x:Name="ucOutputToFile" Panel.ZIndex="0" 
+                                         DataContext="{Binding Path=OutputFileStoreViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <out:ExeOutputView x:Name="ucOutputToExe" Panel.ZIndex="0" 
+                                   DataContext="{Binding Path=ExeOutputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <out:NetworkOutputView x:Name="ucNetworkOutput" Panel.ZIndex="0" 
+                                       DataContext="{Binding Path=NetworkOutputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <out:WSDLOutputView x:Name="ucWSDLOutput" Panel.ZIndex="0" 
+                                    DataContext="{Binding Path=WSDLOutputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <out:ActiveXOutputView x:Name="ucActiveXOutput" Panel.ZIndex="0" 
+                                    DataContext="{Binding Path=ActiveXOutputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <out:CustomOutputView x:Name="ucCustomOutput" Panel.ZIndex="0" 
+                                      DataContext="{Binding Path=CustomOutputViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                
+                <!-- Execution -->
+                <exe:MonitoringControlView x:Name="ucMonitoring" Panel.ZIndex="0"
+                                        DataContext="{Binding Path=MonitoringViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                <exe:ExecuteControlView x:Name="ucExecute" Panel.ZIndex="0"
+                                        DataContext="{Binding Path=ExecutionViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch"/>
+                
+            </Grid>
+        </DockPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Output.View.OutputSelection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fzs="clr-namespace:Fuzzware.Fuzzsaw"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    Height="Auto" Width="Auto">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+                <ResourceDictionary Source="..\..\Common\HandlerSelectionStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid Background="Transparent">
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <StackPanel>
+                <TextBlock Style="{StaticResource HandlerDescriptionText}" Margin="8,0,0,0">
+                    Fuzzware can output the fuzzed testcases it generates to several different types of destinations.  Select from the 
+                    available monitoring methods (under Monitoring) to help Fuzzware detect any errors arising from a testcase.
+                </TextBlock>
+                <Button Style="{StaticResource HandlerOptionStyle}" Name="butToDir"
+                        Command="{Binding Path=(fzs:HandlerCommands.UseDirectoryOutput)}"
+                        cmn:Common.IsSelected="{Binding Path=UseDirectoryOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Store testcases in a directory">
+                        Fuzzware can store testcases in a directory as files with a specific file extension.
+                    </HeaderedContentControl>
+                </Button>
+                <Button Style="{StaticResource HandlerOptionStyle}" Name="butToExe"
+                        Command="{Binding Path=(fzs:HandlerCommands.UseExeOutput)}"
+                        cmn:Common.IsSelected="{Binding Path=UseExeOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Run application on testcases">
+                        Fuzzware can store the testcase in a directory as a file with a specific file extension, and then
+                        execute an application, with a configurable command line.  Fuzzware can also send key-strokes to the 
+                        application when it is opening and closing to handle popup windows or error windows.  Any unique output 
+                        the application writes to stdout is recorded (along with the testcase) in the output directory.
+                    </HeaderedContentControl>
+                </Button>
+                <Button Style="{StaticResource HandlerOptionStyle}" Name="butToNetwork"
+                        Command="{Binding Path=(fzs:HandlerCommands.UseNetworkOutput)}"
+                        cmn:Common.IsSelected="{Binding Path=UseNetworkOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Send testcases over network">
+                        Fuzzware can send the testcase to an IP address or URL (SSL is supported) on a certain port.  All
+                        unique responses received are recorded (along with the testcase) in the output directory.
+                    </HeaderedContentControl>
+                </Button>
+                <Button Style="{StaticResource HandlerOptionStyle}" Name="butToWS"
+                        Command="{Binding Path=(fzs:HandlerCommands.UseWSDLOutput)}"
+                        cmn:Common.IsSelected="{Binding Path=UseWSDLOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Send testcases to Web Services">
+                        If the input source is a WSDL then Fuzzware will send SOAP requests to the WSDL service endpoint.
+                        All unique responses received are recorded (along with the testcase) in the output directory.
+                    </HeaderedContentControl>
+                </Button>
+                <Button Style="{StaticResource HandlerOptionStyle}" Name="butToAX"
+                        Command="{Binding Path=(fzs:HandlerCommands.UseActiveXOutput)}"
+                        cmn:Common.IsSelected="{Binding Path=UseActiveXOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Invoke ActiveX control">
+                        If the input source is an ActiveX control then Fuzzware will create an HTML file with Javascript to
+                        invoke the control's methods with fuzzed parameters and open the HTML in the specified internet
+                        browser.
+                    </HeaderedContentControl>
+                </Button>
+                <Button Style="{StaticResource HandlerOptionStyle}" Name="butToCustom"
+                        Command="{Binding Path=(fzs:HandlerCommands.UseCustomOutput)}"
+                        cmn:Common.IsSelected="{Binding Path=UseCustomOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Pass testcase to custom code">
+                        Provide Fuzzware with a .Net assembly that implements the IUserOutputHandler interface (defined
+                        in Extensible.dll).  Fuzzware will pass testcases to your custom code to be evaluated.
+                    </HeaderedContentControl>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

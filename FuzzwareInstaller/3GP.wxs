@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="_3GP" FileSource="g:\Tools\Fuzzware\Examples\3GP\publish">
+      <Component Id="_3GP.xsd" Guid="{B5B9CB8A-C03E-4a57-B470-799FEEC26FD5}" Feature="MainApplication">
+        <File Id="_3GP.xsd" Name="3GP.xsd" Source="g:\Tools\Fuzzware\Examples\3GP\publish\3GP.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="_3GPRedefine.xsd" Guid="{1C9F4CBF-BCF9-4e23-93C5-87D26734748D}" Feature="MainApplication">
+        <File Id="_3GPRedefine.xsd" Name="3GPRedefine.xsd" Source="g:\Tools\Fuzzware\Examples\3GP\publish\3GPRedefine.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="_3GP.ComplexTypeFuzzerConfig.xml" Guid="{D0E798CC-890D-4330-84F1-CC3FF696AF15}">
+        <File Id="_3GP.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\3GP\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="_3GP.Configuration.xml" Guid="{2714A9A1-5715-481e-8E4D-C57F8500D724}" Feature="MainApplication">
+        <File Id="_3GP.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\3GP\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="_3GP.SimpleTypeFuzzerConfig.xml" Guid="{0A97C4B2-DA4D-4f51-A2CE-5C9D5CF324FC}" Feature="MainApplication">
+        <File Id="_3GP.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\3GP\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="rider.3gp" Guid="{D8060CDD-473F-4184-8CAB-0159E6652463}" Feature="MainApplication">
+        <File Id="rider.3gp" Name="rider.3gp" Source="g:\Tools\Fuzzware\Examples\3GP\publish\rider.3gp" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="rider.3gp.xml" Guid="{35568C08-3857-48c6-A6F9-6FDA793799C4}" Feature="MainApplication">
+        <File Id="rider.3gp.xml" Name="rider.3gp.xml" Source="g:\Tools\Fuzzware\Examples\3GP\publish\rider.3gp.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+	</Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="_3GP" Name="3GP">
+        <Component Id="_3GPDir" Guid="{5908768D-02A4-427a-AABF-89C6654A7BE5}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="Remove3GPDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="_3GPComponentGroup">
+      <ComponentRef Id="_3GP.xsd"/>
+      <ComponentRef Id="_3GPRedefine.xsd"/>
+      <ComponentRef Id="_3GP.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="_3GP.Configuration.xml"/>
+      <ComponentRef Id="_3GP.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="rider.3gp"/>
+      <ComponentRef Id="rider.3gp.xml"/>
+    </ComponentGroup>
+  </Fragment>
+  
+</Wix>

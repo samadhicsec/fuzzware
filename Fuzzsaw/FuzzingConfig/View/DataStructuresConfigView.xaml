@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.FuzzingConfig.View.DataStructuresConfigView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.FuzzingConfig.View"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+                <ResourceDictionary Source="..\..\Common\FuzzingDataTypesConfigStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+
+    <Grid>
+        <ScrollViewer Grid.Column="1" Grid.Row="1">
+            <StackPanel Width="Auto">
+                <TextBlock Style="{StaticResource CommonText}" TextWrapping="Wrap" Margin="8,0,0,0" >
+                    Fuzzware uses the data structure information provided by the input XML Schema to apply specfic fuzzing techniques
+                    to the XML Schema &lt;sequence> and &lt;choice> data structure definitions.
+                </TextBlock>
+                <HeaderedContentControl Style="{StaticResource HeaderedCollaspableGroupStyle}" cmn:Common.IsExpanded="false">
+                    <HeaderedContentControl.Header>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource CommonHeaderText}">Occurrence</TextBlock>
+                            <TextBlock Style="{StaticResource CommonText}">
+                                Repeat members of data structures
+                            </TextBlock>
+                        </StackPanel>
+                    </HeaderedContentControl.Header>
+                    <StackPanel>
+                        <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                        <TextBlock Margin="5" Style="{StaticResource CommonSubHeaderText}" TextWrapping="Wrap">
+                            When members of a data structure (e.g. child nodes of a &lt;sequence> or &lt;choice>) can occur
+                            a different amount of times (e.g. maxOccurs > 1), then occurrence fuzzing will create test cases
+                            that repeat the members.
+                        </TextBlock>
+                        <TextBlock Margin="5" Style="{StaticResource CommonSubHeaderText}" TextWrapping="Wrap">
+                            Enter the number of repetitions to use with each member of the data structure.
+                        </TextBlock>
+                        <local:FuzzDataSelectorView Style="{StaticResource CommonText}" Foreground="Black" MinWidth="350" Margin="5"
+                                                    DataContext="{Binding Path=OccurrenceFuzzer}" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource HeaderedCollaspableGroupStyle}" cmn:Common.IsExpanded="false">
+                    <HeaderedContentControl.Header>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource CommonHeaderText}">Order</TextBlock>
+                            <TextBlock Style="{StaticResource CommonText}">
+                                Randomise the order of members of data structures
+                            </TextBlock>
+                        </StackPanel>
+                    </HeaderedContentControl.Header>
+                    <StackPanel>
+                        <Separator BorderBrush="{StaticResource CommonFontColour}" BorderThickness="1" />
+                        <TextBlock Margin="5" Style="{StaticResource CommonSubHeaderText}" Width="Auto" TextWrapping="Wrap">
+                            Some data structures (e.g. &lt;choice> or &lt;all>) allow their members to occur in different
+                            order.  Order fuzzing will create test cases that randomise the order of members.  This is 
+                            especially relevant for interface fuzzing (e.g. WSDL and ActiveX) where this corresponds to calling
+                            methods in different order.
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Margin="5" Style="{StaticResource CommonSubHeaderText}" TextWrapping="Wrap" VerticalAlignment="Center">
+                                Enter the number of testcases to create per data structure
+                            </TextBlock>
+                            <TextBox Margin="5" Style="{StaticResource CommonText}" Width="150" Height="25" Foreground="Black" 
+                                     Text="{Binding Path=OrderFuzzer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                     ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), Converter={StaticResource GetError}}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </HeaderedContentControl>
+            </StackPanel>
+        </ScrollViewer>
+        
+    </Grid>
+</UserControl>

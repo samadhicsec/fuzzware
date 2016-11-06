@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cfx:ConvertFromXML xmlns:cfx="urn:Fuzzware.Schemas">
+  <cfx:omitXMLDeclaration>true</cfx:omitXMLDeclaration>
+  <cfx:omitComments>true</cfx:omitComments>
+  <cfx:outputEncoding>us-ascii</cfx:outputEncoding>
+  <cfx:verifyOutputAgainstInputSchema>false</cfx:verifyOutputAgainstInputSchema>
+</cfx:ConvertFromXML>

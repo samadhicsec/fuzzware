@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<http:HTTP xmlns:http="urn:Fuzzware.Examples.HTTP">
+  <http:HTTPHeader>
+    <http:HeaderField>
+      <![CDATA[POST / HTTP/1.1]]>
+    </http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>Accept: */*</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>Referrer: localhost</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>Accept-Language: en-gb</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>Content-Type: application/x-www-form-urlencoded</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>UA-CPU: x86</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>Accept-Encoding: text, html, gzip, deflate</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; InfoPath.1; MSN Messenger 7.5.0324)</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>Host: localhost</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>Connection: Keep-Alive</http:HeaderField>
+    <http:CRLF />
+    <http:HeaderField>Cache-Control: no-cache</http:HeaderField>
+    <http:CRLF />
+    <http:ContentLength />
+    <?Schemer ByteLength="Body"?>
+    <http:ByteLengthOfHTTPBody>0</http:ByteLengthOfHTTPBody>
+    <http:CRLF />
+    <http:CRLF />
+  </http:HTTPHeader>
+  <?Schemer Id="Body"?>
+  <http:HTTPBody><![CDATA[Action=Logon&Email_Address=backdoor@fuzzware.net&Password=evilhacker]]></http:HTTPBody>
+</http:HTTP>

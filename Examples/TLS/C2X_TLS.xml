@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<c2x:Convert2XML xmlns:c2x="urn:Fuzzware.Schemas">
+  <c2x:SourceFile>..\..\..\..\Examples\TLS\ClientHello.bin</c2x:SourceFile>
+  <c2x:RootNodeNamespace>http://tempuri.org/Schemer/Examples/TLS/TLS</c2x:RootNodeNamespace>
+  <c2x:RootNodeName>TLSPlaintext</c2x:RootNodeName>
+  <c2x:OutputNamespacePrefix>tls</c2x:OutputNamespacePrefix>
+  <c2x:OutputXMLFile>..\..\..\..\Examples\TLS\C2XClientHello.xml</c2x:OutputXMLFile>
+</c2x:Convert2XML>

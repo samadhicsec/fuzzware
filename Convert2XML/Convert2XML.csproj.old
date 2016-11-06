@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{655665A1-0B71-4F91-8264-DF52D69624DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fuzzware.Convert2XML</RootNamespace>
+    <AssemblyName>Convert2XML</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Common.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="C2X\C2XEngine.cs" />
+    <Compile Include="C2X\C2XProgress.cs" />
+    <Compile Include="C2X\Convert2XML.cs" />
+    <Compile Include="COMInputHandler.cs" />
+    <Compile Include="Convert2XMLInput.cs" />
+    <Compile Include="InputHandler.cs" />
+    <Compile Include="InputHandlerFactory.cs" />
+    <Compile Include="PDMLInputHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolDefnInputHandler.cs" />
+    <Compile Include="UserInputHandler.cs" />
+    <Compile Include="WSDLInputHandler.cs" />
+    <Compile Include="XMLInput.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Schemas\Convert2XML.xsd">
+      <Link>Resources\Convert2XML.xsd</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Schemas\ProtocolDefn.xsd">
+      <Link>Resources\ProtocolDefn.xsd</Link>
+    </EmbeddedResource>
+    <None Include="Common.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{00ECFFBF-23CB-49DB-BA9D-1C0D8A0F076D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConvertFromXML\ConvertFromXML.csproj">
+      <Project>{034F3A9C-0C5D-4224-9273-2D59268AB8E6}</Project>
+      <Name>ConvertFromXML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensible\Extensible.csproj">
+      <Project>{65D98596-8185-4A41-A86B-DB7ECB34DDDD}</Project>
+      <Name>Extensible</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

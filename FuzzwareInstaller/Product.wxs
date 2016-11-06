@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Product Id="3BF998B6-1DD9-4cea-B1E8-92BDDDEE9740" Name="Fuzzware 1.5" Language="1033" Version="1.5.0.0" Manufacturer="Fuzzware.net" UpgradeCode="536a477d-4fc0-42b8-aa47-14f7e35f553a">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Specify the Program Menu Shortcut -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Fuzzware 1.5"/>
+      </Directory>
+      <!-- Specify the Installation Files -->
+      <Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLLOCATION" Name="Fuzzware">
+				  <Component Id="Common.dll" Guid="FA396EC5-4B0C-4c84-81E4-726F952E0954">
+						<File Id="Common.dll" Source="$(var.TargetDir)build\Fuzzware\Common.dll" KeyPath="yes" Checksum="yes" />
+					</Component>
+          <Component Id="Convert2XML.dll" Guid="52779AE6-D88E-481e-9823-8B184604485C">
+            <File Id="Convert2XML.dll" Source="$(var.TargetDir)build\Fuzzware\Convert2XML.dll" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="ConvertFromXML.dll" Guid="A8B0B5B0-B89B-45a4-9953-B7B8B60E34DE">
+            <File Id="ConvertFromXML.dll" Source="$(var.TargetDir)build\Fuzzware\ConvertFromXML.dll" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="Evaluate.dll" Guid="9AF8F915-11DC-4769-8DC2-7338C1F14640">
+            <File Id="Evaluate.dll" Source="$(var.TargetDir)build\Fuzzware\Evaluate.dll" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="Extensible.dll" Guid="43B53FB1-EAD0-4d1e-89E3-0523FD975803">
+            <File Id="Extensible.dll" Source="$(var.TargetDir)build\Fuzzware\Extensible.dll" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="IFuzzwareDBGProxy.dll" Guid="70D0E6AA-0905-45bc-B0CB-3EBB408B6DF6">
+            <File Id="IFuzzwareDBGProxy.dll" Source="$(var.TargetDir)build\Fuzzware\IFuzzwareDBGProxy.dll" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="Monitoring.dll" Guid="D827D615-85FD-4bcd-8AAC-E55FA027F2E0">
+            <File Id="Monitoring.dll" Source="$(var.TargetDir)build\Fuzzware\Monitoring.dll" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="Schemer.exe" Guid="CBFE53CC-99CD-48e0-90C6-CA5E73D95D6E">
+            <File Id="Schemer.exe" Source="$(var.TargetDir)build\Fuzzware\Schemer.exe" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="Fuzzsaw.exe" Guid="FE78F8B2-BFB2-40f9-B495-3D737BB732A5">
+            <File Id="Fuzzsaw.exe" Source="$(var.TargetDir)build\Fuzzware\Fuzzsaw.exe" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="FuzzwareDBG.exe" Guid="79C27CF6-8B7E-42fc-B846-FE858D14A714">
+            <File Id="FuzzwareDBG.exe" Source="$(var.TargetDir)build\Fuzzware\FuzzwareDBG.exe" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <Component Id="FuzzwareDBGStub.dll" Guid="170F5413-A815-4fb1-8310-B6BBE120EF94">
+            <File Id="FuzzwareDBGStub.dll" Source="$(var.TargetDir)build\Fuzzware\FuzzwareDBGStub.dll" KeyPath="yes" Checksum="yes" />
+          </Component>
+          <!--<Directory Id="VC90REDIST" Name="Microsoft.VC90.CRT" >
+            <Component Id="Microsoft.VC90.CRT" Guid="AE8B3E5B-5CBE-4a17-A061-BF29225E6A39">
+              <File Id="Microsoft.VC90.CRT.manifest" Source="C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" Checksum="yes" />
+              <File Id="msvcm90.dll" Source="C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\msvcm90.dll" Checksum="yes" />
+              <File Id="msvcp90.dll" Source="C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\msvcp90.dll" Checksum="yes" />
+              <File Id="msvcr90.dll" Source="C:\Program Files\Microsoft Visual Studio 9.0\VC\redist\x86\Microsoft.VC90.CRT\msvcr90.dll" KeyPath="yes" Checksum="yes" />
+            </Component>
+          </Directory>-->
+          <Directory Id="RESOURCES" Name="Resources">
+            <Component Id="ActiveXInvoke.htm" Guid="C83DA230-33E6-46cf-BE02-2E9DA1EF848C">
+              <File Id="ActiveXInvoke.htm" Source="$(var.SolutionDir)\..\Resources\ActiveXInvoke.htm" KeyPath="yes" />
+            </Component>
+            <Component Id="ActiveXInvoke.js" Guid="A28A8CC2-8C50-4414-B6BD-EA4B92986835">
+              <File Id="ActiveXInvoke.js" Source="$(var.SolutionDir)\..\Resources\ActiveXInvoke.js" KeyPath="yes" />
+            </Component>
+            <Component Id="SOAPRequestTemplate.xml" Guid="C822B1FD-F18D-4524-BF66-0A85BA7CAC0A">
+              <File Id="SOAPRequestTemplate.xml" Source="$(var.SolutionDir)\..\Resources\SOAPRequestTemplate.xml" KeyPath="yes" />
+            </Component>
+            <Component Id="XmlDefaultValues.xml" Guid="BFA38749-67F9-446f-AE2E-D249569D20FD">
+              <File Id="XmlDefaultValues.xml" Source="$(var.SolutionDir)\..\Resources\XmlDefaultValues.xml" KeyPath="yes" />
+            </Component>
+            <Component Id="Configuration.xml" Guid="{696E4763-9BC4-4e26-A8CF-8A364BC63E64}">
+              <File Id="Configuration.xml" Source="$(var.SolutionDir)\..\Resources\Configuration.xml" KeyPath="yes" />
+            </Component>
+            <Component Id="SimpleTypeFuzzerConfig.xml" Guid="{41669102-7BD4-497b-A1AA-C6BAF5089FAE}">
+              <File Id="SimpleTypeFuzzerConfig.xml" Source="$(var.SolutionDir)\..\Resources\SimpleTypeFuzzerConfig.xml" KeyPath="yes" />
+            </Component>
+            <Component Id="ComplexTypeFuzzerConfig.xml" Guid="{6D574A83-A232-4bec-B861-046A49FCC84B}">
+              <File Id="ComplexTypeFuzzerConfig.xml" Source="$(var.SolutionDir)\..\Resources\ComplexTypeFuzzerConfig.xml" KeyPath="yes" />
+            </Component>
+          </Directory>
+          <Directory Id="SCHEMAS" Name="Schemas">
+            <Component Id="Common.xsd" Guid="93CB8171-7A0E-4352-9A36-16699538758D">
+              <File Id="Common.xsd" Source="$(var.SolutionDir)\..\Schemas\Common.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="ComplexTypeFuzzerConfig.xsd" Guid="394ED1BF-B7D3-4390-A401-479D7B6B5E9D">
+              <File Id="ComplexTypeFuzzerConfig.xsd" Source="$(var.SolutionDir)\..\Schemas\ComplexTypeFuzzerConfig.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="Configuration.xsd" Guid="558685DF-B3F7-499c-954B-5B018ADFC855">
+              <File Id="Configuration.xsd" Source="$(var.SolutionDir)\..\Schemas\Configuration.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="Convert2XML.xsd" Guid="810F8CCF-24C1-41d0-8686-E86D58B054CF">
+              <File Id="Convert2XML.xsd" Source="$(var.SolutionDir)\..\Schemas\Convert2XML.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="ConvertFromXML.xsd" Guid="0C91523F-3FEA-4003-AFDD-D08BDF411A3C">
+              <File Id="ConvertFromXML.xsd" Source="$(var.SolutionDir)\..\Schemas\ConvertFromXML.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="Evaluate.xsd" Guid="5E530698-3904-4434-BE27-B11C310042D1">
+              <File Id="Evaluate.xsd" Source="$(var.SolutionDir)\..\Schemas\Evaluate.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="Monitoring.xsd" Guid="4B476844-43E8-46a2-B8B1-C583E23256C4">
+              <File Id="Monitoring.xsd" Source="$(var.SolutionDir)\..\Schemas\Monitoring.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="PDML2XML.xslt" Guid="46C70D02-5868-4568-89A4-AB11105E9312">
+              <File Id="PDML2XML.xslt" Source="$(var.SolutionDir)\..\Schemas\PDML2XML.xslt" KeyPath="yes" />
+            </Component>
+            <Component Id="PDML2XSD.xslt" Guid="D21CB54D-F206-4cbe-9E34-CE9A8767D5CB">
+              <File Id="PDML2XSD.xslt" Source="$(var.SolutionDir)\..\Schemas\PDML2XSD.xslt" KeyPath="yes" />
+            </Component>
+            <Component Id="ProtocolDefn.xsd" Guid="73B77649-DFCB-43b9-B0E4-EFCFF78EEA39">
+              <File Id="ProtocolDefn.xsd" Source="$(var.SolutionDir)\..\Schemas\ProtocolDefn.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="SchemaAttributeCommands.xsd" Guid="20D06329-5946-4923-BEA0-76299865DE6C">
+              <File Id="SchemaAttributeCommands.xsd" Source="$(var.SolutionDir)\..\Schemas\SchemaAttributeCommands.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="SimpleTypeFuzzerConfig.xsd" Guid="214CA888-9882-480c-AE0C-0D4338D9DDF1">
+              <File Id="SimpleTypeFuzzerConfig.xsd" Source="$(var.SolutionDir)\..\Schemas\SimpleTypeFuzzerConfig.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="TapProxy.xsd" Guid="3B0D056E-D674-4a25-BE6D-4E353AD1EE00">
+              <File Id="TapProxy.xsd" Source="$(var.SolutionDir)\..\Schemas\TapProxy.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="XmlDefaultValues.xsd" Guid="213589E0-0283-40f7-9822-13A1E6BAABBA">
+              <File Id="XmlDefaultValues.xsd" Source="$(var.SolutionDir)\..\Schemas\XmlDefaultValues.xsd" KeyPath="yes" />
+            </Component>
+            <Component Id="XMLProcInstCommands.xsd" Guid="29F9124E-766B-4721-9E78-8A1068BE5814">
+              <File Id="XMLProcInstCommands.xsd" Source="$(var.SolutionDir)\..\Schemas\XMLProcInstCommands.xsd" KeyPath="yes" />
+            </Component>
+          </Directory>
+				</Directory>
+			</Directory>
+      <!-- Specify the Projects Directory -->
+      <Directory Id="PersonalFolder">
+        <Directory Id="FuzzwareProjects" Name="Fuzzware Projects">
+          <Component Id="FuzzwareProjectsDirId" Guid="{EED93CE4-82B1-4a60-8E0E-31A4BA0497D1}" Feature="MainApplication">
+            <!-- Create Project settings keys -->
+            <RegistryKey Action="createAndRemoveOnUninstall" Id="FuzzwareProjectsRegKey" Root="HKCU" Key="Software\Fuzzware">
+              <RegistryValue Id="ProjectsDir" Action="write" Type="string" Name="FuzzwareProjectsDir" Value="[PersonalFolder]Fuzzware Projects\" KeyPath="yes" />
+            </RegistryKey>
+            <CreateFolder />
+            <RemoveFolder Id="RemoveFuzzwareProjectsDir" On="uninstall"/>
+          </Component>
+          <Directory Id="Examples" Name="Examples">
+            <Component Id="ExamplesDir" Guid="{D7875449-0338-4e2d-81DA-ABE47C44EA85}" Feature="MainApplication">
+              <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+              </RegistryKey>
+              <CreateFolder />
+              <RemoveFolder Id="RemoveExamplesDir" On="uninstall"/>
+            </Component>
+            <!--<Directory Id="BMP" Name="BMP">
+              <Component Id="BMPDir" Guid="{73E7A221-6628-40db-AB12-5CECD6ACCD42}" Feature="MainApplication">
+                <RegistryKey Action="createAndRemoveOnUninstall" Id="BMPDirRegKey" Root="HKCU" Key="Software\Fuzzware\InstalledDirs">
+                  <RegistryValue Id="BMPDir" Action="write" Type="string" Name="FuzzwareExamplesDir" Value="BMPDir" KeyPath="yes" />
+                </RegistryKey>
+                <CreateFolder />
+                <RemoveFolder Id="RemoveBMPDir" On="uninstall"/>
+              </Component>
+            </Directory>-->
+            </Directory>
+        </Directory>
+      </Directory>
+		</Directory>
+
+    
+
+    <!-- Fuzzware Registry Entries -->
+    <DirectoryRef Id="TARGETDIR">
+      <!-- Create Project settings keys -->
+      <!--<Component Id="ProjectsDirRegistryKey" Guid="17B66528-3D8D-4a4c-BDB9-CAE08570A64B">
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="FuzzwareRegKey" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Id="ProjectsDir" Action="write" Type="string" Name="FuzzwareProjectsDir" Value="[PersonalFolder]Fuzzware Projects\" KeyPath="yes" />
+        </RegistryKey>
+      </Component>-->
+      <!-- Registry FuzzwareDBG -->
+      <Component Id="FuzzwareCOMRegister" Guid="3F51FA44-8ADD-4343-BF43-8A11559360FE">
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="CLSIDKey" Root="HKCR" Key="CLSID\{8C9991FE-3D7A-4f0b-A62A-0EBD08B0725F}">
+          <RegistryValue Id="CLSIDValue" Action="write" Type="string" Value="FuzzwareDBG" KeyPath="yes" />
+        </RegistryKey>
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="LocalServer32Key" Root="HKCR" Key="CLSID\{8C9991FE-3D7A-4f0b-A62A-0EBD08B0725F}\LocalServer32">
+          <RegistryValue Id="LocalServer32Value" Action="write" Type="string" Value="[INSTALLLOCATION]FuzzwareDBG.exe" />
+        </RegistryKey>
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="CLSIDProgIdKey" Root="HKCR" Key="CLSID\{8C9991FE-3D7A-4f0b-A62A-0EBD08B0725F}\ProgId">
+          <RegistryValue Id="ProgIdValue" Action="write" Type="string" Value="Fuzzware.FuzzwareDBG.1" />
+        </RegistryKey>
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="ProgIdKey" Root="HKCR" Key="Fuzzware.FuzzwareDBG.1">
+          <RegistryValue Id="ProgIdKeyValue" Action="write" Type="string" Value="FuzzwareDBG" />
+        </RegistryKey>
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="ProgIdCLSIDKey" Root="HKCR" Key="Fuzzware.FuzzwareDBG.1\CLSID">
+          <RegistryValue Id="ProgIdCLSIDValue" Action="write" Type="string" Value="{8C9991FE-3D7A-4f0b-A62A-0EBD08B0725F}" />
+        </RegistryKey>
+      </Component>
+      <!-- Registry FuzzwareDBGStub -->
+      <Component Id="FuzzwareDBGStubRegister" Guid="{14C94CDA-7381-4860-A877-367F7172F61E}">
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="StubDefaultKey" Root="HKCR" Key="CLSID\{4CD86B5B-BB54-4713-BED0-823B4F4EADC7}">
+          <RegistryValue Id="StubDefaultValue" Action="write" Type="string" Value="PSFactoryBuffer" KeyPath="yes" />
+        </RegistryKey>
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="InProcServer32Key" Root="HKCR" Key="CLSID\{4CD86B5B-BB54-4713-BED0-823B4F4EADC7}\InProcServer32">
+          <RegistryValue Id="InProcServer32DefaultValue" Action="write" Type="string" Value="[INSTALLLOCATION]FuzzwareDBGStub.dll" />
+          <RegistryValue Id="InProcServer32ThreadingModel" Action="write" Type="string" Name="ThreadingModel" Value="Both" />
+        </RegistryKey>
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="InterfaceDefaultKey" Root="HKCR" Key="Interface\{4CD86B5B-BB54-4713-BED0-823B4F4EADC7}">
+          <RegistryValue Id="InterfaceDefaultValue" Action="write" Type="string" Value="IFuzzwareDBG" />
+        </RegistryKey>
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="InterfaceProxyStubClsid32DefaultKey" Root="HKCR" Key="Interface\{4CD86B5B-BB54-4713-BED0-823B4F4EADC7}\ProxyStubClsid32">
+          <RegistryValue Id="InterfaceProxyStubClsid32DefaultValue" Action="write" Type="string" Value="{4CD86B5B-BB54-4713-BED0-823B4F4EADC7}" />
+        </RegistryKey>
+        <RegistryKey Action="createAndRemoveOnUninstall" Id="InterfaceNumMethodsDefaultKey" Root="HKCR" Key="Interface\{4CD86B5B-BB54-4713-BED0-823B4F4EADC7}\NumMethods">
+          <RegistryValue Id="InterfaceNumMethodsDefaultValue" Action="write" Type="string" Value="10" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Start Menu Shortcut -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="FuzzwareShortcut" Guid="A9C6268A-5204-4347-8DA4-732E967F9744">
+        <Shortcut Id="FuzzwareStartMenuShortcut"
+                  Name="Fuzzsaw"
+                  Description="Configuration tool for Fuzzware"
+                  Target="[INSTALLLOCATION]Fuzzsaw.exe"
+                  WorkingDirectory="INSTALLLOCATION"/>
+        <util:InternetShortcut Id="OnlineHelpDocumentationShortcut" Name="Online Help Documentation" Target="http://www.fuzzware.net" />
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Fuzzware" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Microsoft VC++ Redistributable -->
+    <DirectoryRef Id="TARGETDIR">
+      <Merge Id="VCRedist" SourceFile="c:\Program Files\Common Files\Merge Modules\Microsoft_VC90_CRT_x86.msm" DiskId="1" Language="0"/>
+    </DirectoryRef>
+    <Feature Id="VCRedist" Title="Visual C++ 9.0 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <MergeRef Id="VCRedist"/>
+    </Feature>
+
+    <!--<InstallExecuteSequence>
+      <RegisterClassInfo Sequence="1">
+        
+      </RegisterClassInfo>
+    </InstallExecuteSequence>-->
+    
+    
+    
+    <Feature Id="MainApplication" Title="Fuzzware 1.5" Level="1">
+      <!-- Install Binaries -->
+      <ComponentRef Id="Common.dll" />
+      <ComponentRef Id="Convert2XML.dll" />
+      <ComponentRef Id="ConvertFromXML.dll" />
+      <ComponentRef Id="Evaluate.dll" />
+      <ComponentRef Id="Extensible.dll" />
+      <ComponentRef Id="IFuzzwareDBGProxy.dll" />
+      <ComponentRef Id="Monitoring.dll" />
+      <ComponentRef Id="Schemer.exe" />
+      <ComponentRef Id="Fuzzsaw.exe" />
+      <ComponentRef Id="FuzzwareDBG.exe" />
+      <ComponentRef Id="FuzzwareDBGStub.dll" />
+      <!-- Install Resources -->
+      <ComponentRef Id="ActiveXInvoke.htm"/>
+      <ComponentRef Id="ActiveXInvoke.js"/>
+      <ComponentRef Id="SOAPRequestTemplate.xml"/>
+      <ComponentRef Id="XmlDefaultValues.xml"/>
+      <ComponentRef Id="Configuration.xml"/>
+      <ComponentRef Id="SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="ComplexTypeFuzzerConfig.xml"/>
+      <!-- Install Schemas -->
+      <ComponentRef Id="Common.xsd"/>
+      <ComponentRef Id="ComplexTypeFuzzerConfig.xsd"/>
+      <ComponentRef Id="Configuration.xsd"/>
+      <ComponentRef Id="Convert2XML.xsd"/>
+      <ComponentRef Id="ConvertFromXML.xsd"/>
+      <ComponentRef Id="Evaluate.xsd"/>
+      <ComponentRef Id="Monitoring.xsd"/>
+      <ComponentRef Id="PDML2XML.xslt"/>
+      <ComponentRef Id="PDML2XSD.xslt"/>
+      <ComponentRef Id="ProtocolDefn.xsd"/>
+      <ComponentRef Id="SchemaAttributeCommands.xsd"/>
+      <ComponentRef Id="SimpleTypeFuzzerConfig.xsd"/>
+      <ComponentRef Id="TapProxy.xsd"/>
+      <ComponentRef Id="XmlDefaultValues.xsd"/>
+      <ComponentRef Id="XMLProcInstCommands.xsd"/>
+      <!-- Install shortcut -->
+      <ComponentRef Id="FuzzwareShortcut"/>
+      <!-- Install Projects settings -->
+      <!--<ComponentRef Id="ProjectsDirRegistryKey"/>-->
+      <!-- Register COM components -->
+      <ComponentRef Id="FuzzwareCOMRegister"/>
+      <ComponentRef Id="FuzzwareDBGStubRegister"/>
+      <!-- Projects Directory -->
+      <!--<ComponentRef Id="FuzzwareProjectsDirId"/>-->
+      <ComponentGroupRef Id="_3GPComponentGroup"/>
+      <ComponentGroupRef Id="ActiveXComponentGroup"/>
+      <ComponentGroupRef Id="AVIComponentGroup"/>
+      <ComponentGroupRef Id="BMPComponentGroup"/>
+      <ComponentGroupRef Id="HTTPComponentGroup"/>
+      <ComponentGroupRef Id="ISOBaseMediaComponentGroup"/>
+      <ComponentGroupRef Id="MOVComponentGroup"/>
+      <ComponentGroupRef Id="MP4ComponentGroup"/>
+      <ComponentGroupRef Id="PDFComponentGroup"/>
+      <ComponentGroupRef Id="PDMLComponentGroup"/>
+      <ComponentGroupRef Id="TLSComponentGroup"/>
+      <ComponentGroupRef Id="WAVComponentGroup"/>
+      <ComponentGroupRef Id="WinRARComponentGroup"/>
+      <ComponentGroupRef Id="WSDLComponentGroup"/>
+      <ComponentGroupRef Id="XHTMLComponentGroup"/>
+      <ComponentGroupRef Id="XPSComponentGroup"/>
+		</Feature>
+
+    <!-- Customize the License Agreement -->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.SolutionDir)\..\License.rtf" />
+
+    <UIRef Id="WixUI_Minimal" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+
+  </Product>
+</Wix>

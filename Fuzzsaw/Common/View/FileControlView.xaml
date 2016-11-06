@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.View.FileControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Column="0" Height="25" MinWidth="370" Style="{StaticResource DataText}" 
+                 Text="{Binding Path=Filename, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Name="butBrowse" Margin="5,0,0,0" Grid.Column="1" Command="{Binding Path=ChooseFileCommand}">
+            <TextBlock Style="{StaticResource CommonText}">
+                Browse
+            </TextBlock>
+        </Button>
+    </Grid>
+    
+</UserControl>

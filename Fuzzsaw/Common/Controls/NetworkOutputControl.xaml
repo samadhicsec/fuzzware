@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.Controls.NetworkOutputControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Common.Controls"
+    >
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <StackPanel>
+        <Grid Style="{StaticResource CommonText}" DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=NetworkInfo, Mode=TwoWay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="*" />
+                <ColumnDefinition  Width="Auto" />
+                <ColumnDefinition  Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,5,5,0">
+                Enter IP or host address
+            </TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="0" Margin="5" Text="{Binding Path=Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" MinWidth="300"
+                     ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+            
+            <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,5,5,0">
+                Port
+            </TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource CommonText}" Margin="5" MinWidth="50" MaxWidth="100"
+                     Text="{Binding Path=Port, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  
+                      ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+            
+            <CheckBox Name="ckbxUseSSL" Grid.Row="1" Grid.Column="2" Margin="5,8,5,5" Style="{StaticResource CommonText}"
+                      IsChecked="{Binding Path=UseSSL, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                Use SSL
+            </CheckBox>
+            
+        </Grid>
+        
+        <local:FileStoreWithToleranceControl Description="Choose an output directory and file extension for storing unique responses"
+                 DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=OutputToNetwork, Mode=TwoWay}"
+                 FileStoreWithTolerance="{Binding Path=UniqueResponses}" />
+        
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Input.View.InputSelection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fzs="clr-namespace:Fuzzware.Fuzzsaw"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    Height="Auto" Width="Auto">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+                <ResourceDictionary Source="..\..\Common\HandlerSelectionStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+     
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <Grid Background="Transparent">        
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <StackPanel>
+                <TextBlock Style="{StaticResource HandlerDescriptionText}" Margin="8,0,0,0">
+                    Fuzzware requires an XML Schema file (.xsd) describing the types and structures of the data to be fuzzed.  Depending on 
+                    the selected input source, the XSD file needs to be explicitly provided, or in some cases Fuzzware can automatically 
+                    generate it.  Typically, an example (or template) of the data to be fuzzed also needs to be provided as an XML file.
+                </TextBlock>
+                <!-- Fuzz a file -->
+                <HeaderedContentControl Style="{StaticResource HandlerOptionGroupStyle}" Name="hccFuzzFile"
+                                        cmn:Common.IsExpanded="{Binding Path=ExpandFileFuzz, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl.Header>
+                        <HeaderedContentControl Style="{StaticResource HandlerOptionGroupHeaderStyle}" 
+                                                Header="Fuzz a file format">
+                            Fuzzware can fuzz XML files and any file format that can be converted to XML and back to its original format.  
+                            Fuzzware relies on an XML Schema file describing the file format to convert the format to and from XML.
+                        </HeaderedContentControl>
+                    </HeaderedContentControl.Header>    
+                    <StackPanel Margin="20,0,0,0">
+                        <Button Style="{StaticResource HandlerOptionStyle}" Name="butFFxml"
+                                Command="{Binding Path=(fzs:HandlerCommands.UseFileXMLInput)}"
+                                cmn:Common.IsSelected="{Binding Path=UseFileXMLInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Fuzz an XML file">
+                                Select this if the data to be fuzzed is already in an XML file.  You also need an XSD file describing 
+                                the XML file.
+                            </HeaderedContentControl>
+                        </Button>
+                        <Button Style="{StaticResource HandlerOptionStyle}" Name="butFFc2x"
+                                Command="{Binding Path=(fzs:HandlerCommands.UseFileC2XInput)}"
+                                cmn:Common.IsSelected="{Binding Path=UseFileC2XInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Fuzz a non-XML file">
+                                Select this for any non-XML file format.  The file format will need to be able to be converted to and from XML,
+                                and this will require an XSD file describing the format and conversion information.  See the examples and help 
+                                documentation for how to create the XSD.
+                            </HeaderedContentControl>
+                        </Button>
+                    </StackPanel>
+                </HeaderedContentControl>
+                <!-- Fuzz a network protocol -->
+                <HeaderedContentControl Style="{StaticResource HandlerOptionGroupStyle}" Name="hccFuzzNetwork"
+                                        cmn:Common.IsExpanded="{Binding Path=ExpandNetworkFuzz, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl.Header>
+                        <HeaderedContentControl Style="{StaticResource HandlerOptionGroupHeaderStyle}" 
+                                                Header="Fuzz a network protocol">
+                            Fuzzware can fuzz specific packets in a network protocol.  Fuzzware can fuzz packets that are in XML, have been 
+                            converted to XML, that it can automatically convert to XML, or that are in PDML format.
+                        </HeaderedContentControl>
+                    </HeaderedContentControl.Header>
+                    <StackPanel Margin="20,0,0,0">
+                        <Button Style="{StaticResource HandlerOptionStyle}" Name="butNPxml"
+                                Command="{Binding Path=(fzs:HandlerCommands.UseNetworkXMLInput)}"
+                                cmn:Common.IsSelected="{Binding Path=UseNetworkXMLInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Fuzz a packet in XML format">
+                                Select this if the packet to be fuzzed is already in an XML format, or has been converted to an
+                                XML format.  You also need an XSD file describing the XML file.
+                            </HeaderedContentControl>
+                        </Button>
+                        <Button Style="{StaticResource HandlerOptionStyle}" Name="butNPc2x"
+                                Command="{Binding Path=(fzs:HandlerCommands.UseNetworkC2XInput)}"
+                                cmn:Common.IsSelected="{Binding Path=UseNetworkC2XInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Fuzz a packet in a non-XML format">
+                                Select this for any non-XML packet format.  The packet format will need to be able to be converted to and from XML,
+                                and this will require an XSD file describing the format and conversion information.  See the examples and help 
+                                documentation for how to create the XSD.
+                            </HeaderedContentControl>
+                        </Button>
+                        <Button Style="{StaticResource HandlerOptionStyle}" Name="butNPpdml"
+                                Command="{Binding Path=(fzs:HandlerCommands.UseNetworkPDMLInput)}"
+                                cmn:Common.IsSelected="{Binding Path=UseNetworkPDMLInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Fuzz PDML">
+                                Select this if you have captured a network packet in Wireshark and saved that packet in PDML format.  
+                                Fuzzware will automatically create the XML and XML Schema from the PDML file.
+                            </HeaderedContentControl>
+                        </Button>
+                    </StackPanel>
+                </HeaderedContentControl>
+                <!-- Fuzz an interface -->
+                <HeaderedContentControl Style="{StaticResource HandlerOptionGroupStyle}" Name="hccFuzzInterface"
+                                        cmn:Common.IsExpanded="{Binding Path=ExpandInterfaceFuzz, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl.Header>
+                        <HeaderedContentControl Style="{StaticResource HandlerOptionGroupHeaderStyle}" 
+                                                Header="Fuzz an interface">
+                            Fuzzware can fuzz Web Services and ActiveX controls.
+                        </HeaderedContentControl>
+                    </HeaderedContentControl.Header>
+                    <StackPanel Margin="20,0,0,0">
+                        <Button Style="{StaticResource HandlerOptionStyle}" Name="butIwsdl"
+                                Command="{Binding Path=(fzs:HandlerCommands.UseInterfaceWSDLInput)}"
+                                cmn:Common.IsSelected="{Binding Path=UseWSDLInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Fuzz a Web Service">
+                                Select this to fuzz a Web Service given a WSDL file describing the Web Service interface.
+                            </HeaderedContentControl>
+                        </Button>
+                        <Button Style="{StaticResource HandlerOptionStyle}" Name="butIax"
+                                Command="{Binding Path=(fzs:HandlerCommands.UseInterfaceActiveXInput)}"
+                                cmn:Common.IsSelected="{Binding Path=UseActiveXInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Fuzz an ActiveX control">
+                                Select this to fuzz an ActiveX control given either the ProgId or ClassId of the ActiveX control.
+                            </HeaderedContentControl>
+                        </Button>
+                    </StackPanel>
+                </HeaderedContentControl>
+                <!-- Fuzz a custom input source -->
+                <HeaderedContentControl Style="{StaticResource HandlerOptionGroupStyle}" Name="hccFuzzCustom"
+                                        cmn:Common.IsExpanded="{Binding Path=ExpandCustomFuzz, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <HeaderedContentControl.Header>
+                        <HeaderedContentControl Style="{StaticResource HandlerOptionGroupHeaderStyle}" 
+                                                Header="Define a custom input source">
+                            Fuzzware can fuzz an input source coming from code.
+                        </HeaderedContentControl>
+                    </HeaderedContentControl.Header>
+                    <StackPanel Margin="20,0,0,0">
+                        <Button Style="{StaticResource HandlerOptionStyle}" Name="butCustom"
+                                Command="{Binding Path=(fzs:HandlerCommands.UseCustomInput)}"
+                                cmn:Common.IsSelected="{Binding Path=UseCustomInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <HeaderedContentControl Style="{StaticResource HandlerOptionDescStyle}" Header="Fuzz a custom input">
+                                Provide Fuzzware with a .Net assembly that implements the IUserInputHandler interface (defined
+                                in Extensible.dll).  Fuzzware will use the XSD and XML files your custom input source generates as the
+                                basis for fuzzing.
+                            </HeaderedContentControl>
+                        </Button>
+                    </StackPanel>
+                </HeaderedContentControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dfv:XmlDefaultValues xmlns:dfv="urn:Fuzzware.Schemas.XmlDefaultValues">
+  <!--
+  Notes on specifying XPath:
+  Here are some common XPath expressions that can be used
+    /prefix:libraryname/prefix:interface.method/prefix:parametername    
+                                              - this will select a specific parameter (you need to replace each prefix and name with actual values)
+    //*[contains(local-name(.), 'text')]       - update all nodes whose name contains 'text'
+    //*[starts-with(local-name(.), 'text')]    - update all nodes whose name starts with 'text'
+    //*[ends-with(local-name(.), 'text')]      - update all nodes whose name ends with 'text'
+    
+  .Net does not support all XPath functions, for a list see http://msdn.microsoft.com/en-us/library/ms256138(VS.80).aspx. .Net should 
+  support all XPath 1.0.  For a tutorial on XPath see  .
+  
+  Note, if the node the XPath selects is of type 'anyType' the value returned should be a fully qualified XML Schema simple type e.g.
+  http://www.w3.org/2001/XMLSchema:string, http://www.w3.org/2001/XMLSchema:integer etc.  Only the type used, not the value, can be
+  specified.
+  -->
+  <dfv:DefaultValues>
+    <dfv:DefaultValue XPath="//*[contains(local-name(.), 'URL')]">http:\\localhost</dfv:DefaultValue>  
+  </dfv:DefaultValues>
+  <dfv:StringDefaultValue>a</dfv:StringDefaultValue>
+  <dfv:IntegerDefaultValue>1</dfv:IntegerDefaultValue>
+  <dfv:DecimalDefaultValue>1.0</dfv:DecimalDefaultValue>
+  <dfv:BinaryDefaultValue>00</dfv:BinaryDefaultValue>
+  <dfv:AnyTypeDefaultType xmlns:xs="http://www.w3.org/2001/XMLSchema">xs:string</dfv:AnyTypeDefaultType>
+  
+</dfv:XmlDefaultValues>

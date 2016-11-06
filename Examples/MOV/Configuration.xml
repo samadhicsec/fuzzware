@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.5" testConfig="true" originalFile="stretch.mov" xmlns="urn:Fuzzware.Schemas.Configuration">
+  <Input>
+    <DataInputHandler>
+      <Convert2XMLInput>
+        <Convert2XML>
+          <SourceFile>stretch.mov</SourceFile>
+          <RootNodeNamespace>urn:Fuzzware.Examples.MOV</RootNodeNamespace>
+          <RootNodeName>MOV</RootNodeName>
+          <OutputNamespacePrefix>c2x</OutputNamespacePrefix>
+          <OutputXMLFile>stretch.mov.xml</OutputXMLFile>
+        </Convert2XML>
+        <XSDPathAndFilename>mov.xsd</XSDPathAndFilename>
+        <XSDPathAndFilename>SampleTableAtoms.xsd</XSDPathAndFilename>
+      </Convert2XMLInput>
+    </DataInputHandler>
+  </Input>
+  <XmlConfigFiles>
+    <SimpleTypeFuzzerXML>SimpleTypeFuzzerConfig.xml</SimpleTypeFuzzerXML>
+    <ComplexTypeFuzzerXML>ComplexTypeFuzzerConfig.xml</ComplexTypeFuzzerXML>
+  </XmlConfigFiles>
+  <Output>
+    <ConvertFromXML>
+      <OmitXMLDeclaration>true</OmitXMLDeclaration>
+      <OmitComments>true</OmitComments>
+      <FormatXML>false</FormatXML>
+      <OutputEncoding>us-ascii</OutputEncoding>
+      <VerifyOutputAgainstInputSchema>false</VerifyOutputAgainstInputSchema>
+    </ConvertFromXML>
+    <EvaluationMethod>
+      <OutputToExe>
+        <ExePathAndName>C:\Program Files\QuickTime\QuickTimePlayer.exe</ExePathAndName>
+        <InputFromFile>
+          <Directory>out</Directory>
+          <FileExtension>mov</FileExtension>
+        </InputFromFile>
+        <CommandLineParameters SingleTestcaseFilename="false">"[workingdir]\[filename]"</CommandLineParameters>
+        <ExeOpenActions>
+          <OpenDelayMilliSecs>3000</OpenDelayMilliSecs>
+        </ExeOpenActions>
+        <ProcessDelay>3500</ProcessDelay>
+        <ExeCloseActions />
+        <UniqueOutputs>
+          <Directory>out</Directory>
+          <FileExtension>txt</FileExtension>
+        </UniqueOutputs>
+      </OutputToExe>
+    </EvaluationMethod>
+    <Monitoring>
+      <PostMortemDebugger>
+        <CrashOutputDir>crashes</CrashOutputDir>
+      </PostMortemDebugger>
+    </Monitoring>
+  </Output>
+</Configuration>

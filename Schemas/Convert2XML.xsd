@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="Convert2XML" 
+                  targetNamespace="urn:Fuzzware.Schemas.Configuration"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:cfg="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="Common.xsd" />
+  
+  <xs:element name="XMLFileInput">
+    <xs:annotation>
+      <xs:documentation>
+        Use this if the input is in the form of an XML file and XML Schema(s).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="XMLPathAndFilename" type="xs:string" />
+        <xs:element name="XSDPathAndFilename" type="xs:string" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Convert2XML">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SourceFile" type="xs:string" />
+        <xs:element name="RootNodeNamespace" type="xs:string" />
+        <xs:element name="RootNodeName" type="xs:string" />
+        <xs:element name="OutputNamespacePrefix" type="xs:string" />
+        <xs:element name="OutputXMLFile" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Convert2XMLInput">
+    <xs:annotation>
+      <xs:documentation>
+        Use this if the input is in a non-XML format and needs to be converted.  Requires XML Schema(s) to be provided.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Convert2XML" />
+        <xs:element name="XSDPathAndFilename" type="xs:string" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="PDMLInput">
+    <xs:annotation>
+      <xs:documentation>
+        Protocol Description Markup Language (PDML) files can be saved from a Wireshark (www.wireshark.com) packet capture.  Schemer
+        can automatically convert the PDML file into XML and create an XSD for the XML.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="InputPDMLPathAndFile" type="xs:string" nillable="false" />
+        <xs:element name="OutputPrefix" type="xs:string" />
+        <xs:element name="OutputNamespace" type="xs:anyURI" />
+        <xs:element name="OutputXMLPathAndFile" type="xs:string" nillable="false" />
+        <xs:element name="OutputXSDPathAndFile" type="xs:string" nillable="false" />
+        <xs:element name="OptionalXSLT" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              This only needs to be specified if a custom XSLT is required to convert the PDML to XML or XSD.  By default Schemer will
+              use its own XSLT.  If this is specified, path and filenames should be given to the XSLT(s).
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PDML2XML" type="xs:string" minOccurs="0" />
+              <xs:element name="PDML2XSD" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="WSDLInput">
+    <xs:annotation>
+      <xs:documentation>
+        Web Services Description Language (WSDL) input uses the WSDL of a Web Service to fuzz that Web Service.  The protocol
+        and some example Web Service SOAP queries are required.  The example Web Service method requests are called in the order
+        listed.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="WSDLPathAndFile" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="Protocol">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Soap" />
+              <xs:enumeration value="Soap12" />
+              <xs:enumeration value="Http" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element ref="cfg:MethodsConfig" />
+        <xs:element name="OutputDir" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="COMInput">
+    <xs:annotation>
+      <xs:documentation>
+        Component Object Model (COM) input uses a CLSID or ProgID to create a COM object that implements the IDispatch interface.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="CLSID" type="xs:string" />
+          <xs:element name="ProgId" type="xs:string" />
+        </xs:choice>
+        <xs:element ref="cfg:MethodsConfig" />
+        <xs:element name="OutputDir" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="ProtocolDefnInput">
+    <xs:annotation>
+      <xs:documentation>
+        Use this if the input is a message that is part of a protocol.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ProtocolDefnXML" type="xs:string" />
+        <xs:element name="XSDPathAndFilename" type="xs:string" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="UserDefinedInput" type="cfg:UserDefinedCode">
+    <xs:annotation>
+      <xs:documentation>
+        Use this if the input needs to come from user code.  Requires a list of assemblies to load and a class to instantiate.  The class
+        should implement the Fuzzware.Schemer.Extensible.IUserInputHandler interface (defined in Extensible.dll).
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="DataInputHandler">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cfg:XMLFileInput" />
+        <xs:element ref="cfg:Convert2XMLInput" />
+        <xs:element ref="cfg:PDMLInput" />
+        <xs:element ref="cfg:WSDLInput" />
+        <xs:element ref="cfg:COMInput" />
+        <xs:element ref="cfg:ProtocolDefnInput" />
+        <xs:element ref="cfg:UserDefinedInput" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

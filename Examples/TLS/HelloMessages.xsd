@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="HelloMessages" 
+                  targetNamespace="urn:Fuzzware.Examples.TLS"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.TLS"
+                  xmlns:tls="urn:Fuzzware.Examples.TLS"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+  <xs:include schemaLocation="TLSRecord.xsd" />
+  
+  <xs:complexType name="Random">
+    <xs:sequence>
+      <xs:element name="gmt_unix_time" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="random_bytes" sac:outputAs="Decoded">
+        <xs:simpleType>
+          <xs:restriction base="xs:hexBinary">
+            <xs:length value="28" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="SessionID">
+    <xs:sequence>
+      <xs:element name="ByteLengthOfSessionIdValue" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="SessionIdValue" sac:outputAs="Decoded">
+        <xs:simpleType>
+          <xs:restriction base="xs:hexBinary">
+            <xs:maxLength value="32" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="CipherSuiteVector">
+    <xs:sequence>
+      <xs:element name="ByteLengthOfCipherSuites" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="CipherSuites">
+        <xs:complexType>
+          <xs:sequence>
+            <!-- The spec says minOccurs="2" -->
+            <xs:element name="CipherSuite" type="xs:unsignedShort" maxOccurs="65535" sac:outputAs="BinaryBigEndian" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CompressionMethodVector">
+    <xs:sequence>
+      <xs:element name="ByteLengthOfCompressionMethods" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="CompressionMethods">
+        <xs:complexType>
+          <xs:sequence>
+            <!-- The spec says minOccurs="1" -->
+            <xs:element name="CompressionMethod" type="xs:unsignedByte" maxOccurs="255" sac:outputAs="BinaryBigEndian" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="HelloRequest" type="xs:string" nillable="true" fixed="" />
+
+  <xs:element name="ClientHello">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="client_version" type="ProtocolVersion" />
+        <xs:element name="random" type="Random" />
+        <xs:element name="session_id" type="SessionID"/>
+        <xs:element name="cipher_suites" type="CipherSuiteVector" />
+        <xs:element name="compression_methods" type="CompressionMethodVector" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ServerHello">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="client_version" type="ProtocolVersion" />
+        <xs:element name="random" type="Random" />
+        <xs:element name="session_id" type="SessionID"/>
+        <xs:element name="cipher_suite" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="compression_method" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

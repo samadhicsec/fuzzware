@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="MOV" FileSource="g:\Tools\Fuzzware\Examples\MOV\publish">
+      <Component Id="MOV.xsd" Guid="{B2422742-C30C-446c-8637-97BC11BFD516}" Feature="MainApplication">
+        <File Id="MOV.xsd" Name="MOV.xsd" Source="g:\Tools\Fuzzware\Examples\MOV\publish\MOV.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="MOV.SampleTableAtoms.xsd" Guid="{3433C8B5-BB1C-4d9a-A269-C9C3181A86B2}" Feature="MainApplication">
+        <File Id="MOV.SampleTableAtoms.xsd" Name="SampleTableAtoms.xsd" Source="g:\Tools\Fuzzware\Examples\MOV\publish\SampleTableAtoms.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="MOV.ComplexTypeFuzzerConfig.xml" Guid="{BE453FCF-0E1C-4757-8E2F-21195F0DCEEF}" Feature="MainApplication">
+        <File Id="MOV.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\MOV\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="MOV.Configuration.xml" Guid="{915EF16A-6294-42a5-AD81-7BCF90EBB6FD}" Feature="MainApplication">
+        <File Id="MOV.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\MOV\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="MOV.SimpleTypeFuzzerConfig.xml" Guid="{78B6AF85-2474-4023-95E4-0B96838B1062}" Feature="MainApplication">
+        <File Id="MOV.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\MOV\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="stretch.mov" Guid="{F6F3EFC8-050D-439e-9632-FF48906AEC0B}" Feature="MainApplication">
+        <File Id="stretch.mov" Name="stretch.mov" Source="g:\Tools\Fuzzware\Examples\MOV\publish\stretch.mov" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="stretch.mov.xml" Guid="{528EEB35-6976-4e15-8B98-746FF33DDFB1}" Feature="MainApplication">
+        <File Id="stretch.mov.xml" Name="stretch.mov.xml" Source="g:\Tools\Fuzzware\Examples\MOV\publish\stretch.mov.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="MOV" Name="MOV">
+        <Component Id="MOV" Guid="{6126D461-2AAB-4f50-A175-2A3235A76DEF}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveMOVDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="MOVComponentGroup">
+      <ComponentRef Id="MOV.xsd"/>
+      <ComponentRef Id="MOV.SampleTableAtoms.xsd"/>
+      <ComponentRef Id="MOV.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="MOV.Configuration.xml"/>
+      <ComponentRef Id="MOV.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="stretch.mov"/>
+      <ComponentRef Id="stretch.mov.xml"/>
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

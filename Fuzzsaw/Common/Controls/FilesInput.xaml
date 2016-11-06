@@ -1,0 +1,49 @@
+﻿<cc:CommonFileInput x:Class="Fuzzware.Fuzzsaw.Common.Controls.FilesInput"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Fuzzware.Fuzzsaw.Common.Controls"
+    Height="Auto" Width="Auto">
+
+    <cc:CommonFileInput.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </cc:CommonFileInput.Resources>
+
+    <!--<StackPanel Margin="5" Orientation="Horizontal">
+        <TextBox Name="tbFileInput" IsReadOnly="True" Height="25" MinWidth="370" Style="{StaticResource ControlCommonText}"></TextBox>
+        <Button Name="butBrowse" Margin="5,0,0,0">
+            <TextBlock Style="{StaticResource CommonText}">
+                Browse
+            </TextBlock>
+        </Button>
+    </StackPanel>-->
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <ListBox Name="lbFilesInput" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" MinWidth="370" 
+                 Style="{StaticResource ControlCommonText}" SelectionMode="Multiple" 
+                 ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Filenames}"/>
+        <Button Name="butBrowse" Margin="5,0,0,0" Grid.Column="1" Grid.Row="0" Click="butBrowse_Click">
+            <TextBlock Style="{StaticResource CommonText}">
+                Browse
+            </TextBlock>
+        </Button>
+        <Button Name="butRemove" Margin="5,0,0,0" Grid.Column="1" Grid.Row="1" Click="butRemove_Click">
+            <TextBlock Style="{StaticResource CommonText}">
+                Remove
+            </TextBlock>
+        </Button>
+    </Grid>
+
+</cc:CommonFileInput>

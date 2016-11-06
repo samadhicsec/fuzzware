@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="XPS" FileSource="g:\Tools\Fuzzware\Examples\XPS\publish">
+      <Component Id="Hello.xps" Guid="{04C79D40-9F64-438f-842F-10FFC72E42AA}" Feature="MainApplication">
+        <File Id="Hello.xps" Name="Hello.xps" Source="g:\Tools\Fuzzware\Examples\XPS\Hello.xps" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="XPS.OPC">
+      <Component Id="opc_coreProperties.xsd" Guid="{AEC65E33-AAE4-4ea9-8119-B8CE65EA3847}" Feature="MainApplication">
+        <File Id="opc_coreProperties.xsd" Name="opc-coreProperties.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\opc-coreProperties.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="opc_contentTypes.xsd" Guid="{7F8E4360-CE62-41de-BCAD-25E847C3E08E}" Feature="MainApplication">
+        <File Id="opc_contentTypes.xsd" Name="opc-contentTypes.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\opc-contentTypes.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="opc_contentTypes2.xsd" Guid="{7D4FDE5F-5147-40cd-99CA-D4FF2BCEF8F9}" Feature="MainApplication">
+        <File Id="opc_contentTypes2.xsd" Name="opc-contentTypes2.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\opc-contentTypes2.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="opc_relationships.xsd" Guid="{D7A48E91-14BF-4991-9CE3-E909F081C385}" Feature="MainApplication">
+        <File Id="opc_relationships.xsd" Name="opc-relationships.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\opc-relationships.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="opc_digSig.xsd" Guid="{B2AA34E4-0973-42de-B089-473714BB5BB0}" Feature="MainApplication">
+        <File Id="opc_digSig.xsd" Name="opc-digSig.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\opc-digSig.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.ComplexTypeFuzzerConfig.xml" Guid="{3C0ED894-0910-4461-B531-BC6956EC04B9}" Feature="MainApplication">
+        <File Id="OPC.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.Configuration.xml" Guid="{21911649-0F71-4253-B3CC-2F0D9A4BF759}" Feature="MainApplication">
+        <File Id="OPC.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.SimpleTypeFuzzerConfig.xml" Guid="{941671DA-DDEE-4350-B284-4B797601E81C}" Feature="MainApplication">
+        <File Id="OPC.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.dc.xsd" Guid="{E0ACEDB2-D1F9-44ba-A955-FCF37293523B}" Feature="MainApplication">
+        <File Id="OPC.dc.xsd" Name="dc.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\dc.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.dcmitype.xsd" Guid="{3F6496D6-BC7A-4ec5-A2EA-FE793C0B7DFB}" Feature="MainApplication">
+        <File Id="OPC.dcmitype.xsd" Name="dcmitype.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\dcmitype.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.dcterms.xsd" Guid="{BA8EC38C-FB9C-4113-BE9E-A89C7A390D34}" Feature="MainApplication">
+        <File Id="OPC.dcterms.xsd" Name="dcterms.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\dcterms.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.xml.xsd" Guid="{686981BB-F4DE-4887-B98E-0612FB3049C8}" Feature="MainApplication">
+        <File Id="OPC.xml.xsd" Name="xml.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\xml.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.XMLSchema.dtd" Guid="{27381254-F410-4429-A255-280DC623858B}" Feature="MainApplication">
+        <File Id="OPC.XMLSchema.dtd" Name="XMLSchema.dtd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\XMLSchema.dtd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.datatypes.dtd" Guid="{E0E2F430-3FF1-431b-BA9E-39F93B227421}" Feature="MainApplication">
+        <File Id="OPC.datatypes.dtd" Name="datatypes.dtd" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\datatypes.dtd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="OPC.core.xml" Guid="{4E70F9E7-CCD0-4c8a-9952-1ABE2C120966}" Feature="MainApplication">
+        <File Id="OPC.core.xml" Name="core.xml" Source="g:\Tools\Fuzzware\Examples\XPS\OPC\publish\core.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="XPS.XPS">
+      <Component Id="XPS.ComplexTypeFuzzerConfig.xml" Guid="{BB554A7F-343F-44f2-9D47-9048D6E22834}" Feature="MainApplication">
+        <File Id="XPS.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\XPS\XPS\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS.Configuration.xml" Guid="{39BE002E-9124-45f5-B24C-2DC29BBF38C1}" Feature="MainApplication">
+        <File Id="XPS.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\XPS\XPS\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS.SimpleTypeFuzzerConfig.xml" Guid="{4CE40B8D-3328-40e8-9B4B-5FA3D3D01531}" Feature="MainApplication">
+        <File Id="XPS.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\XPS\XPS\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS.xml.xsd" Guid="{C839CB3D-C9DA-40aa-99E9-2C59C9C3B039}" Feature="MainApplication">
+        <File Id="XPS.xml.xsd" Name="xml.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS\publish\xml.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS.XMLSchema.dtd" Guid="{1CA8AB57-647F-4cfc-9B66-DAEFF3A6C45F}" Feature="MainApplication">
+        <File Id="XPS.XMLSchema.dtd" Name="XMLSchema.dtd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS\publish\XMLSchema.dtd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS.datatypes.dtd" Guid="{9906E539-B492-4eb6-BD7C-B999F78B4D4E}" Feature="MainApplication">
+        <File Id="XPS.datatypes.dtd" Name="datatypes.dtd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS\publish\datatypes.dtd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS.structures.dtd" Guid="{F8285438-E4CD-44c8-897D-9F92881508C8}" Feature="MainApplication">
+        <File Id="XPS.structures.dtd" Name="structures.dtd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS\publish\structures.dtd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS.docfuzzme2.xps" Guid="{2EC5A8A1-E446-4a51-AE0A-32A54F47D28D}" Feature="MainApplication">
+        <File Id="XPS.docfuzzme2.xps" Name="docfuzzme2.xps" Source="g:\Tools\Fuzzware\Examples\XPS\XPS\publish\docfuzzme2.xps" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="XPS.XPS_1_0.Schemas">
+      <Component Id="XPS_1_0.Schemas.DiscardControl.xsd" Guid="{9D3C36B3-D8F8-4f60-8FF4-F543EDA73E1E}" Feature="MainApplication">
+        <File Id="XPS_1_0.Schemas.DiscardControl.xsd" Name="DiscardControl.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS_1_0\Schemas\DiscardControl.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS_1_0.Schemas.DocStructure.xsd" Guid="{ABB93688-6A0F-48eb-B286-EBFDBE255E14}" Feature="MainApplication">
+        <File Id="XPS_1_0.Schemas.DocStructure.xsd" Name="DocStructure.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS_1_0\Schemas\DocStructure.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS_1_0.Schemas.RDKey.xsd" Guid="{1FD13FC8-1F9A-4541-A3F4-CC6F81051404}" Feature="MainApplication">
+        <File Id="XPS_1_0.Schemas.RDKey.xsd" Name="RDKey.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS_1_0\Schemas\RDKey.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS_1_0.Schemas.S0schema2.xsd" Guid="{843A0B97-D81B-4885-A613-B7E7F65BA8D6}" Feature="MainApplication">
+        <File Id="XPS_1_0.Schemas.S0schema2.xsd" Name="S0schema2.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS_1_0\Schemas\S0schema2.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS_1_0.Schemas.S0schema.xsd" Guid="{9F434F26-7269-4ed1-AABE-BB0EB7CDDBC9}" Feature="MainApplication">
+        <File Id="XPS_1_0.Schemas.S0schema.xsd" Name="S0schema.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS_1_0\Schemas\S0schema.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPS_1_0.Schemas.SignatureDefinitions.xsd" Guid="{EF417E72-81EC-4b24-8033-0A01A512816E}" Feature="MainApplication">
+        <File Id="XPS_1_0.Schemas.SignatureDefinitions.xsd" Name="SignatureDefinitions.xsd" Source="g:\Tools\Fuzzware\Examples\XPS\XPS_1_0\Schemas\SignatureDefinitions.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="XPS.XPSHandlers.bin.Release">
+      <Component Id="XPSHandlers.dll" Guid="{BB002FF0-FFA8-4b99-8321-7138F348399F}" Feature="MainApplication">
+        <File Id="XPSHandlers.dll" Name="XPSHandlers.dll" Source="g:\Tools\Fuzzware\Examples\XPS\XPSHandlers\bin\Release\XPSHandlers.dll" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="XPS.XPSHandlers">
+      <Component Id="XPSHandlers.XPSHandlers.sln" Guid="{6A44A313-1316-4720-AC9A-D11716956F91}" Feature="MainApplication">
+        <File Id="XPSHandlers.XPSHandlers.sln" Name="XPSHandlers.sln" Source="g:\Tools\Fuzzware\Examples\XPS\XPSHandlers\XPSHandlers.sln" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPSHandlers.XPSHandlers.csproj" Guid="{455B1F99-AE55-455a-A6E8-F0B905A9C5EA}" Feature="MainApplication">
+        <File Id="XPSHandlers.XPSHandlers.csproj" Name="XPSHandlers.csproj" Source="g:\Tools\Fuzzware\Examples\XPS\XPSHandlers\XPSHandlers.csproj" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPSHandlers.TestInputHandler.cs" Guid="{7111D514-C5D8-403a-8BD0-19441A0AE417}" Feature="MainApplication">
+        <File Id="XPSHandlers.TestInputHandler.cs" Name="TestInputHandler.cs" Source="g:\Tools\Fuzzware\Examples\XPS\XPSHandlers\TestInputHandler.cs" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPSHandlers.XPSInputHandler.cs" Guid="{D3824D16-ABB6-404c-A82E-71E4E93E55E3}" Feature="MainApplication">
+        <File Id="XPSHandlers.XPSInputHandler.cs" Name="XPSInputHandler.cs" Source="g:\Tools\Fuzzware\Examples\XPS\XPSHandlers\XPSInputHandler.cs" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="XPSHandlers.XPSPreOutputHandler.cs" Guid="{033B1B9E-9615-49f0-9F13-74775AB8877B}" Feature="MainApplication">
+        <File Id="XPSHandlers.XPSPreOutputHandler.cs" Name="XPSPreOutputHandler.cs" Source="g:\Tools\Fuzzware\Examples\XPS\XPSHandlers\XPSPreOutputHandler.cs" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>          
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="XPS" Name="XPS">
+        <Component Id="XPS" Guid="{B42567BB-D08F-438c-8857-5096D4330E7A}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveXPSDir" On="uninstall"/>
+        </Component>
+        <Directory Id="XPS.OPC" Name="OPC">
+          <Component Id="XPS.OPC" Guid="{EB60E538-E4C9-4a62-8250-36F3E3F10298}" Feature="MainApplication">
+            <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+              <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+            </RegistryKey>
+            <CreateFolder />
+            <RemoveFolder Id="RemoveXPS.OPCDir" On="uninstall"/>
+          </Component>
+        </Directory>  
+        <Directory Id="XPS.XPS" Name="XPS">
+          <Component Id="XPS.XPS" Guid="{F54DF6D7-1D6C-4d07-9FFA-16811C5CF179}" Feature="MainApplication">
+            <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+              <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+            </RegistryKey>
+            <CreateFolder />
+            <RemoveFolder Id="RemoveXPS.XPSDir" On="uninstall"/>
+          </Component>
+        </Directory>
+        <Directory Id="XPS.XPS_1_0" Name="XPS_1_0">
+          <Component Id="XPS.XPS_1_0" Guid="{FCD3524B-1F45-4515-B346-0A976F05E0DF}" Feature="MainApplication">
+            <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+              <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+            </RegistryKey>
+            <CreateFolder />
+            <RemoveFolder Id="RemoveXPS.XPS_1_0Dir" On="uninstall"/>
+          </Component>
+          <Directory Id="XPS.XPS_1_0.Schemas" Name="Schemas">
+            <Component Id="XPS.XPS_1_0.Schemas" Guid="{EFEF1655-C777-4d5a-BCD2-BABD611F862D}" Feature="MainApplication">
+              <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+              </RegistryKey>
+              <CreateFolder />
+              <RemoveFolder Id="RemoveXPS.XPS_1_0.SchemasDir" On="uninstall"/>
+            </Component>
+          </Directory>
+        </Directory>
+        <Directory Id="XPS.XPSHandlers" Name="XPSHandlers">
+          <Component Id="XPS.XPSHandlers" Guid="{73E3F117-A0F9-4a3e-8F0D-9DA192DCFBCF}" Feature="MainApplication">
+            <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+              <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+            </RegistryKey>
+            <CreateFolder />
+            <RemoveFolder Id="RemoveXPS.XPSHandlersDir" On="uninstall"/>
+          </Component>
+          <Directory Id="XPS.XPSHandlers.bin" Name="bin">
+            <Component Id="XPS.XPSHandlers.bin" Guid="{AA52446D-7DD5-4c6b-8EF9-99BB8B7FDB1F}" Feature="MainApplication">
+              <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+              </RegistryKey>
+              <CreateFolder />
+              <RemoveFolder Id="RemoveXPS.XPSHandlers.binDir" On="uninstall"/>
+            </Component>
+            <Directory Id="XPS.XPSHandlers.bin.Release" Name="Release">
+              <Component Id="XPS.XPSHandlers.bin.Release" Guid="{E93A1F13-04FF-498d-A6C0-C773822C7A34}" Feature="MainApplication">
+                <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+                  <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+                </RegistryKey>
+                <CreateFolder />
+                <RemoveFolder Id="RemoveXPS.XPSHandlers.bin.ReleaseDir" On="uninstall"/>
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="XPSComponentGroup">
+      <ComponentRef Id="Hello.xps"/>
+      <ComponentRef Id="opc_coreProperties.xsd"/>
+      <ComponentRef Id="opc_contentTypes.xsd"/>
+      <ComponentRef Id="opc_contentTypes2.xsd"/>
+      <ComponentRef Id="opc_relationships.xsd"/>
+      <ComponentRef Id="opc_digSig.xsd"/>
+      <ComponentRef Id="OPC.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="OPC.Configuration.xml"/>
+      <ComponentRef Id="OPC.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="OPC.dc.xsd"/>
+      <ComponentRef Id="OPC.dcmitype.xsd"/>
+      <ComponentRef Id="OPC.dcterms.xsd"/>
+      <ComponentRef Id="OPC.xml.xsd"/>
+      <ComponentRef Id="OPC.XMLSchema.dtd"/>
+      <ComponentRef Id="OPC.datatypes.dtd"/>
+      <ComponentRef Id="OPC.core.xml"/>
+      <ComponentRef Id="XPS.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="XPS.Configuration.xml"/>
+      <ComponentRef Id="XPS.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="XPS.xml.xsd"/>
+      <ComponentRef Id="XPS.XMLSchema.dtd"/>
+      <ComponentRef Id="XPS.datatypes.dtd"/>
+      <ComponentRef Id="XPS.structures.dtd"/>
+      <ComponentRef Id="XPS.docfuzzme2.xps"/>
+      <ComponentRef Id="XPS_1_0.Schemas.DiscardControl.xsd"/>
+      <ComponentRef Id="XPS_1_0.Schemas.DocStructure.xsd"/>
+      <ComponentRef Id="XPS_1_0.Schemas.RDKey.xsd"/>
+      <ComponentRef Id="XPS_1_0.Schemas.S0schema2.xsd"/>
+      <ComponentRef Id="XPS_1_0.Schemas.S0schema.xsd"/>
+      <ComponentRef Id="XPS_1_0.Schemas.SignatureDefinitions.xsd"/>
+      <ComponentRef Id="XPSHandlers.dll"/>
+      <ComponentRef Id="XPSHandlers.XPSHandlers.sln"/>
+      <ComponentRef Id="XPSHandlers.XPSHandlers.csproj"/>
+      <ComponentRef Id="XPSHandlers.TestInputHandler.cs"/>
+      <ComponentRef Id="XPSHandlers.XPSInputHandler.cs"/>
+      <ComponentRef Id="XPSHandlers.XPSPreOutputHandler.cs"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

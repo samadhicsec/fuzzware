@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.MOV"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.MOV"
+    xmlns:mov="urn:Fuzzware.Examples.MOV"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:element name="stbl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstbl" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stblconst" type="xs:string" fixed="stbl" />
+        <xs:element name="stblData">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="mov:stsd" />
+              <xs:element ref="mov:stts" />
+              <xs:element ref="mov:stss" />
+              <xs:element ref="mov:stsc" />
+              <xs:element ref="mov:stsz" />
+              <xs:element ref="mov:stco" />
+              <xs:element ref="mov:stsh" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="stsd">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstsd" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stsdconst" type="xs:string" fixed="stsd" />
+        <xs:element name="stsdversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stsdflags" sac:outputAs="BinaryBigEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CountOfSampleDescTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="SampleDescTableEntry" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ByteLengthOfSampleDescTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="SampleDataFormat" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="SampleReserved" sac:outputAs="Decoded">
+                <xs:simpleType>
+                  <xs:restriction base="xs:hexBinary">
+                    <xs:length value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SampleDataRefIndex" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="SampleAdditionalData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="stts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstts" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="sttsconst" type="xs:string" fixed="stts" />
+        <xs:element name="sttsversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="sttsflags" sac:outputAs="BinaryBigEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CountOfTimeToSampleTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="TimeToSampleTableEntry" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TTSSampleCount" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="TTSSampleDuration" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="stss">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstss" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stssconst" type="xs:string" fixed="stss" />
+        <xs:element name="stssversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stssflags" sac:outputAs="BinaryBigEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CountOfSyncSampleTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="SyncSampleTableEntry" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="stsc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstsc" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stscconst" type="xs:string" fixed="stsc" />
+        <xs:element name="stscversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stscflags" sac:outputAs="BinaryBigEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CountOfSampleToChunkTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="SampleToChunkTableEntry" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="STCFirstChunk" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="STCSamplesPerChunk" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="STCSampleDescId" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Sample Size Atoms-->
+  <xs:element name="stsz">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstsz" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stszconst" type="xs:string" fixed="stsz" />
+        <xs:element name="stszversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stszflags" sac:outputAs="BinaryBigEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="stszSampleSize" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="CountOfSampleSizeTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="SampleSizeTableEntry" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded" sac:outputAs="BinaryBigEndian" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Chunk Offset Atoms-->
+  <xs:element name="stco">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstco" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stcoconst" type="xs:string" fixed="stco" />
+        <xs:element name="stcoversion" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stcoflags" sac:outputAs="BinaryBigEndian">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="3" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CountOfChunkOffsetTableEntry" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="ChunkOffsetTableEntry" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded" sac:outputAs="BinaryBigEndian" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Shadow Sync Atoms-->
+  <xs:element name="stsh">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfstsh" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="stshconst" type="xs:string" fixed="stsh" />
+        <xs:element name="stshData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+</xs:schema>

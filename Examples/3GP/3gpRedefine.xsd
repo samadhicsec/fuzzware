@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.ISO"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.ISO"
+    xmlns:iso="urn:Fuzzware.Examples.ISO"
+    xmlns:mp4="urn:Fuzzware.Examples.MP4"
+    xmlns:tgp="urn:Fuzzware.Examples.3GP"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:import namespace="urn:Fuzzware.Examples.MP4" schemaLocation="..\MP4\mp4.xsd" />
+  <xs:import namespace="urn:Fuzzware.Examples.3GP" schemaLocation="3gp.xsd" />
+  
+  <xs:redefine schemaLocation="..\ISO Base Media\ISO SampleTableAtoms.xsd">
+
+    <xs:complexType name="tSampleEntryType">
+      <xs:complexContent>
+        <xs:extension base="iso:tSampleEntryType">
+          <xs:choice>
+            <xs:element ref="mp4:mp4v" />
+            <xs:element ref="mp4:mp4a" />
+            <xs:element ref="tgp:amr" />
+            <xs:element ref="tgp:sawp" />
+            <xs:element ref="tgp:s263" />
+          </xs:choice>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+  </xs:redefine>
+  
+</xs:schema>

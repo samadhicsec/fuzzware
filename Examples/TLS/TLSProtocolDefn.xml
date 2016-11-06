@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pd:ProtocolDefinition xmlns:pd="urn:Fuzzware.Schemas.Configuration">
+  <pd:Message>
+    <pd:Direction>ClientToServer</pd:Direction>
+    <pd:XMLMessage Fuzz="true">
+      <pd:InputMessageXMLFilePath>Examples\TLS\ClientHello.xml</pd:InputMessageXMLFilePath>
+      <!--
+      <pd:Convert2XML>
+        <pd:SourceFile>Examples\TLS\ClientHello.bin</pd:SourceFile>
+        <pd:RootNodeNamespace>urn:Fuzzware.Examples.TLS</pd:RootNodeNamespace>
+        <pd:RootNodeName>TLSPlaintext</pd:RootNodeName>
+        <pd:OutputNamespacePrefix>tls</pd:OutputNamespacePrefix>
+        <pd:OutputXMLFile>Examples\TLS\ClientHello.xml</pd:OutputXMLFile>
+      </pd:Convert2XML>
+      -->
+      <pd:OutputRawMessageFilePath>Examples\TLS\OutputClientHello.bin</pd:OutputRawMessageFilePath>
+    </pd:XMLMessage>
+  </pd:Message>
+  <pd:Message>
+    <pd:Direction>ServerToClient</pd:Direction>
+    <!--
+    <pd:RawMessageFilePath>Examples\TLS\ServerResponse.bin</pd:RawMessageFilePath>
+    -->
+    <pd:XMLMessage>
+      <pd:Convert2XML>
+        <pd:SourceFile>Examples\TLS\ServerResponse.bin</pd:SourceFile>
+        <pd:RootNodeNamespace>urn:Fuzzware.Examples.TLS</pd:RootNodeNamespace>
+        <pd:RootNodeName>TLSPlaintext</pd:RootNodeName>
+        <pd:OutputNamespacePrefix>tls</pd:OutputNamespacePrefix>
+        <pd:OutputXMLFile>Examples\TLS\ServerResponse.xml</pd:OutputXMLFile>
+      </pd:Convert2XML>
+      <pd:OutputRawMessageFilePath>Examples\TLS\OutputServerResponse.bin</pd:OutputRawMessageFilePath>
+    </pd:XMLMessage>
+  </pd:Message>
+  <pd:Message>
+    <pd:Direction>ClientToServer</pd:Direction>
+    <pd:XMLMessage Fuzz="false">
+      <pd:Convert2XML>
+        <pd:SourceFile>Examples\TLS\ClientChangeCipherSpec.bin</pd:SourceFile>
+        <pd:RootNodeNamespace>urn:Fuzzware.Examples.TLS</pd:RootNodeNamespace>
+        <pd:RootNodeName>TLSPlaintext</pd:RootNodeName>
+        <pd:OutputNamespacePrefix>tls</pd:OutputNamespacePrefix>
+        <pd:OutputXMLFile>Examples\TLS\ClientChangeCipherSpec.xml</pd:OutputXMLFile>
+      </pd:Convert2XML>
+      <pd:OutputRawMessageFilePath>Examples\TLS\OutputClientChangeCipherSpec.bin</pd:OutputRawMessageFilePath>
+    </pd:XMLMessage>
+  </pd:Message>
+  <pd:ErrorMessage>
+    <pd:ContainsErrorNodes>
+      <pd:NodeName>Alert</pd:NodeName>
+    </pd:ContainsErrorNodes>
+  </pd:ErrorMessage>
+</pd:ProtocolDefinition>

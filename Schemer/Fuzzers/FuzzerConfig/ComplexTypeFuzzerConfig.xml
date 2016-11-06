@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ctfc:ComplexTypeFuzzerConfig xmlns:ctfc="http://tempuri.org/ComplexTypeFuzzerConfig.xsd">
+  <ctfc:AttributeFuzzing>
+    <ctfc:AttributeValueFuzzing/>
+    <ctfc:AtrOppositeOccurrence/>
+    <ctfc:AtrIsolateOccurrence/>
+  </ctfc:AttributeFuzzing>
+  <ctfc:OccurranceFuzzingCount>
+    <ctfc:Occurs>0</ctfc:Occurs>
+    <ctfc:Occurs>1</ctfc:Occurs>
+    <ctfc:Occurs>2</ctfc:Occurs>
+    <ctfc:Occurs>3</ctfc:Occurs>
+    <ctfc:Occurs>100</ctfc:Occurs>
+  </ctfc:OccurranceFuzzingCount>
+  <ctfc:ExampleComplexContent>
+    <ctfc:Example>
+      <RandomNode xmlns="junkns"  randomattribute="random">Hello</RandomNode>
+    </ctfc:Example>
+    <ctfc:Example>
+      <tof:Element3Child1 xmlns:tof="http://tempuri.org/TestOccurrenceFuzzing.xsd" />
+      <tof:Element3Child2 xmlns:tof="http://tempuri.org/TestOccurrenceFuzzing.xsd" />
+      <tof:Element3Child4 xmlns:tof="http://tempuri.org/TestOccurrenceFuzzing.xsd" />
+    </ctfc:Example>
+  </ctfc:ExampleComplexContent>
+</ctfc:ComplexTypeFuzzerConfig>

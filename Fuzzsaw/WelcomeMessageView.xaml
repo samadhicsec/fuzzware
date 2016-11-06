@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.WelcomeMessageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Common\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <UserControl.Visibility>
+        <Binding Path="Show" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource BooleanToVisability}" />
+    </UserControl.Visibility>
+    
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <TextBlock HorizontalAlignment="Center" Style="{StaticResource CommonHeaderText}">
+                        Welcome to Fuzzware
+                    </TextBlock>
+        <TextBlock Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource CommonHeaderText}"
+                               Text="{Binding Path=WelcomeMessage, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBlock>
+        <TextBlock Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                        Use the Project menu to create or open a Project
+                    </TextBlock>
+    </StackPanel>
+    
+</UserControl>

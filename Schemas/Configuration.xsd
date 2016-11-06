@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="Configuration" 
+                  targetNamespace="urn:Fuzzware.Schemas.Configuration"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:cfg="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:include schemaLocation="Common.xsd" />
+  <xs:include schemaLocation="Convert2XML.xsd" />
+  <xs:include schemaLocation="ProtocolDefn.xsd" />
+  <xs:include schemaLocation="ConvertFromXML.xsd" />
+  <xs:include schemaLocation="Evaluate.xsd" />
+  <xs:include schemaLocation="Monitoring.xsd" />
+  
+  <xs:complexType name="StateType">
+    <xs:annotation>
+      <xs:documentation>
+        The state of Schemer is represented in string form as 'NamespacePrefix-Name-Index-FuzzerType-FuzzerIndex'; where 'NamespacePrefix'
+        is the schema namespace prefix of 'Name' and might not be present, 'Name' is the name of the node or attribute being fuzzed, 
+        'Index' is the current index among all the nodes or attributes with name 'Name', and 'FuzzerType' and 'FuzzerIndex' the current 
+        fuzzer type and index.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="NamespacePrefix" type="xs:string" />
+      <xs:element name="Name" type="xs:string" />
+      <xs:element name="Index">
+        <xs:simpleType>
+          <xs:union memberTypes="xs:unsignedInt">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="All" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:union> 
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="FuzzerType" type="xs:string" />
+      <xs:element name="FuzzerIndex" type="xs:unsignedInt" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="PreOutput">
+    <xs:annotation>
+      <xs:documentation>
+        Defines actions to occur after the fuzzed test case has been created but before the test case is passed to the evaluation method.  
+        Implicitly used for protocol fuzzing to run the protocol up until the test case is sent.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="UserDefinedPreOutput" type="cfg:UserDefinedCode">
+          <xs:annotation>
+            <xs:documentation>
+              Use this if the output needs to go to user code before it is output.  Requires a list of assemblies to load and a class 
+              to instantiate.  The class should implement the Fuzzware.Extensible.IUserPreOutputHandler interface (defined in
+              Extensible.dll).
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Input">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cfg:DataInputHandler" />
+        <xs:element name="StartState" type="cfg:StateType" minOccurs="0" />
+        <xs:element name="EndState" type="cfg:StateType" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Output">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cfg:ConvertFromXML" />
+        <xs:element ref="cfg:PreOutput" minOccurs="0" />
+        <xs:element ref="cfg:EvaluationMethod" />
+        <xs:element ref="cfg:Monitoring" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="XmlConfigFiles">
+    <xs:annotation>
+      <xs:documentation>
+        Specifies the location of configuration information for the fuzzing of simple and complex types.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="SimpleTypeFuzzerXML" type="xs:string" minOccurs="1"></xs:element>
+        <xs:element name="ComplexTypeFuzzerXML" type="xs:string" minOccurs="1"></xs:element>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Configuration">
+    <xs:annotation>
+      <xs:documentation>
+        Holds all the configuration data needed by Schemer.
+
+        The 'testConfig' attribute can be set to put the fuzzer in a pass-through mode, where the input will be read in and verified but no 
+        fuzzing will occur, and so the output should be the same as the input.  This allows a user to test that the input XML, Schema and 
+        Configuration have all been correctly set.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cfg:Input" minOccurs="1" />
+        <xs:element ref="cfg:XmlConfigFiles" minOccurs="1" />
+        <xs:element ref="cfg:Output" minOccurs="1" />
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:string" use="required" fixed="1.5" />
+      <xs:attribute name="testConfig" type="xs:boolean" default="false">
+        <xs:annotation>
+          <xs:documentation>
+            This puts Schemer in a pass-through mode, where the input will be read in and verified but no fuzzing will occur, so the output 
+            should be the same as the input.  This is a convenience option to test that the input XML, XML Schema and Configuration have all 
+            been correctly set.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="originalFile" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            If not empty, this file will be byte compared to the output reference testcase (where no fuzzing occurs) to determine if they
+            are the same.  This is useful to confirm that the input XML, XML Schema and Configuration have all been correctly set.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <!--<xs:attribute name="logDirectory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            The directory to store log files, it can be relative or absolute.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>-->
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="TLS" FileSource="g:\Tools\Fuzzware\Examples\TLS\publish">
+      <Component Id="TLS.ComplexTypeFuzzerConfig.xml" Guid="{50D17760-59E2-4ffc-95DB-0194317ABE82}" Feature="MainApplication">
+        <File Id="TLS.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.Configuration.xml" Guid="{D034ABA2-0CEC-4b20-A905-2B048DB29859}" Feature="MainApplication">
+        <File Id="TLS.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.SimpleTypeFuzzerConfig.xml" Guid="{20F13918-CA80-45b1-B4C7-E3C72402F97B}" Feature="MainApplication">
+        <File Id="TLS.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.Alert.xsd" Guid="{7D25CBBB-E1B7-41f6-953A-28EBFA4E018F}" Feature="MainApplication">
+        <File Id="TLS.Alert.xsd" Name="Alert.xsd" Source="g:\Tools\Fuzzware\Examples\TLS\publish\Alert.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.C2X_TLS.xml" Guid="{567ED5C3-AA0F-4364-AD99-44B4446A1ACA}" Feature="MainApplication">
+        <File Id="TLS.C2X_TLS.xml" Name="C2X_TLS.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\C2X_TLS.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.C2XClientHello.xml" Guid="{441CE273-4A5E-4014-BC4F-CAC5BABA0AF3}" Feature="MainApplication">
+        <File Id="TLS.C2XClientHello.xml" Name="C2XClientHello.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\C2XClientHello.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.CFX_TLS.xml" Guid="{D607D901-64B8-45eb-9971-10AA78571158}" Feature="MainApplication">
+        <File Id="TLS.CFX_TLS.xml" Name="CFX_TLS.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\CFX_TLS.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.CFXConfig.xml" Guid="{4EF1E6D1-B90C-49d5-ABD3-3ECD3F37E52A}" Feature="MainApplication">
+        <File Id="TLS.CFXConfig.xml" Name="CFXConfig.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\CFXConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ChangeCipherSpec.xsd" Guid="{EDD3E315-7A91-4783-9E77-C109EA8DFFF7}" Feature="MainApplication">
+        <File Id="TLS.ChangeCipherSpec.xsd" Name="ChangeCipherSpec.xsd" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ChangeCipherSpec.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ClientChangeCipherSpec.bin" Guid="{9917913A-9EF2-4ef1-AC2C-C4E2D23286DE}" Feature="MainApplication">
+        <File Id="TLS.ClientChangeCipherSpec.bin" Name="ClientChangeCipherSpec.bin" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ClientChangeCipherSpec.bin" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ClientChangeCipherSpec.xml" Guid="{6609CADC-F380-4a45-9799-B37BE84FC107}" Feature="MainApplication">
+        <File Id="TLS.ClientChangeCipherSpec.xml" Name="ClientChangeCipherSpec.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ClientChangeCipherSpec.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ClientHello.bin" Guid="{20AB4A2F-BFEE-4276-AA17-656FE7C04E05}" Feature="MainApplication">
+        <File Id="TLS.ClientHello.bin" Name="ClientHello.bin" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ClientHello.bin" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ClientHello.xml" Guid="{2066DC32-9565-4481-B1DB-0D94848FACF4}" Feature="MainApplication">
+        <File Id="TLS.ClientHello.xml" Name="ClientHello.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ClientHello.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ClientSpecificMessages.xsd" Guid="{3817B0CE-D20C-4ddc-981A-303B43C06589}" Feature="MainApplication">
+        <File Id="TLS.ClientSpecificMessages.xsd" Name="ClientSpecificMessages.xsd" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ClientSpecificMessages.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.CommonMessages.xsd" Guid="{01FC3A93-7401-4c30-8F6B-6A4F2769AB38}" Feature="MainApplication">
+        <File Id="TLS.CommonMessages.xsd" Name="CommonMessages.xsd" Source="g:\Tools\Fuzzware\Examples\TLS\publish\CommonMessages.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.Handshake.xsd" Guid="{ED398E99-662F-430e-BF53-9149EC93EDC9}" Feature="MainApplication">
+        <File Id="TLS.Handshake.xsd" Name="Handshake.xsd" Source="g:\Tools\Fuzzware\Examples\TLS\publish\Handshake.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.HelloMessages.xsd" Guid="{EE314209-317C-47dc-B933-546C4E840F4C}" Feature="MainApplication">
+        <File Id="TLS.HelloMessages.xsd" Name="HelloMessages.xsd" Source="g:\Tools\Fuzzware\Examples\TLS\publish\HelloMessages.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.out.bin" Guid="{A385BABD-0082-4f70-A4A4-CE2CDAA666F9}" Feature="MainApplication">
+        <File Id="TLS.out.bin" Name="out.bin" Source="g:\Tools\Fuzzware\Examples\TLS\publish\out.bin" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.OutputClientHello.bin" Guid="{B0D8C7DD-84AC-40f6-8D14-D900A6A83DFA}" Feature="MainApplication">
+        <File Id="TLS.OutputClientHello.bin" Name="OutputClientHello.bin" Source="g:\Tools\Fuzzware\Examples\TLS\publish\OutputClientHello.bin" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ServerResponse.bin" Guid="{CDEA367A-D023-45f3-8DE7-DE8F1DD3B50A}" Feature="MainApplication">
+        <File Id="TLS.ServerResponse.bin" Name="ServerResponse.bin" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ServerResponse.bin" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ServerResponse.xml" Guid="{42D44F2D-63E6-42a2-A67B-D60716A821AE}" Feature="MainApplication">
+        <File Id="TLS.ServerResponse.xml" Name="ServerResponse.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ServerResponse.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.ServerSpecificMessages.xsd" Guid="{BF43CC4A-D9A5-4dba-811F-56141D7FCC2B}" Feature="MainApplication">
+        <File Id="TLS.ServerSpecificMessages.xsd" Name="ServerSpecificMessages.xsd" Source="g:\Tools\Fuzzware\Examples\TLS\publish\ServerSpecificMessages.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.tls.pcap" Guid="{703AB497-D10E-4237-85A5-F6137EA70B27}" Feature="MainApplication">
+        <File Id="TLS.tls.pcap" Name="tls.pcap" Source="g:\Tools\Fuzzware\Examples\TLS\publish\tls.pcap" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.TLSProtocolDefn.xml" Guid="{466CABDB-F1E9-4ade-833F-AA53DEAA73B0}" Feature="MainApplication">
+        <File Id="TLS.TLSProtocolDefn.xml" Name="TLSProtocolDefn.xml" Source="g:\Tools\Fuzzware\Examples\TLS\publish\TLSProtocolDefn.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="TLS.TLSRecord.xsd" Guid="{71512A9B-13F8-4e14-8EC8-984797FF23C9}" Feature="MainApplication">
+        <File Id="TLS.TLSRecord.xsd" Name="TLSRecord.xsd" Source="g:\Tools\Fuzzware\Examples\TLS\publish\TLSRecord.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="TLS" Name="TLS">
+        <Component Id="TLS" Guid="{802190FD-8D7C-4f72-B33F-FAE31BC9D66B}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveTLSDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="TLSComponentGroup">
+      <ComponentRef Id="TLS.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="TLS.Configuration.xml"/>
+      <ComponentRef Id="TLS.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="TLS.Alert.xsd"/>
+      <ComponentRef Id="TLS.C2X_TLS.xml"/>
+      <ComponentRef Id="TLS.C2XClientHello.xml"/>
+      <ComponentRef Id="TLS.CFX_TLS.xml"/>
+      <ComponentRef Id="TLS.CFXConfig.xml"/>
+      <ComponentRef Id="TLS.ChangeCipherSpec.xsd"/>
+      <ComponentRef Id="TLS.ClientChangeCipherSpec.bin"/>
+      <ComponentRef Id="TLS.ClientChangeCipherSpec.xml"/>
+      <ComponentRef Id="TLS.ClientHello.bin"/>
+      <ComponentRef Id="TLS.ClientHello.xml"/>
+      <ComponentRef Id="TLS.ClientSpecificMessages.xsd"/>
+      <ComponentRef Id="TLS.CommonMessages.xsd"/>
+      <ComponentRef Id="TLS.Handshake.xsd"/>
+      <ComponentRef Id="TLS.HelloMessages.xsd"/>
+      <ComponentRef Id="TLS.out.bin"/>
+      <ComponentRef Id="TLS.OutputClientHello.bin"/>
+      <ComponentRef Id="TLS.ServerResponse.bin"/>
+      <ComponentRef Id="TLS.ServerResponse.xml"/>
+      <ComponentRef Id="TLS.ServerSpecificMessages.xsd"/>
+      <ComponentRef Id="TLS.tls.pcap"/>
+      <ComponentRef Id="TLS.TLSProtocolDefn.xml"/>
+      <ComponentRef Id="TLS.TLSRecord.xsd"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

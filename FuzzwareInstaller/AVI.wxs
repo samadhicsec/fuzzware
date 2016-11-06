@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="AVI" FileSource="g:\Tools\Fuzzware\Examples\AVI\publish">
+      <Component Id="AVI.xsd" Guid="{42D992F5-177E-4e43-AE9B-6774E6E6F1A9}" Feature="MainApplication">
+        <File Id="AVI.xsd" Name="AVI.xsd" Source="g:\Tools\Fuzzware\Examples\AVI\publish\AVI.xsd" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="AVI.ComplexTypeFuzzerConfig.xml" Guid="{0E8C4A91-DAB2-4f1a-B3FF-FC06326485B3}">
+        <File Id="AVI.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\AVI\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="AVI.Configuration.xml" Guid="{B8BEE942-9D66-467e-A4B7-E7BDE956F177}" Feature="MainApplication">
+        <File Id="AVI.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\AVI\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="AVI.SimpleTypeFuzzerConfig.xml" Guid="{C76CFFE5-C417-44fc-B774-56E8CA615934}" Feature="MainApplication">
+        <File Id="AVI.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\AVI\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="dotwar.avi" Guid="{1D152D22-27B3-4ea7-B280-B2522AE7E151}" Feature="MainApplication">
+        <File Id="dotwar.avi" Name="dotwar.avi" Source="g:\Tools\Fuzzware\Examples\AVI\publish\dotwar.avi" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="dotwar.avi.xml" Guid="{371C1517-4E00-470e-844B-356001FFAF43}" Feature="MainApplication">
+        <File Id="dotwar.avi.xml" Name="dotwar.avi.xml" Source="g:\Tools\Fuzzware\Examples\AVI\publish\dotwar.avi.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+	</Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="AVI" Name="AVI">
+        <Component Id="AVIDir" Guid="{F493BC0D-FECE-4331-BF32-FA9D60971B99}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveAVIDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="AVIComponentGroup">
+      <ComponentRef Id="AVI.xsd"/>
+      <ComponentRef Id="AVI.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="AVI.Configuration.xml"/>
+      <ComponentRef Id="AVI.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="dotwar.avi"/>
+      <ComponentRef Id="dotwar.avi.xml"/>
+    </ComponentGroup>
+  </Fragment>
+  
+</Wix>

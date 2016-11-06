@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="ComplexTypeFuzzerConfig" 
+                  targetNamespace="http://tempuri.org/ComplexTypeFuzzerConfig.xsd"
+                  elementFormDefault="qualified"
+                  xmlns="http://tempuri.org/ComplexTypeFuzzerConfig.xsd"
+                  xmlns:ctfc="http://tempuri.org/ComplexTypeFuzzerConfig.xsd"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="AttributeFuzzing">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AttributeValueFuzzing" type="xs:string" nillable="true" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              Attribute value fuzzing performs simple type fuzzing on the value of the attribute.  It is treated as a simple type and
+              so uses the configuration of the attribute type in the simple type fuzzer config file.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AtrOppositeOccurrence" type="xs:string" nillable="true" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              This attribute fuzzer flips the presence of an attribute, if it is already present it removes it, if it is not present
+              it adds it.  The other attributes are left untouched.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AtrIsolateOccurrence" type="xs:string" nillable="true" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              This attribute fuzzer causes the target attribute to appear by itself, i.e. isolated, in the node.  If it already existed then
+              it retains its value, if it does not exist it is created.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="OccurranceFuzzingCount">
+    <xs:annotation>
+      <xs:documentation>
+        A list of unsigned integers representing the number of times to repeat a node if the node has maxOccurs="unbounded".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Occurs" type="xs:unsignedInt" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="ExampleComplexContent">
+    <xs:annotation>
+      <xs:documentation>
+        Allows the user to provide arbitrary XML that are examples of XML that could exist, but perhaps doesn't in the XML file being fuzzed.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Example" type="xs:anyType" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name ="ComplexTypeFuzzerConfig">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ctfc:AttributeFuzzing" minOccurs="0" />
+        <xs:element ref="ctfc:OccurranceFuzzingCount" minOccurs="0" />
+        <xs:element ref="ctfc:ExampleComplexContent" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.Common.View.AdvancedFileStoreControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Style="{StaticResource CommonText}">
+        <local:FileStoreControlView DataContext="{Binding}" Description="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Description}" />
+        <HeaderedContentControl DataContext="{Binding RelativeSource={RelativeSource Self}}" Style="{StaticResource AdvancedOptionsStyle}" cmn:Common.IsExpanded="false">
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap">
+                    Fuzzware usually stores all unique responses.  Use Tolerance to only store an otherwise unique response
+                    if it differs from the other unique responses by more than a certain number of characters.
+                </TextBlock>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="30,0,0,0">
+                    <TextBlock Margin="5">Character Tolerance</TextBlock>
+                    <TextBox Name="tbTolerance" Margin="5" MinWidth="50" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.Tolerance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </StackPanel>
+        </HeaderedContentControl>
+    </StackPanel>
+</UserControl>

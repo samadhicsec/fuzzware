@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.ISO"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.ISO"
+    xmlns:iso="urn:Fuzzware.Examples.ISO"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <!--Version Type-->
+  <xs:complexType name="tVersionInfo">
+    <xs:sequence>
+      <xs:element name="Version" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+      <xs:element name="Flags" sac:outputAs="Decoded">
+        <xs:simpleType>
+          <xs:restriction base="xs:hexBinary">
+            <xs:length value="3" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!--String (null terminated or length prepended)-->
+  <xs:complexType name="tString">
+    <xs:choice>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfStringValue" type="xs:unsignedByte" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="StringValue" type="xs:string" sac:outputAs="UTF8String" />
+        <xs:element name="NullTerm" type="xs:hexBinary" fixed="00" minOccurs="0" sac:outputAs="Decoded" />
+      </xs:sequence>
+      <xs:sequence>
+        <xs:element name="StringValue" type="xs:string" sac:outputAs="UTF8String" />
+        <xs:element name="NullTerm" type="xs:hexBinary" fixed="00" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:choice>
+  </xs:complexType>
+
+  <!--Free Space-->
+  <xs:element name="free">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOffree" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="freeConst" type="xs:string" fixed="free" />
+        <xs:element name="freeData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Free Space-->
+  <xs:element name="skip">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfskip" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="skipConst" type="xs:string" fixed="skip" />
+        <xs:element name="skipData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--User Data-->
+  <xs:element name="udta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfudta" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="udtaConst" type="xs:string" fixed="udta" />
+        <xs:element name="udtaData" minOccurs="0">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element ref="iso:cprt" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Movie Fragment Random Access Offset Box-->
+  <xs:element name="cprt">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfcprt" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="cprtConst" type="xs:string" fixed="mfro" />
+        <xs:element name="cprtVersion" type="iso:tVersionInfo" />
+        <xs:element name="cprtData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cprtLang" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="cprtNotice" type="iso:tString" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Unknown Box-->
+  <xs:element name="unknown">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfunknown" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="unknownConst" sac:outputAs="Decoded">
+          <xs:simpleType>
+            <xs:restriction base="xs:hexBinary">
+              <xs:length value="4" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="unknownData" type="xs:hexBinary" sac:outputAs="Decoded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

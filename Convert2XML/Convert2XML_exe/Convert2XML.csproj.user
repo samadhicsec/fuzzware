@@ -1,0 +1,5 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <StartArguments>/is:..\..\..\..\Examples\TLS\TLSRecord.xsd /cx:..\..\..\..\Examples\TLS\C2X_TLS.xml</StartArguments>
+  </PropertyGroup>
+</Project>

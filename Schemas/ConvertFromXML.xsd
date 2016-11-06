@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="ConvertFromXML" 
+                  targetNamespace="urn:Fuzzware.Schemas.Configuration"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:cfg="urn:Fuzzware.Schemas.Configuration"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ConvertFromXML">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="OmitXMLDeclaration" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>
+              Whether or not the XML declaration that can occur at the beginning of XML files will be omitted.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="OmitComments" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>
+              Whether or not XML comments appear in the output depends on the value of this configuration setting and on the markup setting
+              of the parent node.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="FormatXML" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>
+              Whether or not to format the output XML with line breaks and indentation.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="OutputEncoding" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>
+              The desired output character formatting of resulting data. E.g. us-ascii, utf-8, utf-16 or any string that represents
+              an encoding that System.Text.Encoding supports (see MSDN help on this class for a list).
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="VerifyOutputAgainstInputSchema" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>
+              Whether or not to verify the resulting data against the input schema.  This should only be set to true if outputting XML data.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

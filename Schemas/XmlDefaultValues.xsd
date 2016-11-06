@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Schemas.XmlDefaultValues"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Schemas.XmlDefaultValues"
+    xmlns:dfv="urn:Fuzzware.Schemas.XmlDefaultValues"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <xs:element name="NodeName">
+    <xs:annotation>
+      <xs:documentation>
+        Specifies how to match the name of a node.  The value of the node should contain a string to use with the matching method
+        specified in the MatchMethod attribute.  Matching is case-sensitive.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="MatchMethod" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="Equals" />
+                <xs:enumeration value="StartsWith" />
+                <xs:enumeration value="EndsWith" />
+                <xs:enumeration value="Contains" />
+                <xs:enumeration value="RegEx" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="ParentsNameEquals" type="xs:string" use="optional">
+            <xs:annotation>
+              <xs:documentation>
+                For a XSD with many nodes of the same name, using the parent's node name can help distinguish between nodes.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="tValue">
+    <xs:sequence>
+      <xs:element ref="dfv:NodeName" />
+      <xs:element name="Value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="DefaultValues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DefaultValue" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="XPath" use="required" type="xs:string" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="StringValues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="StringValue" minOccurs="0" maxOccurs="unbounded" type="dfv:tValue" />
+        <xs:element name="DefaultValue" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="StringDefaultValue" type="xs:string" />
+
+  <xs:element name="IntegerValues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="IntegerValue" minOccurs="0" maxOccurs="unbounded" type="dfv:tValue" />
+        <xs:element name="DefaultValue" type="xs:integer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="IntegerDefaultValue" type="xs:integer" />
+
+  <xs:element name="DecimalValues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DecimalValue" minOccurs="0" maxOccurs="unbounded" type="dfv:tValue" />
+        <xs:element name="DefaultValue" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DecimalDefaultValue" type="xs:decimal" />
+  
+  <xs:element name="BinaryValues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BinaryValue" minOccurs="0" maxOccurs="unbounded" type="dfv:tValue" />
+        <xs:element name="DefaultValue" type="xs:hexBinary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="BinaryDefaultValue" type="xs:hexBinary" />
+  
+  <xs:element name="AnyTypeValues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="AnyTypeValue" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="dfv:NodeName" />
+              <xs:element name="Type" type="xs:QName" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DefaultValue" type="xs:QName" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AnyTypeDefaultType" type="xs:QName" />
+
+  <xs:element name="XmlDefaultValues">
+    <xs:annotation>
+      <xs:documentation>
+        Contains type specific default values for use during generation of XML from XML Schema.  Each type has entries that will be matched
+        against node names, but also a default value if no matches exist.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dfv:DefaultValues" />
+        <xs:element ref="dfv:StringDefaultValue" minOccurs="1" />
+        <xs:element ref="dfv:IntegerDefaultValue" minOccurs="1" />
+        <xs:element ref="dfv:DecimalDefaultValue" minOccurs="1" />
+        <xs:element ref="dfv:BinaryDefaultValue" minOccurs="1" />
+        <xs:element ref="dfv:AnyTypeDefaultType" minOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

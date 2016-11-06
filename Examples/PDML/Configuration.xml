@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.5" testConfig="true" xmlns="urn:Fuzzware.Schemas.Configuration">
+  <Input>
+    <DataInputHandler>
+      <PDMLInput>
+        <InputPDMLPathAndFile>dns.pdml</InputPDMLPathAndFile>
+        <OutputPrefix>pkt</OutputPrefix>
+        <OutputNamespace>urn:Fuzzware.Projects.publish</OutputNamespace>
+        <OutputXMLPathAndFile>dns.xml</OutputXMLPathAndFile>
+        <OutputXSDPathAndFile>dns.xsd</OutputXSDPathAndFile>
+        <OptionalXSLT>
+          <PDML2XML></PDML2XML>
+          <PDML2XSD></PDML2XSD>
+        </OptionalXSLT>
+      </PDMLInput>
+    </DataInputHandler>
+  </Input>
+  <XmlConfigFiles>
+    <SimpleTypeFuzzerXML>SimpleTypeFuzzerConfig.xml</SimpleTypeFuzzerXML>
+    <ComplexTypeFuzzerXML>ComplexTypeFuzzerConfig.xml</ComplexTypeFuzzerXML>
+  </XmlConfigFiles>
+  <Output>
+    <ConvertFromXML>
+      <OmitXMLDeclaration>true</OmitXMLDeclaration>
+      <OmitComments>true</OmitComments>
+      <FormatXML>false</FormatXML>
+      <OutputEncoding>us-ascii</OutputEncoding>
+      <VerifyOutputAgainstInputSchema>false</VerifyOutputAgainstInputSchema>
+    </ConvertFromXML>
+    <EvaluationMethod>
+      <OutputToNetwork>
+        <URI>localhost</URI>
+        <Port>53</Port>
+        <UniqueResponses>
+          <Directory>out</Directory>
+          <FileExtension>bin</FileExtension>
+        </UniqueResponses>
+      </OutputToNetwork>
+    </EvaluationMethod>
+    <Monitoring />
+  </Output>
+</Configuration>

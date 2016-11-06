@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <DirectoryRef Id="ActiveX" FileSource="g:\Tools\Fuzzware\Examples\ActiveX\publish">
+      <Component Id="ActiveX.ComplexTypeFuzzerConfig.xml" Guid="{5BA256C2-8C3E-4a74-9638-CC9765579156}" Feature="MainApplication">
+        <File Id="ActiveX.ComplexTypeFuzzerConfig.xml" Name="ComplexTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\COM\publish\ComplexTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="ActiveX.Configuration.xml" Guid="{60ADCCC4-9227-4c16-A6F3-70610F90E045}" Feature="MainApplication">
+        <File Id="ActiveX.Configuration.xml" Name="Configuration.xml" Source="g:\Tools\Fuzzware\Examples\COM\publish\Configuration.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="ActiveX.SimpleTypeFuzzerConfig.xml" Guid="{1E025669-9E50-4e88-851F-55B23D2DD082}" Feature="MainApplication">
+        <File Id="ActiveX.SimpleTypeFuzzerConfig.xml" Name="SimpleTypeFuzzerConfig.xml" Source="g:\Tools\Fuzzware\Examples\COM\publish\SimpleTypeFuzzerConfig.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+      <Component Id="ActiveX.XmlDefaultValues.xml" Guid="{091336BB-E9AC-454f-85F8-C9E57EFFC2E1}" Feature="MainApplication">
+        <File Id="ActiveX.XmlDefaultValues.xml" Name="XmlDefaultValues.xml" Source="g:\Tools\Fuzzware\Examples\COM\publish\XmlDefaultValues.xml" />
+        <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+          <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="Examples">
+      <Directory Id="ActiveX" Name="ActiveX">
+        <Component Id="ActiveXDir" Guid="{B769AA92-8A80-468e-9879-511BA30604A0}" Feature="MainApplication">
+          <RegistryKey Action="none" Root="HKCU" Key="Software\Fuzzware">
+            <RegistryValue Type="string" Name="RequiredHKCUKey" Value="" KeyPath="yes" />
+          </RegistryKey>
+          <CreateFolder />
+          <RemoveFolder Id="RemoveActiveXDir" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ActiveXComponentGroup">
+      <ComponentRef Id="ActiveX.ComplexTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="ActiveX.Configuration.xml"/>
+      <ComponentRef Id="ActiveX.SimpleTypeFuzzerConfig.xml"/>
+      <ComponentRef Id="ActiveX.XmlDefaultValues.xml"/>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

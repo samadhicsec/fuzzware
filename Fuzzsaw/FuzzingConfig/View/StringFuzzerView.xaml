@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="Fuzzware.Fuzzsaw.FuzzingConfig.View.StringFuzzerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Fuzzware.Fuzzsaw.FuzzingConfig.View"
+    xmlns:cmn="clr-namespace:Fuzzware.Fuzzsaw.Common"
+    xmlns:cv="clr-namespace:Fuzzware.Fuzzsaw.Common.View"
+    >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Common\Common.xaml" />
+                <ResourceDictionary Source="BaseFuzzerResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <Border Name="FuzzDataBorder" Style="{StaticResource BorderStyle}" Width="Auto" Height="Auto">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Name="DeleteFuzzer" Grid.Column="1" 
+                                Command="{Binding Path=(cmn:Common.Command)}"
+                                CommandParameter="{Binding}"
+                                Template="{StaticResource DeleteButtonTemplate}" VerticalAlignment="Top" Margin="3"
+                                Visibility="{Binding Path=CustomFuzzer, Converter={StaticResource BooleanToVisability}}"></Button>
+                        <cv:OnOffControlView x:Name="OnOffDefaultFuzzer" Grid.Column="1" Margin="3" VerticalAlignment="Top" 
+                                             Visibility="{Binding ElementName=FuzzDataBorder, Path=DataContext.DefaultFuzzer, Converter={StaticResource BooleanToVisability}}"
+                                             DataContext="{Binding Path=OnOffControl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Style="{StaticResource CommonSubHeaderText}" Grid.Column="0" VerticalAlignment="Center"
+                                   Visibility="{Binding Path=DefaultFuzzer, Converter={StaticResource BooleanToVisability}}">
+                            The default fuzzing values used with all XML Schema elements of type String.
+                        </TextBlock>
+                        <ContentControl Template="{StaticResource CustomNodeName}" />
+
+                    </Grid>
+                    <TabControl Width="Auto" Height="Auto" Name="tcStringFuzzers" TabStripPlacement="Left" Style="{StaticResource CommonText}"
+                                IsEnabled="{Binding Path=OnOffControl.On}">
+                        <TabItem Name="tiLongStringReplace">
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">Replace with long strings</TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Replace strings with long strings</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">of lengths given in the list</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=ReplaceWithLongStringsFuzzData, Mode=TwoWay}"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" Width="Auto" />
+                        </TabItem>
+                        <TabItem Name="tiInsertLongStrings">
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Insert long strings
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Insert long strings at each character</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">position, or in optional range</TextBlock>
+                                        <local:RangeDataView DataContext="{Binding Path=InsertLongStringsRange, Mode=TwoWay}" Style="{StaticResource HelpTextStyle}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=InsertLongStringsFuzzData, Mode=TwoWay}" 
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" />
+                        </TabItem>
+                        <TabItem Name="tiInsertTotalLongStrings">
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Insert long strings to length
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Insert long strings so total length of</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">target string is values listed.</TextBlock>
+                                        <local:RangeDataView DataContext="{Binding Path=InsertToLengthLongStringsRange, Mode=TwoWay}" Style="{StaticResource HelpTextStyle}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=InsertToLengthLongStringsFuzzData, Mode=TwoWay}" 
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" />
+                        </TabItem>
+                        <TabItem Name="tiReplaceStrings">
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Replace strings
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,3" Style="{StaticResource HelpTextStyle}">Replace strings with strings listed.</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=ReplaceStringsFuzzData, Mode=TwoWay}" 
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" />
+                        </TabItem>
+                        <TabItem Name="tiInsertStrings">
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Insert strings
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Insert into strings, at each character</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">position, the strings listed.</TextBlock>
+                                        <local:RangeDataView DataContext="{Binding Path=InsertStringsRange, Mode=TwoWay}" Style="{StaticResource HelpTextStyle}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=InsertStringsFuzzData, Mode=TwoWay}" 
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" />
+                        </TabItem>
+                        <TabItem Name="tiEncodeStrings">
+                            <TabItem.Header>
+                                <StackPanel Style="{StaticResource TabItemStackPanelStyle}">
+                                    <TextBlock Margin="3" HorizontalAlignment="Center" Style="{StaticResource CommonText}">
+                                        Encode strings
+                                    </TextBlock>
+                                    <StackPanel Style="{StaticResource HelpStackPanelStyle}">
+                                        <Separator BorderBrush="DarkBlue" BorderThickness="4" />
+                                        <TextBlock Margin="0,3,0,0" Style="{StaticResource HelpTextStyle}">Replace strings with strings listed</TextBlock>
+                                        <TextBlock Margin="0,0,0,3" Style="{StaticResource HelpTextStyle}">encoded in various ways e.g UTF-16</TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Header>
+                            <local:FuzzDataSelectorView DataContext="{Binding Path=EncodeStringsFuzzData, Mode=TwoWay}"
+                                              ScrollViewer.VerticalScrollBarVisibility="Auto" Height="250" />
+                        </TabItem>
+                    </TabControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+    </Grid>
+
+
+</UserControl>

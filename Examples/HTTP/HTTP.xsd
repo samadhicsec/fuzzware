@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="HTTP" 
+                  targetNamespace="urn:Fuzzware.Examples.HTTP"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Examples.HTTP"
+                  xmlns:http="urn:Fuzzware.Examples.HTTP"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:element name="CRLF" type="xs:hexBinary" fixed="0D0A" sac:outputAs="Decoded"/>
+  
+  <!-- This is quite a poorly done HTTP schema, ideally it should list all the header fields seperately according to RFC2616 (HTTP/1.1) -->
+  <xs:element name="HTTPHeader">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <!-- The ContentLength should be first so if we are using Convert2XML it will match before HeaderField -->
+          <xs:sequence>
+            <xs:element name="ContentLength" type="xs:string" fixed="Content-Length: " />
+            <xs:element name="ByteLengthOfHTTPBody" type="xs:unsignedInt" />
+            <xs:element ref="CRLF"/>
+          </xs:sequence>
+          <xs:sequence>
+            <xs:element name="HeaderField" type="xs:string" />
+            <xs:element ref="CRLF" />
+          </xs:sequence>
+        </xs:choice>
+        <xs:element ref="CRLF" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HTTP" sac:markup="removeIncludingChildNodes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="HTTPHeader" />
+        <xs:element name="HTTPBody" type="xs:anyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

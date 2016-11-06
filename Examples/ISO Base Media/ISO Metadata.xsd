@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn:Fuzzware.Examples.ISO"
+    elementFormDefault="qualified"
+    xmlns="urn:Fuzzware.Examples.ISO"
+    xmlns:iso="urn:Fuzzware.Examples.ISO"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:sac="urn:Fuzzware.Schemas.SchemaAttributeCommands">
+
+  <xs:include schemaLocation="ISO Common.xsd" />
+  <xs:include schemaLocation="ISO MovieBox.xsd" />
+  
+  <!--Meta Data-->
+  <xs:element name="meta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfmeta" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="metaConst" type="xs:string" fixed="meta" />
+        <xs:element name="metaData">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element ref="iso:hdlr" />
+              <xs:element ref="iso:dinf" />
+              <xs:element ref="iso:ipmc" />
+              <xs:element ref="iso:iloc" />
+              <xs:element ref="iso:ipro" />
+              <xs:element ref="iso:iinf" />
+              <xs:element ref="iso:xml" />
+              <xs:element ref="iso:bxml" />
+              <xs:element ref="iso:pitm" />
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Item Location Box-->
+  <xs:element name="iloc">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfiloc" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="ilocConst" type="xs:string" fixed="iloc" />
+        <xs:element name="ilocVersion" type="iso:tVersionInfo" />
+        <xs:element name="ilocData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Item Protection Box-->
+  <xs:element name="ipro">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfipro" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="iproConst" type="xs:string" fixed="ipro" />
+        <xs:element name="iproVersion" type="iso:tVersionInfo" />
+        <xs:element name="iproData" type="xs:hexBinary" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Item Information Box-->
+  <xs:element name="iinf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfiinf" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="iinfConst" type="xs:string" fixed="iinf" />
+        <xs:element name="iinfVersion" type="iso:tVersionInfo" />
+        <xs:element name="iinfData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CountOfiinfItemInfoEntry" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="iinfItemInfoEntry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Item Info Entry Box-->
+  <xs:element name="infe">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfinfe" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="infeConst" type="xs:string" fixed="infe" />
+        <xs:element name="infeVersion" type="iso:tVersionInfo" />
+        <xs:element name="infeData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="infeItemId" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="infeItemProtectionIndex" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+              <xs:element name="infeItemName" type="iso:tString" />
+              <xs:element name="infeContentType" type="iso:tString" />
+              <xs:element name="infeContentEncoding" type="iso:tString" minOccurs="0"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--XML Box-->
+  <xs:element name="xml">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfxml" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="xmlConst" type="xs:string" fixed="xml " />
+        <xs:element name="xmlVersion" type="iso:tVersionInfo" />
+        <xs:element name="xmlData" type="iso:tString" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Binary XML Box-->
+  <xs:element name="bxml">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfbxml" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="bxmlConst" type="xs:string" fixed="bxml" />
+        <xs:element name="bxmlVersion" type="iso:tVersionInfo" />
+        <xs:element name="bxmlData" type="xs:hexBinary" minOccurs="0" sac:outputAs="Decoded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Primary Item Box-->
+  <xs:element name="pitm">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ByteLengthOfpitm" type="xs:unsignedInt" sac:outputAs="BinaryBigEndian" />
+        <xs:element name="pitmConst" type="xs:string" fixed="pitm" />
+        <xs:element name="pitmVersion" type="iso:tVersionInfo" />
+        <xs:element name="pitmData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="pitmItemId" type="xs:unsignedShort" sac:outputAs="BinaryBigEndian" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>

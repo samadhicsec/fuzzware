@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<xs:schema id="SchemaAttributeCommands" 
+                  targetNamespace="urn:Fuzzware.Schemas.SchemaAttributeCommands"
+                  elementFormDefault="qualified"
+                  xmlns="urn:Fuzzware.Schemas.SchemaAttributeCommands"
+                  xmlns:fuzt="urn:Fuzzware.Schemas.SchemaAttributeCommands"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <xs:attribute name="markup" default="dontRemoveIncludingChildNodes">
+    <xs:annotation>
+      <xs:documentation>
+        Indicates whether or not the current node, and all child nodes will have their XML mark-up removed before being output.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="remove" />
+        <xs:enumeration value="removeIncludingChildNodes" />
+        <xs:enumeration value="dontRemove" />
+        <xs:enumeration value="dontRemoveIncludingChildNodes" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="DontOutput" type="xs:boolean" default="false">
+    <xs:annotation>
+      <xs:documentation>
+        Setting to true will suppress this node and child nodes from being serialised to the output, however this node and its child nodes
+        will still be serialised for the purpose of being passed to Schemer processing instructions.  This is useful for passing custom
+        data to custom Extensible.IUserNodeProcessor functions.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  
+  <xs:attribute name="Encoding">
+    <xs:annotation>
+      <xs:documentation>
+        This attribute should be applied to a simpleType element that has been encoded in some format.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Base64" />
+        <xs:enumeration value="Hex" />
+        <xs:enumeration value="MSBase64" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  
+  <xs:attribute name="treatAsEncoded" default="None">
+    <xs:annotation>
+      <xs:documentation>
+        This attribute should be applied to a simpleType element of type base64Binary, hexBinary or has the attribute 'Encoding' which
+        describes how the element is encoded.  The fuzzer will decode the element and fuzz it according to the value given in this attribute.
+        The values in the enumeration can correspond to an System.Xml.Schema.XmlTypeCode enumeration value.
+        
+        A value of None means the encoded data will be treated as Binary data, and fuzzed accordingly.
+        
+        This is useful for parts of a file that require binary fuzzing, either intentionally or due to the structure not being known.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="None" />
+        <xs:enumeration value="String" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  
+  <xs:attribute name="outputAs" default="Unchanged">
+    <xs:annotation>
+      <xs:documentation>
+        This attribute controls how a particular type is written to output.  The type may appear in the XML using some encoding (for instance,
+        as specified by the 'Encoding' attribute), if a type has the 'outputAs' attribute, the type will be decoded according to its encoding,
+        and then re-encoded using the method specified in this attribute.
+
+        Example: A node is of type int, and has 'outputAs="BinaryLittleEndian"'.  When the node is being written to the final output it will be
+        encoded into a Little Endian binary number.
+
+        Example: A node has 'outputAs="Base64"' and has child nodes beneath it that should be encoded before output (the child nodes could 
+        contain both binary and XML data), each child node will be formatted according to each of their 'outputAs' commands, then encoded 
+        and output in Base64.
+
+        The value 'Unchanged' means the type will be written to the output as it appears in the original XML document i.e. if it is encoded
+        it will remain encoded.  The value 'Decoded' means the type will be decoded and essentially written as binary data.  Using 'Decoded'
+        on a type that is not encoded will have no effect.  The string encodings support outputting strings in different encodings, LE and 
+        BE refer to little and big endianess respectively and BOM is byte-order-mark.
+
+        The value of the attribute should be appropriate for the type e.g. 'BinaryLittleEndian' will only be effective on number types.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Unchanged" />
+        <xs:enumeration value="Decoded" />
+        <xs:enumeration value="Base64" />
+        <xs:enumeration value="Hex" />
+        <xs:enumeration value="MSBase64" />
+        <xs:enumeration value="BinaryLittleEndian" />
+        <xs:enumeration value="BinaryBigEndian" />
+        <xs:enumeration value="ASCIIString" />
+        <xs:enumeration value="UTF7String" />
+        <xs:enumeration value="UTF8String" />
+        <xs:enumeration value="UTF8StringWithBOM" />
+        <xs:enumeration value="UTF16LEString" />
+        <xs:enumeration value="UTF16BEString" />
+        <xs:enumeration value="UTF32LEString" />
+        <xs:enumeration value="UTF32BEString" />
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+
+  <xs:attribute name="TypeID" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        To help decode input conversion to XML when a part of a file specifies one choice of type in another part of a file.  For instance,
+        a file format containing records of different types, where the type is part of a header.
+
+        This attribute needs to be both a schema attribute command (as this is where it is specified) and an XML processing instruction command
+        (as it is handled the same as the other XML processing instruction commands).
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
+  <xs:attribute name="EscapeStr" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        Use this attribute to help specify how another string is terminated.  If a string is terminated with a special character e.g ')',
+        however that character may appear in the string under some circumstances e.g. '\)', that is escaped by '\', then specifying this
+        attribute with the value '\' will ensure the end of the string is correctly found.  This is useful for conversions from binary to
+        XML, and will largely be used with fixed strings.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  
+</xs:schema>
